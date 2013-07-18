@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="ASSETSRV" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="ASSETSRV" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="ASSETSRV">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAssListXml">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAssListXmlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAssListXmlResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmpXml">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetEmpXmlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEmpXmlResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAsncLogDataTable">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sClientId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="nMaxId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAsncLogDataTableResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAsncLogDataTableResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserDataTable">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sClientId" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="nMaxId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserDataTableResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserDataTableResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDataTableBySql">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sSql" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDataTableBySqlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDataTableBySqlResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserXml">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetUserXmlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserXmlResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExecuteNoQueryTran">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SQLStringList" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ExecuteNoQueryTranResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ExecuteNoQueryTranResult" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="sErr" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAssListXmlSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAssListXml" />
+  </wsdl:message>
+  <wsdl:message name="GetAssListXmlSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAssListXmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEmpXmlSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEmpXml" />
+  </wsdl:message>
+  <wsdl:message name="GetEmpXmlSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEmpXmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAsncLogDataTableSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAsncLogDataTable" />
+  </wsdl:message>
+  <wsdl:message name="GetAsncLogDataTableSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAsncLogDataTableResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserDataTableSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserDataTable" />
+  </wsdl:message>
+  <wsdl:message name="GetUserDataTableSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserDataTableResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDataTableBySqlSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDataTableBySql" />
+  </wsdl:message>
+  <wsdl:message name="GetDataTableBySqlSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDataTableBySqlResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserXmlSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserXml" />
+  </wsdl:message>
+  <wsdl:message name="GetUserXmlSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserXmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteNoQueryTranSoapIn">
+    <wsdl:part name="parameters" element="tns:ExecuteNoQueryTran" />
+  </wsdl:message>
+  <wsdl:message name="ExecuteNoQueryTranSoapOut">
+    <wsdl:part name="parameters" element="tns:ExecuteNoQueryTranResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ServiceSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAssListXml">
+      <wsdl:input message="tns:GetAssListXmlSoapIn" />
+      <wsdl:output message="tns:GetAssListXmlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmpXml">
+      <wsdl:input message="tns:GetEmpXmlSoapIn" />
+      <wsdl:output message="tns:GetEmpXmlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAsncLogDataTable">
+      <wsdl:input message="tns:GetAsncLogDataTableSoapIn" />
+      <wsdl:output message="tns:GetAsncLogDataTableSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDataTable">
+      <wsdl:input message="tns:GetUserDataTableSoapIn" />
+      <wsdl:output message="tns:GetUserDataTableSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDataTableBySql">
+      <wsdl:input message="tns:GetDataTableBySqlSoapIn" />
+      <wsdl:output message="tns:GetDataTableBySqlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserXml">
+      <wsdl:input message="tns:GetUserXmlSoapIn" />
+      <wsdl:output message="tns:GetUserXmlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteNoQueryTran">
+      <wsdl:input message="tns:ExecuteNoQueryTranSoapIn" />
+      <wsdl:output message="tns:ExecuteNoQueryTranSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="ASSETSRV/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAssListXml">
+      <soap:operation soapAction="ASSETSRV/GetAssListXml" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmpXml">
+      <soap:operation soapAction="ASSETSRV/GetEmpXml" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAsncLogDataTable">
+      <soap:operation soapAction="ASSETSRV/GetAsncLogDataTable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDataTable">
+      <soap:operation soapAction="ASSETSRV/GetUserDataTable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDataTableBySql">
+      <soap:operation soapAction="ASSETSRV/GetDataTableBySql" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserXml">
+      <soap:operation soapAction="ASSETSRV/GetUserXml" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteNoQueryTran">
+      <soap:operation soapAction="ASSETSRV/ExecuteNoQueryTran" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="ASSETSRV/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAssListXml">
+      <soap12:operation soapAction="ASSETSRV/GetAssListXml" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmpXml">
+      <soap12:operation soapAction="ASSETSRV/GetEmpXml" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAsncLogDataTable">
+      <soap12:operation soapAction="ASSETSRV/GetAsncLogDataTable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDataTable">
+      <soap12:operation soapAction="ASSETSRV/GetUserDataTable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDataTableBySql">
+      <soap12:operation soapAction="ASSETSRV/GetDataTableBySql" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserXml">
+      <soap12:operation soapAction="ASSETSRV/GetUserXml" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExecuteNoQueryTran">
+      <soap12:operation soapAction="ASSETSRV/ExecuteNoQueryTran" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="http://10.1.1.52/AssWebSrv/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
+      <soap12:address location="http://10.1.1.52/AssWebSrv/Service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

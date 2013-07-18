@@ -11,7 +11,7 @@ namespace IrRfidUHFDemo
 {
     public partial class CheckOptForm : Form
     {
-        public string sInvListNo = "";
+        public string sOptTyp = "";
         public CheckOptForm()
         {
             InitializeComponent();
@@ -19,13 +19,31 @@ namespace IrRfidUHFDemo
 
         private void SelectInvList_Load(object sender, EventArgs e)
         {
-            comboBoxOptTyp.Items.Add("已盘点");
+            comboBoxOptTyp.Items.Add("手动盘点");
             comboBoxOptTyp.Items.Add("丢失");
             comboBoxOptTyp.Items.Add("报废");
+            comboBoxOptTyp.SelectedIndex = 0;
         }
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            
+            sOptTyp = comboBoxOptTyp.Text;
+        }
+
+        private void CheckOptForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F3)
+            {
+                buttonCancel_Click(null, null);
+            }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                buttonOK_Click(null, null);
+            }
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
     }

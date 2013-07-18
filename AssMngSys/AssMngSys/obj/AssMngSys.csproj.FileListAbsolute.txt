@@ -14,3 +14,6 @@ E:\Projects\MyProjects\资产管理系统\AssMngSys\AssMngSys\obj\Debug\AssMngSy
 E:\Projects\MyProjects\资产管理系统\AssMngSys\AssMngSys\obj\Debug\AssMngSys.QryAssLog.resources
 E:\Projects\MyProjects\资产管理系统\AssMngSys\AssMngSys\obj\Debug\AssMngSys.Login.resources
 E:\Projects\MyProjects\资产管理系统\AssMngSys\AssMngSys\obj\Debug\AssMngSys.InvList.resources
+E:\Project\资产管理系统\asset-management-system\AssMngSys\AssMngSys\bin\Debug\AssMngSys.exe.config
+E:\Project\资产管理系统\asset-management-system\AssMngSys\AssMngSys\obj\Debug\AssMngSys.exe
+E:\Project\资产管理系统\asset-management-system\AssMngSys\AssMngSys\obj\Debug\AssMngSys.pdb

@@ -440,7 +440,7 @@ namespace IrRfidUHFDemo
             // 
             this.comboBoxMan.Location = new System.Drawing.Point(166, 50);
             this.comboBoxMan.Name = "comboBoxMan";
-            this.comboBoxMan.Size = new System.Drawing.Size(65, 23);
+            this.comboBoxMan.Size = new System.Drawing.Size(61, 23);
             this.comboBoxMan.TabIndex = 4;
             this.comboBoxMan.SelectedIndexChanged += new System.EventHandler(this.comboBoxMan_SelectedIndexChanged);
             // 
@@ -456,7 +456,7 @@ namespace IrRfidUHFDemo
             // 
             this.comboBoxDept.Location = new System.Drawing.Point(41, 26);
             this.comboBoxDept.Name = "comboBoxDept";
-            this.comboBoxDept.Size = new System.Drawing.Size(190, 23);
+            this.comboBoxDept.Size = new System.Drawing.Size(185, 23);
             this.comboBoxDept.TabIndex = 4;
             this.comboBoxDept.SelectedIndexChanged += new System.EventHandler(this.comboBoxDept_SelectedIndexChanged);
             // 
@@ -480,6 +480,7 @@ namespace IrRfidUHFDemo
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(238, 268);
+            this.ControlBox = false;
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonClear);
             this.Controls.Add(this.buttonRead);
@@ -489,7 +490,7 @@ namespace IrRfidUHFDemo
             this.Text = "Read2PcForm";
             this.Load += new System.EventHandler(this.Read2PcForm_Load);
             this.Closing += new System.ComponentModel.CancelEventHandler(this.Read2PcForm_Closing);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Read2PcForm_KeyUp);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Read2PcForm_KeyUp);
             this.tabPage5.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

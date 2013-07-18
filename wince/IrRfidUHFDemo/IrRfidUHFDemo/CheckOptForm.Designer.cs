@@ -38,7 +38,7 @@ namespace IrRfidUHFDemo
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(23, 96);
+            this.label1.Location = new System.Drawing.Point(24, 107);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 20);
             this.label1.Text = "操作类型：";
@@ -46,7 +46,7 @@ namespace IrRfidUHFDemo
             // comboBoxOptTyp
             // 
             this.comboBoxOptTyp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
-            this.comboBoxOptTyp.Location = new System.Drawing.Point(98, 92);
+            this.comboBoxOptTyp.Location = new System.Drawing.Point(99, 103);
             this.comboBoxOptTyp.Name = "comboBoxOptTyp";
             this.comboBoxOptTyp.Size = new System.Drawing.Size(116, 23);
             this.comboBoxOptTyp.TabIndex = 2;
@@ -54,7 +54,7 @@ namespace IrRfidUHFDemo
             // buttonOK
             // 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(77, 230);
+            this.buttonOK.Location = new System.Drawing.Point(67, 217);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(76, 35);
             this.buttonOK.TabIndex = 3;
@@ -63,11 +63,12 @@ namespace IrRfidUHFDemo
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(159, 230);
+            this.buttonCancel.Location = new System.Drawing.Point(149, 217);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(76, 35);
             this.buttonCancel.TabIndex = 3;
             this.buttonCancel.Text = "取消(F3)";
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // CheckOptForm
             // 
@@ -79,9 +80,13 @@ namespace IrRfidUHFDemo
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.comboBoxOptTyp);
             this.Controls.Add(this.label1);
+            this.KeyPreview = true;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "CheckOptForm";
             this.Text = "SelectInvList";
             this.Load += new System.EventHandler(this.SelectInvList_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CheckOptForm_KeyUp);
             this.ResumeLayout(false);
 
         }

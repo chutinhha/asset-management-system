@@ -19,6 +19,7 @@ namespace IrRfidUHFDemo
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            dataGrid1.DataSource = null;
             this.Close();
         }
 

@@ -20,7 +20,7 @@ namespace IrRfidUHFDemo
         public int ret = 0;
         public int nIndex = 0;
         public List<string> listDept = new List<string>();
-        private string sTyp;
+        public string sTyp;
         public GetReasonForm(string sTyp)
         {
             InitializeComponent();

@@ -56,7 +56,7 @@ namespace IrRfidUHFDemo
             listView1.Columns.Add("资产编码", 60, HorizontalAlignment.Left);
 
             listView2.FullRowSelect = true;
-            listView2.Columns.Add("N", 16, HorizontalAlignment.Left);
+            listView2.Columns.Add("序", 16, HorizontalAlignment.Left);
             listView2.Columns.Add("喷码", 96, HorizontalAlignment.Left);
             listView2.Columns.Add("资产编码", 60, HorizontalAlignment.Left);
             listView2.Columns.Add("资产名称", 60, HorizontalAlignment.Left);
@@ -180,34 +180,41 @@ namespace IrRfidUHFDemo
             {
                 if (listView2.Items[nfind].SubItems[8].Text.Length == 0)
                 {
-                    //找到显示绿色
-                    List<string> listSql = new List<string>();
-                    string sAssId = listView2.Items[nfind].SubItems[2].Text;
-                    string sId = listView2.Items[nfind].SubItems[9].Text;
-                    string sSql = "update inv_list set result = '正常' where id = " + sId;
-                    string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-                        "盘点结果", "0", sSql.Replace("'", "''"), SettingForm.sClientId, sAssId, LoginForm.getDateTime());
-                    listSql.Add(sSql);
-                    listSql.Add(sSqlLog);
-                    bool bOK = SQLiteHelper.ExecuteNoQueryTran(listSql);
-                    string sErr = SQLiteHelper.sLastErr;
-                    if (bOK)
-                    {
-                        listView2.Items[nfind].SubItems[8].Text = "正常";
-                        listView2.Items[nfind].BackColor =  Color.FromArgb(0,255,0);
-                        nCheck++;
-                        label4.Text = string.Format("总计 {0};已盘 {1};异常 {2};未盘点 {3}.", nAll, nCheck, nExp, nAll - nCheck);
-                    }
-                    else
-                    {
-                        Console.Out.WriteLine(sErr);
-                    }
+                    string sErr;
+                    checkAss(nfind, "自动盘点", out sErr);
                 }
             }
             else
             {
             }
 
+        }
+        private bool checkAss(int nIndex,string sTpe,out string sErr)
+        {
+            //找到显示绿色
+            sErr = "";
+            List<string> listSql = new List<string>();
+            string sAssId = listView2.Items[nIndex].SubItems[2].Text;
+            string sId = listView2.Items[nIndex].SubItems[9].Text;
+            string sSql = "update inv_list set result = '" + sTpe + "' where id = " + sId;
+            string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
+                "盘点结果", "0", sSql.Replace("'", "''"), SettingForm.sClientId, sAssId, LoginForm.getDateTime());
+            listSql.Add(sSql);
+            listSql.Add(sSqlLog);
+            bool bOK = SQLiteHelper.ExecuteNoQueryTran(listSql);
+            sErr = SQLiteHelper.sLastErr;
+            if (bOK)
+            {
+                listView2.Items[nIndex].SubItems[8].Text = sTpe;
+                listView2.Items[nIndex].BackColor = Color.FromArgb(0, 255, 0);
+                nCheck++;
+                label4.Text = string.Format("总计 {0};已盘 {1};异常 {2};未盘点 {3}.", nAll, nCheck, nExp, nAll - nCheck);
+            }
+            else
+            {
+                Console.Out.WriteLine(sErr);
+            }
+            return bOK;
         }
 
 
@@ -587,21 +594,58 @@ namespace IrRfidUHFDemo
             else if (tabControl1.SelectedIndex == (int)Page.sync)//同步
             {
             }
-            else if (tabControl1.SelectedIndex == (int)Page.check)//同步
+            else if (tabControl1.SelectedIndex == (int)Page.check)//盘点
             {
-                CheckOptForm f = new CheckOptForm();
-                if (f.ShowDialog() == DialogResult.OK)
+                CheckOptForm checkoptform = new CheckOptForm();
+                int nIndex = listView2.Items.IndexOf(listView2.FocusedItem);
+                if (checkoptform.ShowDialog() == DialogResult.OK)
                 {
-                    listView2.Items.Clear();
-                    string sSql = "select * from inv_list where inv_no = \'" + f.sInvListNo + "\'";
-                    SQLiteDataReader reader = SQLiteHelper.ExecuteReader(sSql);
-                    while (reader.Read())
+                    string sErr;
+                    bool bOK = false;
+                    if (checkoptform.sOptTyp == "手动盘点")
                     {
-                        //reader[]
+                        bOK = checkAss(nIndex, checkoptform.sOptTyp, out sErr);
+                       if (bOK)
+                       {
+                           MessageBox.Show("操作成功！");
+                       }
+                       else
+                       {
+                           MessageBox.Show("操作失败！\r\n" + sErr);
+                       }
                     }
-                    reader.Close();
-                }
-            }
+                    else if (checkoptform.sOptTyp == "报废" || checkoptform.sOptTyp == "报失")
+                    {
+                        GetReasonForm f = new GetReasonForm(checkoptform.sOptTyp);
+                        f.ShowDialog();
+                        if (f.ret != 0)
+                        {
+                            string sTyp = f.sTyp;
+                            string sDept = f.sDept;
+                            string sMan = f.sEmpNam;
+                            string sAddr = f.sAddr;
+                            string sReason = f.sReason;
+                            List<string> listAssId = new List<string>();
+                            string sAssId = listView2.Items[nIndex].SubItems[2].Text;
+                            listAssId.Add(sAssId);               
+                            bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, listAssId, out sErr);
+                            if (bOK)
+                            {
+                                bOK = checkAss(nIndex, checkoptform.sOptTyp, out sErr);
+                            }
+
+                            if (bOK)
+                            {
+                                MessageBox.Show("操作成功！");
+                            }
+                            else
+                            {
+                                MessageBox.Show("操作失败！\r\n" + sErr);
+                            }
+                        }//GetReasonForm
+                    }//f.sOptTyp
+                }//f.ShowDialog()
+            }//tabControl1.SelectedIndex
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -659,7 +703,7 @@ namespace IrRfidUHFDemo
             else if (tabControl1.SelectedIndex == (int)Page.check)//盘点
             {
                 buttonRead.Text = "开始(F1)";
-                buttonClear.Text = "选择(Ent)";
+                buttonClear.Text = "操作(Ent)";
             }
         }
 
@@ -818,68 +862,6 @@ namespace IrRfidUHFDemo
             label6.Visible = false;
         }
 
-        private void buttonApply_Click(object sender, EventArgs e)
-        {
-            //GetReasonForm f = new GetReasonForm("领用");
-            //f.ShowDialog();
-            //if (f.ret != 0)
-            //{
-            //    string sTyp = f.ret == 1 ? "领用" : "退领";
-            //    string sDept = f.sDept;
-            //    string sMan = f.sEmpNam;
-            //    string sAddr = f.sAddr;
-            //    string sReason = f.sReason;
-
-            //    string sErr;
-            //    List<string> listPid = new List<string>();
-            //    for (int j = 0; j < listView1.Items.Count; j++)
-            //    {
-            //        string sStat = listView1.Items[j].SubItems[(int)Index.stat].Text;
-            //        if (sStat.Length != 0)
-            //        {
-            //            string sPid = listView1.Items[j].SubItems[(int)Index.pid].Text;
-            //            listPid.Add(sPid);
-            //        }
-            //    }
-            //    AssWebSrv.Service ws = new AssWebSrv.Service();
-            //    bool bOK = ws.AddAssLog(sTyp, sDept, sMan, sAddr, sReason, LoginForm.sCompany, LoginForm.sUserName, listPid.ToArray(),out sErr);
-            //   if (bOK)
-            //   {
-            //       MessageBox.Show("操作成功！");
-            //       buttonClear_Click(null,null);
-            //   }
-            //   else
-            //   {
-            //       MessageBox.Show("操作失败!\r\n" +sErr);
-            //   }
-            GetReasonForm f = new GetReasonForm("领用");
-            f.ShowDialog();
-            if (f.ret != 0)
-            {
-                string sTyp = f.ret == 1 ? "领用" : "退领";
-                string sDept = f.sDept;
-                string sMan = f.sEmpNam;
-                string sAddr = f.sAddr;
-                string sReason = f.sReason;
-                List<string> listAssId = new List<string>();
-                for (int j = 0; j < listView1.Items.Count; j++)
-                {
-                    string sAssId = listView1.Items[j].SubItems[(int)Index.assid].Text;
-                    listAssId.Add(sAssId);
-                }
-                string sErr;
-                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, listAssId, out sErr);
-                if (bOK)
-                {
-                    MessageBox.Show("操作成功！");
-                    buttonClear_Click(null, null);
-                }
-                else
-                {
-                    MessageBox.Show("操作失败！\r\n" + sErr);
-                }
-            }
-        }
         private bool AssChange(string sTyp, string sDept, string sMan, string sAddr, string sReason, List<string> listAssid, out string sErr)
         {
             List<string> listSql = new List<string>();
@@ -928,6 +910,38 @@ namespace IrRfidUHFDemo
             // }
             return bOK;
         }
+
+        private void buttonApply_Click(object sender, EventArgs e)
+        {
+            GetReasonForm f = new GetReasonForm("领用");
+            f.ShowDialog();
+            if (f.ret != 0)
+            {
+                string sTyp = f.ret == 1 ? "领用" : "退领";
+                string sDept = f.sDept;
+                string sMan = f.sEmpNam;
+                string sAddr = f.sAddr;
+                string sReason = f.sReason;
+                List<string> listAssId = new List<string>();
+                for (int j = 0; j < listView1.Items.Count; j++)
+                {
+                    string sAssId = listView1.Items[j].SubItems[(int)Index.assid].Text;
+                    listAssId.Add(sAssId);
+                }
+                string sErr;
+                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, listAssId, out sErr);
+                if (bOK)
+                {
+                    MessageBox.Show("操作成功！");
+                    buttonClear_Click(null, null);
+                }
+                else
+                {
+                    MessageBox.Show("操作失败！\r\n" + sErr);
+                }
+            }
+        }
+
         private void buttonBorrow_Click(object sender, EventArgs e)
         {
             GetReasonForm f = new GetReasonForm("借用");
@@ -996,7 +1010,7 @@ namespace IrRfidUHFDemo
             f.ShowDialog();
             if (f.ret != 0)
             {
-                string sTyp = "租还";
+                string sTyp = f.sTyp;
                 string sDept = f.sDept;
                 string sMan = f.sEmpNam;
                 string sAddr = f.sAddr;
@@ -1058,7 +1072,7 @@ namespace IrRfidUHFDemo
             f.ShowDialog();
             if (f.ret != 0)
             {
-                string sTyp = "退返";
+                string sTyp = f.sTyp;
                 string sDept = f.sDept;
                 string sMan = f.sEmpNam;
                 string sAddr = f.sAddr;
@@ -1089,7 +1103,7 @@ namespace IrRfidUHFDemo
             f.ShowDialog();
             if (f.ret != 0)
             {
-                string sTyp = "丢失";
+                string sTyp = f.sTyp;
                 string sDept = f.sDept;
                 string sMan = f.sEmpNam;
                 string sAddr = f.sAddr;
@@ -1120,7 +1134,7 @@ namespace IrRfidUHFDemo
             f.ShowDialog();
             if (f.ret != 0)
             {
-                string sTyp = "报废";
+                string sTyp = f.sTyp;
                 string sDept = f.sDept;
                 string sMan = f.sEmpNam;
                 string sAddr = f.sAddr;
@@ -1151,7 +1165,7 @@ namespace IrRfidUHFDemo
             f.ShowDialog();
             if (f.ret != 0)
             {
-                string sTyp = "转出";
+                string sTyp = f.sTyp;
                 string sDept = f.sDept;
                 string sMan = f.sEmpNam;
                 string sAddr = f.sAddr;
@@ -1547,14 +1561,24 @@ namespace IrRfidUHFDemo
                 ListViewItem lvi = new ListViewItem();
                 string sResult = reader["result"].ToString();
                 lvi.Text = (listView2.Items.Count + 1).ToString();
-                if (sResult == "正常")
+                if (sResult == "自动盘点")
                 {
-                    lvi.BackColor = Color.FromArgb(0, 255, 0);
+                    lvi.BackColor = Color.FromArgb(124, 255, 0);
                     nCheck ++;
                 }
-                else if (sResult == "异常")
+                else if (sResult == "手动盘点")
                 {
-                    lvi.BackColor = Color.FromArgb(255, 0, 0);
+                    lvi.BackColor = Color.FromArgb(0, 255, 0);
+                    nCheck++;
+                }
+                else if (sResult == "丢失")
+                {
+                    lvi.BackColor = Color.FromArgb(255,0,0);
+                    nCheck++;
+                }
+                else if (sResult == "报废")
+                {
+                    lvi.BackColor = Color.FromArgb(255, 69, 0);
                     nExp++;
                 }
                 lvi.SubItems.Add(reader["pid"].ToString());

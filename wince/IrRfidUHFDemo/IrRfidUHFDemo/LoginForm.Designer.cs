@@ -222,7 +222,7 @@
             this.Text = "金溢RFID资产管理系统";
             this.Load += new System.EventHandler(this.LoginForm_Load);
             this.Closed += new System.EventHandler(this.LoginForm_Closed);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.LoginForm_KeyUp);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LoginForm_KeyUp);
             this.ResumeLayout(false);
 
         }

@@ -61,6 +61,7 @@ namespace IrRfidUHFDemo
                 listBox1.Items.Add("购置类型：" + reader["input_typ"].ToString());
                 listBox1.Items.Add("TID：" + reader["tid"].ToString());
             }
+            reader.Close();
             /////XML方式
             //string sFilename = LoginForm.sCodePath + "\\ass_list.xml";
             //XmlDocument xmlDoc = new XmlDocument();

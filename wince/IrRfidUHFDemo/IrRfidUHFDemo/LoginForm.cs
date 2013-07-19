@@ -260,7 +260,7 @@ namespace IrRfidUHFDemo
         //获取时间：yyyymmdd
         static public string getDate()
         {
-            string s = DateTime.Now.ToString("yyyyMMdd");
+            string s = DateTime.Now.ToString("yyyy-MM-dd");
             return s;
         }
 

@@ -12,6 +12,12 @@ namespace IrRfidUHFDemo
         [MTAThread]
         static void Main()
         {
+            //LoginForm f = new LoginForm();
+            //f.ShowDialog();
+            //if (f.nRet == 1)
+            //{
+            //    Application.Run(new MainForm(f));
+            //}
             Application.Run(new LoginForm());
         }
     }

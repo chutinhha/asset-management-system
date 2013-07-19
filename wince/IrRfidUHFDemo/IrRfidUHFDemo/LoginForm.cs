@@ -27,6 +27,7 @@ namespace IrRfidUHFDemo
         public static string sPort = "";
       //  public static IniFile setting = new IniFile();
      //   public static SettingForm setting = new SettingForm();
+        public int nRet = 0;
         public LoginForm()
         {
             InitializeComponent();
@@ -71,11 +72,11 @@ namespace IrRfidUHFDemo
             HTApi.WIrUHFClosePower();
         }
 
-        private void buttonRead2Pc_Click(object sender, EventArgs e)
-        {
-            Read2PcForm dlg = new Read2PcForm();
-            dlg.ShowDialog();
-        }
+        //private void buttonRead2Pc_Click(object sender, EventArgs e)
+        //{
+        //    Read2PcForm dlg = new Read2PcForm();
+        //    dlg.ShowDialog();
+        //}
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
@@ -151,7 +152,7 @@ namespace IrRfidUHFDemo
                     if (!sStat.Equals("0"))
                     {
                         bLogin = true;
-                        buttonLogin.Text = "注销";
+                        buttonLogin.Text = "注销(Ent)";
                         textBoxUser.Visible = false;
                         textBoxPass.Visible = false;
                         checkBoxStorePass.Visible = false;
@@ -160,6 +161,11 @@ namespace IrRfidUHFDemo
 " + sUserName + " " + sRole + @"
 " + SettingForm.sCompany + @"
 欢迎使用!";
+                        buttonStart.Visible = true;
+                        MainForm dlg = new MainForm(this);
+                        dlg.ShowDialog();
+                       // nRet = 1;
+                       // this.Close();
                     }
                     else
                     {
@@ -174,6 +180,7 @@ namespace IrRfidUHFDemo
             }
             else
             {
+                buttonStart.Visible = false;
                 bLogin = false;
                 buttonLogin.Text = "登陆";
                 textBoxUser.Visible = true;
@@ -230,7 +237,7 @@ namespace IrRfidUHFDemo
             }
             else if (e.KeyCode == Keys.F1)
             {
-                buttonRead2Pc_Click(null, null);
+              //  buttonRead2Pc_Click(null, null);
             }
             else if (e.KeyCode == Keys.Enter)
             {
@@ -255,6 +262,19 @@ namespace IrRfidUHFDemo
         {
             string s = DateTime.Now.ToString("yyyyMMdd");
             return s;
+        }
+
+        private void buttonStart_Click(object sender, EventArgs e)
+        {
+            if (!bLogin)
+            {
+                return;
+            }
+            else
+            {
+                MainForm dlg = new MainForm(this);
+                dlg.ShowDialog();
+            }
         }   
     }
 }

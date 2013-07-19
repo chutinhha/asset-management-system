@@ -10,8 +10,8 @@ namespace AssMngSys
 {
     public partial class InvList : Form
     {
-        MainWnd mf;
-        public InvList(MainWnd f)
+        MainForm mf;
+        public InvList(MainForm f)
         {
             InitializeComponent();
             mf = f;
@@ -44,9 +44,9 @@ namespace AssMngSys
 
         private void buttonQry_Click(object sender, EventArgs e)
         {
-            string sStartDate = string.Format("{0}{1:00}{2:00}", dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, dateTimePicker1.Value.Day);
-            string sEndDate = string.Format("{0}{1:00}{2:00}", dateTimePicker2.Value.Year, dateTimePicker2.Value.Month, dateTimePicker2.Value.Day);
-            string sSql = string.Format("select pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,use_man 领用人员,vender 品牌, ass_desc 资产描述,addr 所在地点 ,input_typ 购置类型,use_dept 领用部门 from ass_list where 1=1 ");
+            string sStartDate = string.Format("{0}-{1:00}-{2:00}", dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, dateTimePicker1.Value.Day);
+            string sEndDate = string.Format("{0}-{1:00}-{2:00}", dateTimePicker2.Value.Year, dateTimePicker2.Value.Month, dateTimePicker2.Value.Day);
+            string sSql = "select pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 库存状态, stat_sub 使用状态,duty_man 保管人员,vender 品牌, ass_desc 资产描述,addr 所在地点 ,dept 部门 from ass_list where 1=1 ";
 
             if (checkBox1.Checked)
             {
@@ -65,7 +65,7 @@ namespace AssMngSys
 
         private void buttonQryHistory_Click(object sender, EventArgs e)
         {
-            string sSql = string.Format("select inv_no 清单号,pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 盘点结果,memo 备注,use_man 领用人员,vender 品牌, ass_desc 资产描述,addr 所在地点 ,input_typ 购置类型,use_dept 领用部门 from inv_list where 1=1 ");
+            string sSql = string.Format("select inv_no 清单号,pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 库存状态,stat_sub 使用状态,result 盘点结果,memo 备注,duty_man 保管人员,vender 品牌, ass_desc 资产描述,addr 所在地点 ,dept 部门 from inv_list where 1=1 ");
             sSql += string.Format(" and inv_no = '{0}'", comboBoxInvNo.Text);
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
             bindingSource2.DataSource = dt;
@@ -93,8 +93,8 @@ namespace AssMngSys
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
                 string sAssId = dataGridView1.Rows[i].Cells["资产编码"].Value.ToString();
-                sSql = string.Format(@"insert into inv_list(pid,ass_id,ass_nam,use_man,vender,ass_desc,addr,input_typ,use_dept,inv_no,
-                cre_man,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}')",
+                sSql = string.Format(@"insert into inv_list(pid,ass_id,ass_nam,stat,stat_sub,duty_man,vender,ass_desc,addr,dept,inv_no,
+                cre_man,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}')",
                     dataGridView1.Rows[i].Cells[0].Value.ToString(),
                     dataGridView1.Rows[i].Cells[1].Value.ToString(),
                     dataGridView1.Rows[i].Cells[2].Value.ToString(),
@@ -104,12 +104,13 @@ namespace AssMngSys
                     dataGridView1.Rows[i].Cells[6].Value.ToString(),
                     dataGridView1.Rows[i].Cells[7].Value.ToString(),
                     dataGridView1.Rows[i].Cells[8].Value.ToString(),
+                    dataGridView1.Rows[i].Cells[9].Value.ToString(),
                     textBoxInvId.Text,
-                    MainWnd.sUserName,
-                    MainWnd.getDateTime()
+                    MainForm.sUserName,
+                    MainForm.getDateTime()
                     );
                 string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-"盘点清单", "0", sSql.Replace("'", "''"), MainWnd.sClientId, sAssId, MainWnd.getDateTime());
+"盘点清单", "0", sSql.Replace("'", "''"), MainForm.sClientId, sAssId, MainForm.getDateTime());
                 listSql.Add(sSql);
                 listSqlLog.Add(sSqlLog);
             }
@@ -149,7 +150,7 @@ namespace AssMngSys
             List<string> listSql = new List<string>();
             string sSql = string.Format(" delete from inv_list where inv_no = '{0}'", comboBoxInvNo.Text);
             string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-"删除清单", "0", sSql.Replace("'", "''"), MainWnd.sClientId, comboBoxInvNo.Text, MainWnd.getDateTime());
+"删除清单", "0", sSql.Replace("'", "''"), MainForm.sClientId, comboBoxInvNo.Text, MainForm.getDateTime());
             listSql.Add(sSql);
             listSql.Add(sSqlLog);
 

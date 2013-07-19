@@ -23,7 +23,7 @@ namespace AssMngSys
         {
             if (textBoxUser.Text.Length == 0 || textBoxPass.Text.Length == 0)
             {
-                MessageBox.Show("账号密码不能为空！");
+                MessageBox.Show("账号密码不能为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             string sSql = "select * from user where user_no = \'" + textBoxUser.Text + "\'";
@@ -46,13 +46,13 @@ namespace AssMngSys
                 }
                 else
                 {
-                    MessageBox.Show("账号无效！");
+                    MessageBox.Show("账号无效！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
             else
             {
-                MessageBox.Show("账号或密码有误！");
+                MessageBox.Show("账号或密码有误！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

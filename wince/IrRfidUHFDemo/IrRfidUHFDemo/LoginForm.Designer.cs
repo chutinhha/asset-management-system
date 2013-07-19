@@ -44,7 +44,6 @@
             this.menuItemRead = new System.Windows.Forms.MenuItem();
             this.menuItemInv = new System.Windows.Forms.MenuItem();
             this.menuItemLockTag = new System.Windows.Forms.MenuItem();
-            this.buttonRead2Pc = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -52,6 +51,7 @@
             this.textBoxPass = new System.Windows.Forms.TextBox();
             this.buttonLogin = new System.Windows.Forms.Button();
             this.checkBoxStorePass = new System.Windows.Forms.CheckBox();
+            this.buttonStart = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -68,7 +68,7 @@
             // menuItem10
             // 
             this.menuItem10.Text = "开始";
-            this.menuItem10.Click += new System.EventHandler(this.buttonRead2Pc_Click);
+            this.menuItem10.Click += new System.EventHandler(this.buttonStart_Click);
             // 
             // menuItem7
             // 
@@ -136,15 +136,6 @@
             this.menuItemLockTag.Text = "锁定标签";
             this.menuItemLockTag.Click += new System.EventHandler(this.menuItemLockTag_Click);
             // 
-            // buttonRead2Pc
-            // 
-            this.buttonRead2Pc.Location = new System.Drawing.Point(0, 229);
-            this.buttonRead2Pc.Name = "buttonRead2Pc";
-            this.buttonRead2Pc.Size = new System.Drawing.Size(76, 36);
-            this.buttonRead2Pc.TabIndex = 0;
-            this.buttonRead2Pc.Text = "开始(F1)";
-            this.buttonRead2Pc.Click += new System.EventHandler(this.buttonRead2Pc_Click);
-            // 
             // buttonCancel
             // 
             this.buttonCancel.Location = new System.Drawing.Point(159, 229);
@@ -187,7 +178,7 @@
             // 
             // buttonLogin
             // 
-            this.buttonLogin.Location = new System.Drawing.Point(80, 229);
+            this.buttonLogin.Location = new System.Drawing.Point(79, 229);
             this.buttonLogin.Name = "buttonLogin";
             this.buttonLogin.Size = new System.Drawing.Size(76, 36);
             this.buttonLogin.TabIndex = 14;
@@ -202,6 +193,16 @@
             this.checkBoxStorePass.TabIndex = 18;
             this.checkBoxStorePass.Text = "记住密码";
             // 
+            // buttonStart
+            // 
+            this.buttonStart.Location = new System.Drawing.Point(0, 229);
+            this.buttonStart.Name = "buttonStart";
+            this.buttonStart.Size = new System.Drawing.Size(76, 36);
+            this.buttonStart.TabIndex = 14;
+            this.buttonStart.Text = "开始(F1)";
+            this.buttonStart.Visible = false;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -213,9 +214,9 @@
             this.Controls.Add(this.textBoxUser);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.buttonLogin);
             this.Controls.Add(this.buttonCancel);
-            this.Controls.Add(this.buttonRead2Pc);
             this.KeyPreview = true;
             this.Menu = this.mainMenu1;
             this.Name = "LoginForm";
@@ -229,7 +230,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button buttonRead2Pc;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.MenuItem menuItem6;
         private System.Windows.Forms.MenuItem menuItem7;
@@ -251,6 +251,7 @@
         private System.Windows.Forms.MenuItem menuItemPowerRate;
         private System.Windows.Forms.MenuItem menuItem3;
         private System.Windows.Forms.MenuItem menuItem4;
+        private System.Windows.Forms.Button buttonStart;
     }
 }
 

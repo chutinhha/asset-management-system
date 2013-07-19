@@ -10,12 +10,12 @@ namespace AssMngSys
 {
     public partial class QryAssLog : Form
     {
-        MainWnd mf;
+        MainForm mf;
         string sSQLSelect = "select Id 记录好,ass_id 资产编码,opt_typ 操作类型,opt_man 确认人员,opt_date 操作日期,cre_man 操作人员,cre_tm 操作时间,company 所属公司,dept 所属部门,addr 地址,reason 事由 from ass_log ";
-        public QryAssLog(MainWnd f)
+        public QryAssLog(MainForm f)
         {
             InitializeComponent(); 
-            f.recvEvent += new MainWnd.RecvEventHandler(this.RecvDataEvent);
+            f.recvEvent += new MainForm.RecvEventHandler(this.RecvDataEvent);
             mf = f;
         }
         
@@ -43,8 +43,8 @@ namespace AssMngSys
         }
         private void buttonQry_Click(object sender, EventArgs e)
         {
-            string sStartDate = string.Format("{0}{1:00}{2:00}",dateTimePicker1.Value.Year,dateTimePicker1.Value.Month,dateTimePicker1.Value.Day);
-            string sEndDate = string.Format("{0}{1:00}{2:00}",dateTimePicker2.Value.Year,dateTimePicker2.Value.Month,dateTimePicker2.Value.Day);
+            string sStartDate = string.Format("{0}-{1:00}-{2:00}",dateTimePicker1.Value.Year,dateTimePicker1.Value.Month,dateTimePicker1.Value.Day);
+            string sEndDate = string.Format("{0}-{1:00}-{2:00}",dateTimePicker2.Value.Year,dateTimePicker2.Value.Month,dateTimePicker2.Value.Day);
             string sSql = sSQLSelect + string.Format(" where opt_date between '{0}' and '{1}'", sStartDate, sEndDate);
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
             bindingSource1.DataSource = dt;

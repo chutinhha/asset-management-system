@@ -31,11 +31,11 @@ namespace AssMngSys
         //MySqlCommand cmd;
         //MySqlConnection myConn = null;
 
-        MainWnd mf;
-        public AssInput(MainWnd f)
+        MainForm mf;
+        public AssInput(MainForm f)
         {
             InitializeComponent();
-            f.recvEvent += new MainWnd.RecvEventHandler(this.RecvDataEvent);
+            f.recvEvent += new MainForm.RecvEventHandler(this.RecvDataEvent);
             //myConn = f.myConn;
             mf = f;
         }
@@ -96,7 +96,7 @@ namespace AssMngSys
             radioButtonModify.Checked = false;
             radioButtonQuery.Checked = false;
 
-            sSQLSelect = "select Id ID,ass_id 资产编号,fin_id 财务编码,pid 标签喷码,tid 标签ID,cat_no 类别编码,typ 类型,ass_nam 资产名称,ass_desc 资产描述,ass_pri 资产金额,reg_date 登记日期,use_dept 领用部门,use_man 领用人员,addr 所在地点,use_co 所在公司,f_getStat(stat,stat_sub) 状态,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,mfr_date 生产日期,unit 单位,num 数量,ppu 单价,duty_man 责任人,company 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间,input_typ 购置类型 from ass_list";
+            sSQLSelect = "select Id ID,ass_id 资产编号,fin_id 财务编码,pid 标签喷码,tid 标签ID,cat_no 类别编码,typ 类型,ass_nam 资产名称,ass_desc 资产描述,ass_pri 资产金额,reg_date 登记日期,dept 部门,duty_man 责任人员,addr 所在地点,use_co 所在公司,f_getStat(stat,stat_sub) 状态,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,mfr_date 生产日期,unit 单位,num 数量,ppu 单价,duty_man 责任人,company 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间,input_typ 购置类型 from ass_list";
 
             string sSql = sSQLSelect;
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
@@ -209,12 +209,36 @@ namespace AssMngSys
         {
             if (textBoxAssId.Text.Equals(""))
             {
-                MessageBox.Show("资产编号不能为空!");
+                MessageBox.Show("资产编码不能为空!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            string sSql = "select 'X' from ass_list where ass_id = '" + textBoxAssId.Text + "'";
+            MySqlDataReader reader = MysqlHelper.ExecuteReader(sSql);
+            if (reader.HasRows)
+            {
+                reader.Close();
+                MessageBox.Show("资产编码已存在!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            reader.Close();
+
+            if (textBoxPid.Text.Length != 0)
+            {
+                sSql = "select ass_id from ass_list where pid = '" + textBoxPid.Text + "'";
+                reader = MysqlHelper.ExecuteReader(sSql);
+                if (reader.Read())
+                {
+                    string sAssid = reader["ass_id"].ToString();
+                    MessageBox.Show("该标签已绑定资产:" + sAssid + "\r\n如需继续，请先清空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    reader.Close();
+                    return;
+                }
+                reader.Close();
+            }
+
             if (comboBoxCat.Text.Equals(""))
             {
-                MessageBox.Show("请选择资产类别!");
+                MessageBox.Show("请选择资产类别!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             string sSqlIns = string.Format(@"insert into ass_list
@@ -222,7 +246,7 @@ namespace AssMngSys
                 supplier,sn,vender,mfr_date,unit,num,ppu,company,cre_man,supplier_info,input_typ,addr) 
                 values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}',
                 '{11}','{12}','{13}','{14}','{15}','{16}','{17}','{18}','{19}','{20}','{21}','{22}')",
-                MainWnd.getDateTime(),
+                MainForm.getDateTime(),
                 textBoxAssId.Text,
                 textBoxFinId.Text,
                 textBoxPid.Text,
@@ -231,7 +255,7 @@ namespace AssMngSys
                 textBoxAssNam.Text,
                 textBoxAssDesc.Text,
                 textBoxAssPri.Text,
-                MainWnd.getDate(),
+                MainForm.getDate(),
                 textBoxTyp.Text,//typ
                 textBoxSupplier.Text,
                 textBoxSn.Text,
@@ -240,14 +264,14 @@ namespace AssMngSys
                 comboBoxUnit.Text,
                 textBoxNum.Text,
                 textBoxPpu.Text,
-                MainWnd.sCompany, // company
+                MainForm.sCompany, // company
                 "SYS",//cre_man
                 textBoxSupplierInfo.Text,
                 comboBoxInputTyp.Text,
                 comboBoxAddr.Text);
 
             string sSqlInsLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-    "新增", "0", sSqlIns.Replace("'", "\\'"), MainWnd.sClientId, textBoxAssId.Text,MainWnd.getDateTime());
+    "新增", "0", sSqlIns.Replace("'", "\\'"), MainForm.sClientId, textBoxAssId.Text,MainForm.getDateTime());
 
             List<string> listSql = new List<string>();
             listSql.Add(sSqlIns);
@@ -256,13 +280,13 @@ namespace AssMngSys
             bOK = MysqlHelper.ExecuteNoQueryTran(listSql);
             if (bOK)
             {
-                MessageBox.Show("新增成功！");
+                MessageBox.Show("新增成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 resetData();
                 bs.MoveLast();
             }
             else
             {
-                MessageBox.Show("新增失败！\r\n" + MysqlHelper.sLastErr);
+                MessageBox.Show("新增失败！\r\n" + MysqlHelper.sLastErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 //        private void insertData()
@@ -384,19 +408,18 @@ namespace AssMngSys
 //        }
         private void ModifyData()
         {
-            string sSqlUpd = string.Format(@"update ass_list set 
-ass_id = '{0}', fin_id = '{1}', pid = '{2}',tid = '{3}',cat_no = '{4}', ass_nam = '{5}', ass_desc = '{6}', ass_pri = '{7}', mod_tm = '{8}',
-typ = '{8}', supplier = '{10}', supplier_info = '{11}', sn = '{12}',vender = '{13}', mfr_date = '{14}', unit = '{15}', 
-num = '{16}', ppu = '{17}',memo = '{18}', mod_man = '{19}',input_typ = '{20}',input_typ = '{21}' where id = '{22}'",
-                    textBoxAssId.Text,
+            string sSqlUpd = string.Format(@"update ass_list set fin_id = '{0}',cat_no = '{1}', ass_nam = '{2}', ass_desc = '{3}', ass_pri = '{4}', mod_tm = '{5}',
+typ = '{6}', supplier = '{7}', supplier_info = '{8}', sn = '{9}',vender = '{10}', mfr_date = '{11}', unit = '{12}', 
+num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',addr = '{18}' where id = '{19}'",
+                    //textBoxAssId.Text,
                     textBoxFinId.Text,
-                    textBoxPid.Text,
-                    textBoxTid.Text,
+                    //textBoxPid.Text,
+                    //textBoxTid.Text,
                     comboBoxCat.Text.Substring(0, 3),
                     textBoxAssNam.Text,
                     textBoxAssDesc.Text,
                     textBoxAssPri.Text,
-                    MainWnd.getDateTime(),
+                    MainForm.getDateTime(),
                     textBoxTyp.Text,//typ
                     textBoxSupplier.Text,
                     textBoxSupplierInfo.Text,
@@ -407,13 +430,13 @@ num = '{16}', ppu = '{17}',memo = '{18}', mod_man = '{19}',input_typ = '{20}',in
                     textBoxNum.Text,
                     textBoxPpu.Text,
                     "修改备注",//memo
-                    "SYS",//cre_man 
+                    MainForm.sUserName,//mod_man 
                     comboBoxInputTyp.Text,
                     comboBoxAddr.Text,
                     textBoxId.Text);
 
             string sSqlInsLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-    "修改", "0", sSqlUpd.Replace("'", "\\'"), MainWnd.sClientId, textBoxAssId.Text,MainWnd.getDateTime());
+    "修改", "0", sSqlUpd.Replace("'", "\\'"), MainForm.sClientId, textBoxAssId.Text,MainForm.getDateTime());
 
                 List<string> listSql = new List<string>();
                 listSql.Add(sSqlUpd);
@@ -474,11 +497,21 @@ num = '{16}', ppu = '{17}',memo = '{18}', mod_man = '{19}',input_typ = '{20}',in
         {
             if (textBoxPid.Text.Length == 0)
             {
-                if (MessageBox.Show("新标签为空，确定要清空标签吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                if (MessageBox.Show("确定要清空标签吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                     return;
             }
             else
             {
+                string sSql = "select ass_id from ass_list where pid = '" + textBoxPid.Text + "'";
+                MySqlDataReader reader = MysqlHelper.ExecuteReader(sSql);
+                if (reader.Read())
+                {
+                    string sAssid = reader["ass_id"].ToString();
+                    MessageBox.Show("该标签已绑定资产:" + sAssid + "\r\n如需继续，请先清空！","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    reader.Close();
+                    return;
+                }
+                reader.Close();
                 if (MessageBox.Show("您确定要替换该标签吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                     return;
             }
@@ -487,12 +520,12 @@ num = '{16}', ppu = '{17}',memo = '{18}', mod_man = '{19}',input_typ = '{20}',in
                 = string.Format("update ass_list set pid = '{0}', tid = '{1}', mod_tm = '{2}',mod_man = '{3}',memo = '{4}' where id = '{5}'",
             textBoxPid.Text,
             textBoxTid.Text,
-            MainWnd.getDateTime(),
+            MainForm.getDateTime(),
             "SYS",//cre_man
             "标签更换",//memo
             textBoxId.Text);
             string sSqlInsLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-"替换", "0", sSqlUpd.Replace("'", "\\'"), MainWnd.sClientId, textBoxAssId.Text, MainWnd.getDateTime());
+"替换", "0", sSqlUpd.Replace("'", "\\'"), MainForm.sClientId, textBoxAssId.Text, MainForm.getDateTime());
 
             List<string> listSql = new List<string>();
             listSql.Add(sSqlUpd);
@@ -501,12 +534,12 @@ num = '{16}', ppu = '{17}',memo = '{18}', mod_man = '{19}',input_typ = '{20}',in
             bOK = MysqlHelper.ExecuteNoQueryTran(listSql);
             if (bOK)
             {
-                MessageBox.Show("替换成功！");
+                MessageBox.Show("替换成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 resetData();
             }
             else
             {
-                MessageBox.Show("替换失败！\r\n" + MysqlHelper.sLastErr);
+                MessageBox.Show("替换失败！\r\n" + MysqlHelper.sLastErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         } 
@@ -560,7 +593,7 @@ num = '{16}', ppu = '{17}',memo = '{18}', mod_man = '{19}',input_typ = '{20}',in
             string sSqlDel = string.Format("delete from ass_list where id='{0}'",textBoxId.Text);//删除语句，已ID为条件删除
 
             string sSqlInsLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-"删除", "0", sSqlDel.Replace("'", "\\'"), MainWnd.sClientId, textBoxAssId.Text, MainWnd.getDateTime());
+"删除", "0", sSqlDel.Replace("'", "\\'"), MainForm.sClientId, textBoxAssId.Text, MainForm.getDateTime());
 
             List<string> listSql = new List<string>();
             listSql.Add(sSqlDel);
@@ -582,7 +615,7 @@ num = '{16}', ppu = '{17}',memo = '{18}', mod_man = '{19}',input_typ = '{20}',in
         private void AssInput_FormClosing(object sender, FormClosingEventArgs e)
         {
             //myConn.Close();
-            mf.recvEvent -= new MainWnd.RecvEventHandler(this.RecvDataEvent);
+            mf.recvEvent -= new MainForm.RecvEventHandler(this.RecvDataEvent);
         }
 
         // 利用委托回调机制实现界面上消息内容显示
@@ -659,6 +692,8 @@ num = '{16}', ppu = '{17}',memo = '{18}', mod_man = '{19}',input_typ = '{20}',in
                 comboBoxCat.Enabled = true;
                 comboBoxUnit.Enabled = true;
 
+                bs.MoveFirst();
+
             }
         }
 
@@ -691,6 +726,8 @@ num = '{16}', ppu = '{17}',memo = '{18}', mod_man = '{19}',input_typ = '{20}',in
                 comboBoxCat.Enabled = true;
                 comboBoxCat.Enabled = false;
                 comboBoxUnit.Enabled = false;
+                bs.MoveFirst();
+
             }
 
         }
@@ -724,6 +761,7 @@ num = '{16}', ppu = '{17}',memo = '{18}', mod_man = '{19}',input_typ = '{20}',in
                 comboBoxCat.Enabled = false;
                 comboBoxCat.Enabled = true;
                 comboBoxUnit.Enabled = true;
+                bs.MoveFirst();
             }
 
         }

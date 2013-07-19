@@ -30,33 +30,9 @@ namespace AssMngSys
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AssSupply));
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.radioButtonApply = new System.Windows.Forms.RadioButton();
             this.radioButtonUnAppply = new System.Windows.Forms.RadioButton();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.radioButtonBorrow = new System.Windows.Forms.RadioButton();
-            this.radioButtonReturn = new System.Windows.Forms.RadioButton();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.radioButtonStartRepair = new System.Windows.Forms.RadioButton();
-            this.radioButtonEndRepair = new System.Windows.Forms.RadioButton();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButtonOut = new System.Windows.Forms.RadioButton();
-            this.radioButtonBack = new System.Windows.Forms.RadioButton();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.labelHit = new System.Windows.Forms.Label();
             this.comboBoxDept = new System.Windows.Forms.ComboBox();
@@ -95,67 +71,24 @@ namespace AssMngSys
             this.label18 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.groupBox5.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.tabPage5.SuspendLayout();
-            this.tabPage6.SuspendLayout();
-            this.tabPage7.SuspendLayout();
-            this.tabPage8.SuspendLayout();
-            this.tabPage9.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             this.groupBox10.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Controls.Add(this.tabPage5);
-            this.tabControl1.Controls.Add(this.tabPage6);
-            this.tabControl1.Controls.Add(this.tabPage7);
-            this.tabControl1.Controls.Add(this.tabPage8);
-            this.tabControl1.Controls.Add(this.tabPage9);
-            this.tabControl1.ItemSize = new System.Drawing.Size(48, 17);
-            this.tabControl1.Location = new System.Drawing.Point(-2, 3);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(893, 81);
-            this.tabControl1.TabIndex = 12;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.groupBox5);
-            this.tabPage1.Location = new System.Drawing.Point(4, 21);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(885, 56);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "领用";
-            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.radioButtonApply);
             this.groupBox5.Controls.Add(this.radioButtonUnAppply);
-            this.groupBox5.Location = new System.Drawing.Point(9, 6);
+            this.groupBox5.Location = new System.Drawing.Point(9, 25);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(609, 50);
+            this.groupBox5.Size = new System.Drawing.Size(174, 50);
             this.groupBox5.TabIndex = 18;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "请选择";
@@ -182,229 +115,6 @@ namespace AssMngSys
             this.radioButtonUnAppply.TabStop = true;
             this.radioButtonUnAppply.Text = "退领";
             this.radioButtonUnAppply.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.groupBox4);
-            this.tabPage2.Location = new System.Drawing.Point(4, 21);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(885, 56);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "借用";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.radioButtonBorrow);
-            this.groupBox4.Controls.Add(this.radioButtonReturn);
-            this.groupBox4.Location = new System.Drawing.Point(9, 6);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(609, 50);
-            this.groupBox4.TabIndex = 17;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "请选择";
-            // 
-            // radioButtonBorrow
-            // 
-            this.radioButtonBorrow.AutoSize = true;
-            this.radioButtonBorrow.Location = new System.Drawing.Point(23, 21);
-            this.radioButtonBorrow.Name = "radioButtonBorrow";
-            this.radioButtonBorrow.Size = new System.Drawing.Size(47, 16);
-            this.radioButtonBorrow.TabIndex = 14;
-            this.radioButtonBorrow.TabStop = true;
-            this.radioButtonBorrow.Text = "借用";
-            this.radioButtonBorrow.UseVisualStyleBackColor = true;
-            this.radioButtonBorrow.CheckedChanged += new System.EventHandler(this.radioButtonBorrow_CheckedChanged);
-            // 
-            // radioButtonReturn
-            // 
-            this.radioButtonReturn.AutoSize = true;
-            this.radioButtonReturn.Location = new System.Drawing.Point(88, 21);
-            this.radioButtonReturn.Name = "radioButtonReturn";
-            this.radioButtonReturn.Size = new System.Drawing.Size(47, 16);
-            this.radioButtonReturn.TabIndex = 14;
-            this.radioButtonReturn.TabStop = true;
-            this.radioButtonReturn.Text = "归还";
-            this.radioButtonReturn.UseVisualStyleBackColor = true;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.groupBox7);
-            this.tabPage3.Location = new System.Drawing.Point(4, 21);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(885, 56);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "维修";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.radioButtonStartRepair);
-            this.groupBox7.Controls.Add(this.radioButtonEndRepair);
-            this.groupBox7.Location = new System.Drawing.Point(9, 6);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(611, 50);
-            this.groupBox7.TabIndex = 19;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "请选择";
-            // 
-            // radioButtonStartRepair
-            // 
-            this.radioButtonStartRepair.AutoSize = true;
-            this.radioButtonStartRepair.Location = new System.Drawing.Point(25, 20);
-            this.radioButtonStartRepair.Name = "radioButtonStartRepair";
-            this.radioButtonStartRepair.Size = new System.Drawing.Size(71, 16);
-            this.radioButtonStartRepair.TabIndex = 14;
-            this.radioButtonStartRepair.TabStop = true;
-            this.radioButtonStartRepair.Text = "开始维修";
-            this.radioButtonStartRepair.UseVisualStyleBackColor = true;
-            this.radioButtonStartRepair.CheckedChanged += new System.EventHandler(this.radioButtonStartRepair_CheckedChanged);
-            // 
-            // radioButtonEndRepair
-            // 
-            this.radioButtonEndRepair.AutoSize = true;
-            this.radioButtonEndRepair.Location = new System.Drawing.Point(112, 20);
-            this.radioButtonEndRepair.Name = "radioButtonEndRepair";
-            this.radioButtonEndRepair.Size = new System.Drawing.Size(71, 16);
-            this.radioButtonEndRepair.TabIndex = 14;
-            this.radioButtonEndRepair.TabStop = true;
-            this.radioButtonEndRepair.Text = "结束维修";
-            this.radioButtonEndRepair.UseVisualStyleBackColor = true;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.groupBox1);
-            this.tabPage4.Location = new System.Drawing.Point(4, 21);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(885, 56);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "外出";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.radioButtonOut);
-            this.groupBox1.Controls.Add(this.radioButtonBack);
-            this.groupBox1.Location = new System.Drawing.Point(9, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(609, 50);
-            this.groupBox1.TabIndex = 15;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "请选择";
-            // 
-            // radioButtonOut
-            // 
-            this.radioButtonOut.AutoSize = true;
-            this.radioButtonOut.Location = new System.Drawing.Point(23, 19);
-            this.radioButtonOut.Name = "radioButtonOut";
-            this.radioButtonOut.Size = new System.Drawing.Size(47, 16);
-            this.radioButtonOut.TabIndex = 14;
-            this.radioButtonOut.TabStop = true;
-            this.radioButtonOut.Text = "外出";
-            this.radioButtonOut.UseVisualStyleBackColor = true;
-            this.radioButtonOut.CheckedChanged += new System.EventHandler(this.radioButtonOut_CheckedChanged);
-            // 
-            // radioButtonBack
-            // 
-            this.radioButtonBack.AutoSize = true;
-            this.radioButtonBack.Location = new System.Drawing.Point(88, 19);
-            this.radioButtonBack.Name = "radioButtonBack";
-            this.radioButtonBack.Size = new System.Drawing.Size(47, 16);
-            this.radioButtonBack.TabIndex = 14;
-            this.radioButtonBack.TabStop = true;
-            this.radioButtonBack.Text = "返回";
-            this.radioButtonBack.UseVisualStyleBackColor = true;
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.groupBox2);
-            this.tabPage5.Location = new System.Drawing.Point(4, 21);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(885, 56);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "租还";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Location = new System.Drawing.Point(9, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(609, 50);
-            this.groupBox2.TabIndex = 16;
-            this.groupBox2.TabStop = false;
-            // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.groupBox3);
-            this.tabPage6.Location = new System.Drawing.Point(4, 21);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(885, 56);
-            this.tabPage6.TabIndex = 5;
-            this.tabPage6.Text = "退返";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Location = new System.Drawing.Point(9, 6);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(609, 50);
-            this.groupBox3.TabIndex = 17;
-            this.groupBox3.TabStop = false;
-            // 
-            // tabPage7
-            // 
-            this.tabPage7.Controls.Add(this.groupBox8);
-            this.tabPage7.Location = new System.Drawing.Point(4, 21);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(885, 56);
-            this.tabPage7.TabIndex = 6;
-            this.tabPage7.Text = "丢失";
-            this.tabPage7.UseVisualStyleBackColor = true;
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Location = new System.Drawing.Point(9, 6);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(609, 50);
-            this.groupBox8.TabIndex = 17;
-            this.groupBox8.TabStop = false;
-            // 
-            // tabPage8
-            // 
-            this.tabPage8.Controls.Add(this.groupBox9);
-            this.tabPage8.Location = new System.Drawing.Point(4, 21);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(885, 56);
-            this.tabPage8.TabIndex = 7;
-            this.tabPage8.Text = "报废";
-            this.tabPage8.UseVisualStyleBackColor = true;
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Location = new System.Drawing.Point(9, 6);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(609, 50);
-            this.groupBox9.TabIndex = 17;
-            this.groupBox9.TabStop = false;
-            // 
-            // tabPage9
-            // 
-            this.tabPage9.Controls.Add(this.groupBox11);
-            this.tabPage9.Location = new System.Drawing.Point(4, 21);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(885, 56);
-            this.tabPage9.TabIndex = 8;
-            this.tabPage9.Text = "转出";
-            this.tabPage9.UseVisualStyleBackColor = true;
-            // 
-            // groupBox11
-            // 
-            this.groupBox11.Location = new System.Drawing.Point(9, 3);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(609, 53);
-            this.groupBox11.TabIndex = 17;
-            this.groupBox11.TabStop = false;
             // 
             // groupBox6
             // 
@@ -788,11 +498,37 @@ namespace AssMngSys
             this.label19.TabIndex = 12;
             this.label19.Text = "租还人员：";
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 21);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(100, 48);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "领用";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.ItemSize = new System.Drawing.Size(48, 17);
+            this.tabControl1.Location = new System.Drawing.Point(682, 57);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(108, 73);
+            this.tabControl1.TabIndex = 12;
+            this.tabControl1.Visible = false;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            // 
             // AssSupply
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(903, 572);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.buttonClear);
@@ -814,24 +550,8 @@ namespace AssMngSys
             this.Text = "AssSupply";
             this.Load += new System.EventHandler(this.AssSupply_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AssSupply_FormClosing);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage6.ResumeLayout(false);
-            this.tabPage7.ResumeLayout(false);
-            this.tabPage8.ResumeLayout(false);
-            this.tabPage9.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -840,6 +560,7 @@ namespace AssMngSys
             this.bindingNavigator1.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -847,13 +568,6 @@ namespace AssMngSys
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.BindingNavigator bindingNavigator1;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
@@ -866,10 +580,6 @@ namespace AssMngSys
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
         private System.Windows.Forms.Button buttonClear;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton radioButtonOut;
-        private System.Windows.Forms.RadioButton radioButtonBack;
-        private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label labelCnt;
@@ -880,10 +590,6 @@ namespace AssMngSys
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TabPage tabPage8;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.RadioButton radioButtonBorrow;
-        private System.Windows.Forms.RadioButton radioButtonReturn;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.RadioButton radioButtonApply;
         private System.Windows.Forms.RadioButton radioButtonUnAppply;
@@ -896,21 +602,14 @@ namespace AssMngSys
         private System.Windows.Forms.TextBox textBoxReason;
         private System.Windows.Forms.Label labelReason;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.RadioButton radioButtonStartRepair;
-        private System.Windows.Forms.RadioButton radioButtonEndRepair;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TabPage tabPage9;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.GroupBox groupBox9;
-        private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.Label labelHit;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabControl tabControl1;
     }
 }

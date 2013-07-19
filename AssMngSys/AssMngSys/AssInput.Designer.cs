@@ -87,11 +87,13 @@ namespace AssMngSys
             this.comboBoxInputTyp = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.comboBoxAddr = new System.Windows.Forms.ComboBox();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonCancel
@@ -678,6 +680,7 @@ namespace AssMngSys
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -742,5 +745,6 @@ namespace AssMngSys
         private System.Windows.Forms.Button buttonReplace;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox comboBoxAddr;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }

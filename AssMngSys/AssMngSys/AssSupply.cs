@@ -491,48 +491,56 @@ namespace AssMngSys
             }
             return true;
         }
-        private bool AssChange(string sTyp, string sDept, string sMan, string sAddr, string sReason, out string sErr, List<string> listAssid)
+        static public bool AssChange(string sTyp, string sDept, string sMan, string sAddr, string sReason, out string sErr, List<string> listAssid)
         {
             List<string> listSql = new List<string>();
             List<string> listSqlLog = new List<string>();
             string sUpd;
-            if( sTyp == "退领")
+            if (sTyp == "领用")// )
             {
-                sUpd = string.Format("update ass_list set stat = '库存',mod_man = '{0}',mod_tm = '{1}'", MainForm.sUserName, MainForm.getDateTime());
-            }
-            else
-            {
-                sUpd = string.Format("update ass_list set stat = '领用',duty_man = '{0}',dept = '{1}',mod_man = '{2}',mod_tm = '{3}'", sMan, sDept, MainForm.sUserName,MainForm.getDateTime()); 
+                sUpd = string.Format("update ass_list set stat = '领用',duty_man = '{0}',dept = '{1}',mod_man = '{2}',mod_tm = '{3}'", sMan, sDept, MainForm.sUserName, MainForm.getDateTime());
                 if (sAddr.Length != 0)
                 {
                     sUpd += ",addr = '" + sAddr + "' ";
                 }
             }
-            string sIns = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr) select ass_id,'{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}',addr from ass_list ", sTyp, sMan, MainForm.getDate(), MainForm.sUserName,MainForm.getDateTime(), MainForm.sCompany, sDept, sReason);
+            else if (sTyp == "退领")
+            {
+                sUpd = string.Format("update ass_list set stat = '库存',mod_man = '{0}',mod_tm = '{1}'", MainForm.sUserName, MainForm.getDateTime());
+            }
+            else if (sTyp == "租还" || sTyp == "退返" || sTyp == "丢失" || sTyp == "报废" || sTyp == "转出")
+            {
+                sUpd = string.Format("update ass_list set stat = '{0}',mod_man = '{1}',mod_tm = '{2}'", sTyp, sMan, MainForm.getDateTime());
+            }
+            else//借用，归还，送修，修返，外出，返回
+            {
+                sUpd = string.Format("update ass_list set stat_sub = '{0}',use_man = '{1}',use_dept = '{2}',mod_tm = '{3}'", sTyp, sMan, sDept, MainForm.getDateTime());
+            }
+
+            string sSql = "";
             foreach (string sAssId in listAssid)
             {
+                if (sAssId.Length == 0) continue;
                 //更新
-                string sSqlUpd = sUpd + " where ass_id = '" + sAssId + "'";
-
-                string sSqlUpdLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-                    sTyp, "0", sSqlUpd.Replace("'", "\\'"), MainForm.sClientId, sAssId, MainForm.getDateTime());
-
+                sSql = sUpd + " where ass_id = '" + sAssId + "'";
+                listSql.Add(sSql);
                 //插入
-                string sSqlIns = sIns + " where ass_id = '" + sAssId + "'";
-
-                string sSqlInsLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-                    sTyp, "0", sSqlIns.Replace("'", "\\'"), MainForm.sClientId, sAssId, MainForm.getDateTime());
-
-                listSql.Add(sSqlUpd);
-                listSql.Add(sSqlIns);
-                listSqlLog.Add(sSqlUpdLog);
-                listSqlLog.Add(sSqlInsLog);
+                sSql = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')",
+                sAssId, sTyp, sMan, MainForm.getDate(), MainForm.sUserName, MainForm.getDateTime(), MainForm.sCompany, sDept, sReason, sAddr);
+                listSql.Add(sSql);
             }
-            bool bOK = false;
-            foreach (string sTmp in listSqlLog)
+            //同步SQL
+            int nCnt = listSql.Count;
+            for (int i = 0; i < nCnt; i++)
             {
-                listSql.Add(sTmp);
+                sSql = listSql[i];
+                string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
+                sTyp, "0", sSql.Replace("'", "''"), MainForm.sClientId, listAssid[i / 2], MainForm.getDateTime());
+                listSql.Add(sSqlLog);
             }
+
+            bool bOK = false;
+
             bOK = MysqlHelper.ExecuteNoQueryTran(listSql);
             sErr = MysqlHelper.sLastErr;
             return bOK;

@@ -17,6 +17,30 @@ namespace IrRfidUHFDemo
 {
     public partial class MainForm : Form
     {
+        static class MngIndex
+        {
+            public const int no = 0;
+            public const int epc = 1;
+            public const int pid = 2;
+            public const int stat = 3;
+            public const int cnt = 4;
+            public const int assid = 5;
+        }
+        static class ChkIndex
+        {            
+            public const int no = 0;
+            public const int pid = 1;
+            public const int assid = 2;
+            public const int assnam = 3;
+            public const int stat = 4;
+            public const int dutyman = 5;
+            public const int dept = 6;
+            public const int addr = 6;
+            public const int result = 8;
+            public const int id = 9;
+        }
+        static public bool bHasSrv = false;
+        public bool bIsFirstIni = false;
         Thread thrSyncIni;
         Thread thrSyncDiff;
         public bool bSyncing = false;
@@ -26,6 +50,7 @@ namespace IrRfidUHFDemo
         Thread thrCheck;
         public bool bChecking = false;
         int nAll = 0, nExp = 0, nCheck = 0;
+        bool bIsCheckHide = false;
 
         Thread thrInv;
         public bool bInving = false;
@@ -35,20 +60,22 @@ namespace IrRfidUHFDemo
         static string sIp;
         static string sPort;
         enum Page { onepcs = 0, inv, check, sync };
-        enum Index { no = 0, epc, pid, stat, cnt, assid };
-
         int nCurTab = 0;
         LoginForm loginForm = null;
         private System.Net.Sockets.UdpClient sendUdpClient;
+
         public MainForm(LoginForm f)
         {
             InitializeComponent();
             loginForm = f;
 
 
+        }
+        private void Read2PcForm_Load(object sender, EventArgs e)
+        {
             this.WindowState = FormWindowState.Maximized;
             listView1.FullRowSelect = true;
-            listView1.Columns.Add("N", 16, HorizontalAlignment.Left);
+            listView1.Columns.Add("序", 16, HorizontalAlignment.Left);
             listView1.Columns.Add("EPC", 0, HorizontalAlignment.Left);
             listView1.Columns.Add("喷码", 96, HorizontalAlignment.Left);
             listView1.Columns.Add("状态", 38, HorizontalAlignment.Left);
@@ -67,6 +94,23 @@ namespace IrRfidUHFDemo
             listView2.Columns.Add("盘点结果", 40, HorizontalAlignment.Left);
             listView2.Columns.Add("ID", 0, HorizontalAlignment.Left);
 
+            iniData();
+
+            if (bIsFirstIni)
+            {
+                tabControl1.SelectedIndex = (int)Page.sync;
+                buttonSyncIni_Click(null, null);
+            }
+            else
+            {
+                buttonSyncDiff_Click(null,null);
+            }
+
+
+
+        }
+        private void iniData()
+        {
             string sSql = "select distinct inv_no from inv_list order by inv_no desc";
             SQLiteDataReader reader = SQLiteHelper.ExecuteReader(sSql);
             comboBoxInvListNo.Items.Clear();
@@ -75,11 +119,6 @@ namespace IrRfidUHFDemo
                 comboBoxInvListNo.Items.Add(reader["inv_no"].ToString());
             }
             reader.Close();
-        }
-        private void Read2PcForm_Load(object sender, EventArgs e)
-        {
-
-
         }
 
         private void buttonRead_Click(object sender, EventArgs e)
@@ -173,7 +212,7 @@ namespace IrRfidUHFDemo
             int count = listView2.Items.Count;
             for (int j = 0; j < count; j++)
             {
-                string findItem = listView2.Items[j].SubItems[1].Text;
+                string findItem = listView2.Items[j].SubItems[ChkIndex.pid].Text;
                 if (sPid == findItem)
                 {
                     nfind = j;
@@ -182,10 +221,11 @@ namespace IrRfidUHFDemo
             }
             if (nfind != -1)
             {
-                if (listView2.Items[nfind].SubItems[8].Text.Length == 0)
+                if (listView2.Items[nfind].SubItems[ChkIndex.result].Text.Length == 0)
                 {
                     string sErr;
                     checkAss(nfind, "自动盘点", out sErr);
+                    buttonSyncDiff_Click(null, null);
                 }
             }
             else
@@ -193,29 +233,43 @@ namespace IrRfidUHFDemo
             }
 
         }
-        private bool checkAss(int nIndex,string sTpe,out string sErr)
+        private bool checkAss(int nIndex, string sTpe, out string sErr)
         {
             //找到显示绿色
             sErr = "";
             List<string> listSql = new List<string>();
-            string sAssId = listView2.Items[nIndex].SubItems[2].Text;
-            string sId = listView2.Items[nIndex].SubItems[9].Text;
+            string sAssId = listView2.Items[nIndex].SubItems[ChkIndex.assid].Text;
+            string sId = listView2.Items[nIndex].SubItems[ChkIndex.id].Text;
+            //更新盘点清单
             string sSql = "update inv_list set result = '" + sTpe + "' where id = " + sId;
             listSql.Add(sSql);
-            //更新新资产盘点日期
-            sSql = string.Format("update ass_list set inv_result = '{0}',inv_man = '{1}',inv_date = '{2}' where id = {3}",sTpe,LoginForm.sUserName,LoginForm.getDateTime(),sId);
+            //更新新资产清单
+            sSql = string.Format("update ass_list set inv_result = '{0}',inv_man = '{1}',inv_date = '{2}' where id = {3}", sTpe, LoginForm.sUserName, LoginForm.getDate(), sId);
             listSql.Add(sSql);
-            string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-                "盘点结果", "0", sSql.Replace("'", "''"), SettingForm.sClientId, sAssId, LoginForm.getDateTime());
-            listSql.Add(sSqlLog);
+            //增加资产历史记录
+            sSql = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}') ",
+                sAssId, "盘点", LoginForm.sUserName, LoginForm.getDate(), LoginForm.sUserName, LoginForm.getDateTime(), SettingForm.sCompany,
+                listView2.Items[nIndex].SubItems[ChkIndex.dept].Text, sTpe, "");
+            listSql.Add(sSql);
+
+            int nCnt = listSql.Count;
+            for (int i = 0; i < nCnt; i++)
+            {
+                sSql = listSql[i];
+                string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
+                "资产盘点", "0", sSql.Replace("'", "''"), SettingForm.sClientId, sAssId, LoginForm.getDateTime());
+                listSql.Add(sSqlLog);
+            }
+
             bool bOK = SQLiteHelper.ExecuteNoQueryTran(listSql);
             sErr = SQLiteHelper.sLastErr;
             if (bOK)
             {
-                listView2.Items[nIndex].SubItems[8].Text = sTpe;
+                listView2.Items[nIndex].SubItems[ChkIndex.result].Text = sTpe;
                 listView2.Items[nIndex].BackColor = Color.FromArgb(0, 255, 0);
                 nCheck++;
-                label4.Text = string.Format("总计 {0};已盘 {1};异常 {2};未盘点 {3}.", nAll, nCheck, nExp, nAll - nCheck);
+                //label4.Text = string.Format("总计 {0};已盘 {1};异常 {2};未盘点 {3}.", nAll, nCheck, nExp, nAll - nCheck);
+                sumCheckText();
             }
             else
             {
@@ -411,7 +465,7 @@ namespace IrRfidUHFDemo
             int count = listView1.Items.Count;
             for (int j = 0; j < count; j++)
             {
-                string findItem = listView1.Items[j].SubItems[(int)Index.epc].Text;
+                string findItem = listView1.Items[j].SubItems[(int)MngIndex.epc].Text;
                 if (sOnetagInfo == findItem)
                 {
                     nfind = j;
@@ -421,10 +475,10 @@ namespace IrRfidUHFDemo
 
             if (nfind != -1)
             {
-                String sCnt = listView1.Items[nfind].SubItems[(int)Index.cnt].Text;
+                String sCnt = listView1.Items[nfind].SubItems[(int)MngIndex.cnt].Text;
                 int nCnt = Convert.ToInt32(sCnt) + 1;
                 String sumFind = nCnt.ToString();
-                listView1.Items[nfind].SubItems[(int)Index.cnt].Text = sumFind;
+                listView1.Items[nfind].SubItems[(int)MngIndex.cnt].Text = sumFind;
             }
             else
             {
@@ -441,20 +495,20 @@ namespace IrRfidUHFDemo
                 lvi.SubItems.Add("");
                 lvi.SubItems.Add("");
                 lvi.SubItems.Add("");
-                lvi.SubItems[(int)Index.epc].Text = sOnetagInfo;
-                lvi.SubItems[(int)Index.pid].Text = sPid;
+                lvi.SubItems[(int)MngIndex.epc].Text = sOnetagInfo;
+                lvi.SubItems[(int)MngIndex.pid].Text = sPid;
                 string sAssId, sStat;
                 GetAssInfo(sPid, out sAssId, out sStat);
-                lvi.SubItems[(int)Index.stat].Text = sStat;
-                lvi.SubItems[(int)Index.cnt].Text = "1";//读取次数
-                lvi.SubItems[(int)Index.assid].Text = sAssId;
+                lvi.SubItems[(int)MngIndex.stat].Text = sStat;
+                lvi.SubItems[(int)MngIndex.cnt].Text = "1";//读取次数
+                lvi.SubItems[(int)MngIndex.assid].Text = sAssId;
                 this.listView1.Items.Add(lvi);
                 listView1.EnsureVisible(listView1.Items.Count - 1);
 
                 int nHasStat = 0;
                 for (int k = 0; k < listView1.Items.Count; k++)
                 {
-                    string sTagStat = listView1.Items[k].SubItems[(int)Index.stat].Text;
+                    string sTagStat = listView1.Items[k].SubItems[(int)MngIndex.stat].Text;
                     if (sTagStat.Length != 0)
                     {
                         nHasStat++;
@@ -557,7 +611,7 @@ namespace IrRfidUHFDemo
             //发送循环读取画面数据
             for (int j = 0; j < listView1.Items.Count; j++)
             {
-                string message2 = listView1.Items[j].SubItems[(int)Index.pid].Text;
+                string message2 = listView1.Items[j].SubItems[(int)MngIndex.pid].Text;
                 byte[] sendbytes2 = Encoding.Unicode.GetBytes(message2);
                 sendUdpClient.Send(sendbytes2, sendbytes2.Length, remoteIpEndPoint);
                 ShowStat(listBox1, "已发送：" + message2);
@@ -603,56 +657,62 @@ namespace IrRfidUHFDemo
             }
             else if (tabControl1.SelectedIndex == (int)Page.check)//盘点
             {
-                CheckOptForm checkoptform = new CheckOptForm();
-                int nIndex = listView2.Items.IndexOf(listView2.FocusedItem);
-                if (checkoptform.ShowDialog() == DialogResult.OK)
-                {
-                    string sErr;
-                    bool bOK = false;
-                    if (checkoptform.sOptTyp == "手动盘点")
-                    {
-                        bOK = checkAss(nIndex, checkoptform.sOptTyp, out sErr);
-                       if (bOK)
-                       {
-                           MessageBox.Show("操作成功！");
-                       }
-                       else
-                       {
-                           MessageBox.Show("操作失败！\r\n" + sErr);
-                       }
-                    }
-                    else if (checkoptform.sOptTyp == "报废" || checkoptform.sOptTyp == "报失")
-                    {
-                        GetReasonForm f = new GetReasonForm(checkoptform.sOptTyp);
-                        f.ShowDialog();
-                        if (f.ret != 0)
-                        {
-                            string sTyp = f.sTyp;
-                            string sDept = f.sDept;
-                            string sMan = f.sEmpNam;
-                            string sAddr = f.sAddr;
-                            string sReason = f.sReason;
-                            List<string> listAssId = new List<string>();
-                            string sAssId = listView2.Items[nIndex].SubItems[2].Text;
-                            listAssId.Add(sAssId);               
-                            bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, listAssId, out sErr);
-                            if (bOK)
-                            {
-                                bOK = checkAss(nIndex, checkoptform.sOptTyp, out sErr);
-                            }
-
-                            if (bOK)
-                            {
-                                MessageBox.Show("操作成功！");
-                            }
-                            else
-                            {
-                                MessageBox.Show("操作失败！\r\n" + sErr);
-                            }
-                        }//GetReasonForm
-                    }//f.sOptTyp
-                }//f.ShowDialog()
+                CheckOpt();
             }//tabControl1.SelectedIndex
+        }
+
+        private void CheckOpt()
+        {
+            CheckOptForm checkoptform = new CheckOptForm();
+            int nIndex = listView2.Items.IndexOf(listView2.FocusedItem);
+            if (checkoptform.ShowDialog() == DialogResult.OK)
+            {
+                string sErr;
+                bool bOK = false;
+                if (checkoptform.sOptTyp == "手动盘点")
+                {
+                    bOK = checkAss(nIndex, checkoptform.sOptTyp, out sErr);
+                    if (bOK)
+                    {
+                        MessageBox.Show("操作成功！");
+                    }
+                    else
+                    {
+                        MessageBox.Show("操作失败！\r\n" + sErr);
+                    }
+                }
+                else if (checkoptform.sOptTyp == "报废" || checkoptform.sOptTyp == "报失")
+                {
+                    GetReasonForm f = new GetReasonForm(checkoptform.sOptTyp);
+                    f.ShowDialog();
+                    if (f.ret != 0)
+                    {
+                        string sTyp = f.sTyp;
+                        string sDept = f.sDept;
+                        string sMan = f.sEmpNam;
+                        string sAddr = f.sAddr;
+                        string sReason = f.sReason;
+                        List<string> listAssId = new List<string>();
+                        string sAssId = listView2.Items[nIndex].SubItems[ChkIndex.assid].Text;
+                        listAssId.Add(sAssId);
+                        bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, listAssId, out sErr);
+                        if (bOK)
+                        {
+                            bOK = checkAss(nIndex, checkoptform.sOptTyp, out sErr);
+                        }
+
+                        if (bOK)
+                        {
+                            MessageBox.Show("操作成功！");
+                            buttonSyncDiff_Click(null, null);
+                        }
+                        else
+                        {
+                            MessageBox.Show("操作失败！\r\n" + sErr);
+                        }
+                    }//GetReasonForm
+                }//f.sOptTyp
+            }//f.ShowDialog()
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -807,7 +867,7 @@ namespace IrRfidUHFDemo
                 if (listView1.FocusedItem != null && tabControl1.SelectedIndex == (int)Page.inv)
                 {
                     int nIndex = listView1.Items.IndexOf(listView1.FocusedItem);
-                    string sPid = listView1.Items[nIndex].SubItems[(int)Index.pid].Text;
+                    string sPid = listView1.Items[nIndex].SubItems[(int)MngIndex.pid].Text;
                     AssDetailForm fr = new AssDetailForm(sPid);
                     fr.ShowDialog();
                 }
@@ -892,35 +952,37 @@ namespace IrRfidUHFDemo
             }
             else//借用，归还，送修，修返，外出，返回
             {
-                sUpd = string.Format("update ass_list set stat_sub = '{0}',use_man = '{1}',use_dept = '{2}',mod_tm = '{3}'", sTyp, sMan, sDept, LoginForm.getDateTime());
+                sUpd = string.Format("update ass_list set stat_sub = '{0}',duty_man = '{1}',dept = '{2}',mod_tm = '{3}'", sTyp, sMan, sDept, LoginForm.getDateTime());
             }
 
-            string sIns = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr) select ass_id,'{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}',addr from ass_list ", sTyp, sMan, LoginForm.getDate(), LoginForm.sUserName, LoginForm.getDateTime(), SettingForm.sCompany, sDept, sReason);
+            string sSql = "";
             foreach (string sAssId in listAssid)
             {
                 if (sAssId.Length == 0) continue;
                 //更新
-                string sSqlUpd = sUpd + " where ass_id = '" + sAssId + "'";
-
-                string sSqlUpdLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-                    sTyp, "0", sSqlUpd.Replace("'", "''"), SettingForm.sClientId, sAssId, LoginForm.getDateTime());
-
+                sSql = sUpd + " where ass_id = '" + sAssId + "'";
+                listSql.Add(sSql);
                 //插入
-                string sSqlIns = sIns + " where ass_id = '" + sAssId + "'";
-
-                string sSqlInsLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-                    sTyp, "0", sSqlIns.Replace("'", "''"), SettingForm.sClientId, sAssId, LoginForm.getDateTime());
-
-                listSql.Add(sSqlUpd);
-                listSql.Add(sSqlIns);
-                listSqlLog.Add(sSqlUpdLog);
-                listSqlLog.Add(sSqlInsLog);
+                sSql = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')",
+                sAssId, sTyp, sMan, LoginForm.getDate(), LoginForm.sUserName, LoginForm.getDateTime(), SettingForm.sCompany, sDept, sReason, sAddr);
+                listSql.Add(sSql);
             }
+            //同步SQL
+            int nCnt = listSql.Count;
+            for (int i = 0; i < nCnt; i++)
+            {
+                sSql = listSql[i];
+                string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
+                sTyp, "0", sSql.Replace("'", "''"), SettingForm.sClientId, listAssid[i / 2], LoginForm.getDateTime());
+                listSql.Add(sSqlLog);
+            }
+
             bool bOK = false;
             foreach (string sTmp in listSqlLog)
             {
                 listSql.Add(sTmp);
             }
+
             bOK = SQLiteHelper.ExecuteNoQueryTran(listSql);
             sErr = SQLiteHelper.sLastErr;
             // }
@@ -941,7 +1003,7 @@ namespace IrRfidUHFDemo
                 List<string> listAssId = new List<string>();
                 for (int j = 0; j < listView1.Items.Count; j++)
                 {
-                    string sAssId = listView1.Items[j].SubItems[(int)Index.assid].Text;
+                    string sAssId = listView1.Items[j].SubItems[(int)MngIndex.assid].Text;
                     listAssId.Add(sAssId);
                 }
                 string sErr;
@@ -950,6 +1012,7 @@ namespace IrRfidUHFDemo
                 {
                     MessageBox.Show("操作成功！");
                     buttonClear_Click(null, null);
+                    buttonSyncDiff_Click(null, null);
                 }
                 else
                 {
@@ -972,7 +1035,7 @@ namespace IrRfidUHFDemo
                 List<string> listAssId = new List<string>();
                 for (int j = 0; j < listView1.Items.Count; j++)
                 {
-                    string sAssId = listView1.Items[j].SubItems[(int)Index.assid].Text;
+                    string sAssId = listView1.Items[j].SubItems[(int)MngIndex.assid].Text;
                     listAssId.Add(sAssId);
                 }
                 string sErr;
@@ -981,6 +1044,7 @@ namespace IrRfidUHFDemo
                 {
                     MessageBox.Show("操作成功！");
                     buttonClear_Click(null, null);
+                    buttonSyncDiff_Click(null, null);
                 }
                 else
                 {
@@ -1003,7 +1067,7 @@ namespace IrRfidUHFDemo
                 List<string> listAssId = new List<string>();
                 for (int j = 0; j < listView1.Items.Count; j++)
                 {
-                    string sAssId = listView1.Items[j].SubItems[(int)Index.assid].Text;
+                    string sAssId = listView1.Items[j].SubItems[(int)MngIndex.assid].Text;
                     listAssId.Add(sAssId);
                 }
                 string sErr;
@@ -1012,6 +1076,7 @@ namespace IrRfidUHFDemo
                 {
                     MessageBox.Show("操作成功！");
                     buttonClear_Click(null, null);
+                    buttonSyncDiff_Click(null, null);
                 }
                 else
                 {
@@ -1034,7 +1099,7 @@ namespace IrRfidUHFDemo
                 List<string> listAssId = new List<string>();
                 for (int j = 0; j < listView1.Items.Count; j++)
                 {
-                    string sAssId = listView1.Items[j].SubItems[(int)Index.assid].Text;
+                    string sAssId = listView1.Items[j].SubItems[(int)MngIndex.assid].Text;
                     listAssId.Add(sAssId);
                 }
                 string sErr;
@@ -1043,6 +1108,7 @@ namespace IrRfidUHFDemo
                 {
                     MessageBox.Show("操作成功！");
                     buttonClear_Click(null, null);
+                    buttonSyncDiff_Click(null, null);
                 }
                 else
                 {
@@ -1065,7 +1131,7 @@ namespace IrRfidUHFDemo
                 List<string> listAssId = new List<string>();
                 for (int j = 0; j < listView1.Items.Count; j++)
                 {
-                    string sAssId = listView1.Items[j].SubItems[(int)Index.assid].Text;
+                    string sAssId = listView1.Items[j].SubItems[(int)MngIndex.assid].Text;
                     listAssId.Add(sAssId);
                 }
                 string sErr;
@@ -1074,6 +1140,7 @@ namespace IrRfidUHFDemo
                 {
                     MessageBox.Show("操作成功！");
                     buttonClear_Click(null, null);
+                    buttonSyncDiff_Click(null, null);
                 }
                 else
                 {
@@ -1096,7 +1163,7 @@ namespace IrRfidUHFDemo
                 List<string> listAssId = new List<string>();
                 for (int j = 0; j < listView1.Items.Count; j++)
                 {
-                    string sAssId = listView1.Items[j].SubItems[(int)Index.assid].Text;
+                    string sAssId = listView1.Items[j].SubItems[(int)MngIndex.assid].Text;
                     listAssId.Add(sAssId);
                 }
                 string sErr;
@@ -1105,6 +1172,7 @@ namespace IrRfidUHFDemo
                 {
                     MessageBox.Show("操作成功！");
                     buttonClear_Click(null, null);
+                    buttonSyncDiff_Click(null, null);
                 }
                 else
                 {
@@ -1127,7 +1195,7 @@ namespace IrRfidUHFDemo
                 List<string> listAssId = new List<string>();
                 for (int j = 0; j < listView1.Items.Count; j++)
                 {
-                    string sAssId = listView1.Items[j].SubItems[(int)Index.assid].Text;
+                    string sAssId = listView1.Items[j].SubItems[(int)MngIndex.assid].Text;
                     listAssId.Add(sAssId);
                 }
                 string sErr;
@@ -1136,6 +1204,7 @@ namespace IrRfidUHFDemo
                 {
                     MessageBox.Show("操作成功！");
                     buttonClear_Click(null, null);
+                    buttonSyncDiff_Click(null, null);
                 }
                 else
                 {
@@ -1158,7 +1227,7 @@ namespace IrRfidUHFDemo
                 List<string> listAssId = new List<string>();
                 for (int j = 0; j < listView1.Items.Count; j++)
                 {
-                    string sAssId = listView1.Items[j].SubItems[(int)Index.assid].Text;
+                    string sAssId = listView1.Items[j].SubItems[(int)MngIndex.assid].Text;
                     listAssId.Add(sAssId);
                 }
                 string sErr;
@@ -1167,6 +1236,7 @@ namespace IrRfidUHFDemo
                 {
                     MessageBox.Show("操作成功！");
                     buttonClear_Click(null, null);
+                    buttonSyncDiff_Click(null, null);
                 }
                 else
                 {
@@ -1189,7 +1259,7 @@ namespace IrRfidUHFDemo
                 List<string> listAssId = new List<string>();
                 for (int j = 0; j < listView1.Items.Count; j++)
                 {
-                    string sAssId = listView1.Items[j].SubItems[(int)Index.assid].Text;
+                    string sAssId = listView1.Items[j].SubItems[(int)MngIndex.assid].Text;
                     listAssId.Add(sAssId);
                 }
                 string sErr;
@@ -1198,6 +1268,7 @@ namespace IrRfidUHFDemo
                 {
                     MessageBox.Show("操作成功！");
                     buttonClear_Click(null, null);
+                    buttonSyncDiff_Click(null, null);
                 }
                 else
                 {
@@ -1211,50 +1282,112 @@ namespace IrRfidUHFDemo
             if (buttonHide.Text == "︽")
             {
                 buttonHide.Text = "︾";
-                listView1.Height = 101;
-                buttonHide.Top = 101;
+                listView1.Height = 101 +5;
+                buttonHide.Top = 101+5;
             }
             else
             {
                 buttonHide.Text = "︽";
-                listView1.Height = 188;
-                buttonHide.Top = 188;
+                listView1.Height = 188 +5;
+                buttonHide.Top = 188+5;
             }
             listView1.Focus();
         }
         private void buttonHideCheck_Click(object sender, EventArgs e)
         {
-            if (buttonHideCheck.Text == "︽")
+            //if (buttonHideCheck.Text == "︽")
+            if (!bIsCheckHide)
             {
-                buttonHideCheck.Text = "︾";
+               // buttonHideCheck.Text = "︾";
                 listView2.Top = 15;
-                listView2.Height = 168;
+                listView2.Height = 168 + 22;
                 buttonHideCheck.Top = 0;
+                bIsCheckHide = true;
+                sumCheckText();
             }
             else
             {
-                buttonHideCheck.Text = "︽";
+                //buttonHideCheck.Text = "︽";
                 listView2.Top = 90;
-                listView2.Height = 93;
+                listView2.Height = 93+22;
                 buttonHideCheck.Top = 75;
+                bIsCheckHide = false;
+                sumCheckText();
             }
             listView2.Focus();
         }
 
         private void buttonSyncDiff_Click(object sender, EventArgs e)
         {
-            listBox1.Items.Clear();
-            ShowStat(listBox1, "正在同步，请勿关闭电源!");
-            //启动同步线程
-            buttonSyncDiff.Enabled = false;
-            thrSyncDiff = new Thread(new ThreadStart(syncDiffThread));
-            thrSyncDiff.Start();
+            //获取待同步数据
+            string sSql = "select count(*) cnt from sync_log where stat= '0' order by id asc";
+            SQLiteDataReader reader = SQLiteHelper.ExecuteReader(sSql);
+            if (reader.Read())
+            {
+                this.Text = string.Format("Asset System(待同步：{0})", reader["cnt"].ToString());
+            }
+            reader.Close();
+
+            if (buttonSyncDiff.Enabled)
+            {
+                listBox1.Items.Clear();
+                ShowStat(listBox1, "正在同步，请勿关闭电源!");
+                //启动同步线程
+                buttonSyncDiff.Enabled = false;
+                thrSyncDiff = new Thread(new ThreadStart(syncDiffThread));
+                thrSyncDiff.Start();
+            }
+            else
+            {
+                if (!timer2.Enabled)
+                {
+                    timer2.Enabled = true;
+                    ShowStat(listBox1, "同步中 ...");
+                }
+            }
+        }
+        ///   <summary>     
+        ///   判断webservice是否可用     
+        ///   </summary>     
+        ///   <returns>true：可用；false：不可用</returns>     
+        static public bool getWSStatus(string url,out string sErr)
+        {
+            sErr = "";
+            try
+            {
+                HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                using(HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse())
+                {
+                    return true;
+                }
+            }
+            catch (WebException e)
+            {
+                if (e.Status == WebExceptionStatus.ProtocolError)
+                {
+                    sErr = string.Format("code:{0}\r\nDesc:{1}",((HttpWebResponse)e.Response).StatusCode,((HttpWebResponse)e.Response).StatusDescription);
+                }
+            }
+            catch (Exception e)
+            {
+              sErr = e.Message;
+            }
+            return false;
         }
         //增量同步
         private void syncDiffThread()
         {
+            string sErr;
+            bHasSrv = getWSStatus(SettingForm.sWebSrvUrl,out sErr);
+            if (!bHasSrv)
+            {
+                ShowStat(listBox1, "当前服务器不可用!");
+                ShowStat(listBox1, "finish-diff");
+                return;
+            }
             AssWebSrv.Service ws = new AssWebSrv.Service();
             ws.Url = SettingForm.sWebSrvUrl;
+
             //获取本地待同步队列
             ShowStat(listBox1, "同步到服务器 ...");
             string sSql = "select * from sync_log where stat= '0' order by id asc";
@@ -1266,10 +1399,10 @@ namespace IrRfidUHFDemo
             else
             {
                 List<string> listSql = new List<string>();
-                string sId = "0";
+                string sIdSql = "";
                 while (reader.Read())
                 {
-                    sId = reader["id"].ToString();
+                    sIdSql += "'" + reader["id"].ToString() + "',";
                     string sTyp = reader["typ"].ToString();
                     string sSqlContent = reader["sql_content"].ToString();
                     string sAssId = reader["ass_id"].ToString();
@@ -1290,8 +1423,8 @@ namespace IrRfidUHFDemo
                 bool bOK = ws.ExecuteNoQueryTran(listSql.ToArray(), out sLastErr);
                 if (bOK)
                 {
-                    sSql = "update sync_log set stat = '1' where stat = '0' and id <= " + sId;
-                    int nReslt = SQLiteHelper.ExecuteNonQuery(sSql,null);
+                    sSql = "update sync_log set stat = '1' where stat = '0' and id in(" + sIdSql.Trim(',') + ")";
+                    int nReslt = SQLiteHelper.ExecuteNonQuery(sSql, null);
                     if (nReslt > 0)
                     {
                         ShowStat(listBox1, "提交OK!");
@@ -1369,6 +1502,15 @@ namespace IrRfidUHFDemo
         }
         private void syncAllThread()
         {
+            string sErr;
+            bHasSrv = getWSStatus(SettingForm.sWebSrvUrl, out sErr);
+            if (!bHasSrv)
+            {
+                ShowStat(listBox1, "当前服务器不可用!");
+                ShowStat(listBox1, "finish-all");
+                return;
+            }
+
             AssWebSrv.Service ws = new AssWebSrv.Service();
             ws.Url = SettingForm.sWebSrvUrl;
             //同步资产清单
@@ -1396,21 +1538,18 @@ namespace IrRfidUHFDemo
             if (dt != null)
             {
                 sSyncMax = dt.Rows[0]["maxid"].ToString();
+                if (sSyncMax.Length == 0)
+                {
+                    sSyncMax = "0";
+                }
             }
 
-            if (sSyncMax.Length == 0)
-            {
-                ShowStat(listBox1, "获取同步号失败！");
-            }
-            else
-            {
-                ShowStat(listBox1, "同步号更新：" + sSyncMax);
-                ShowStat(listBox1, "本地同步队列删除");
-                ShowStat(listBox1, "客户端ID恢复：" + SettingForm.sWebSrvIp);
-                ShowStat(listBox1, "Web Service恢复：" + SettingForm.sWebSrvIp);
-                ShowStat(listBox1, "UDP IP恢复：" + SettingForm.sUdpIp);
-                ShowStat(listBox1, "UDP 端口恢复：" + SettingForm.sUdpPort);
-            }
+            ShowStat(listBox1, "同步号更新：" + sSyncMax);
+            ShowStat(listBox1, "本地同步队列删除");
+            ShowStat(listBox1, "客户端ID恢复：" + SettingForm.sWebSrvIp);
+            ShowStat(listBox1, "Web Service恢复：" + SettingForm.sWebSrvIp);
+            ShowStat(listBox1, "UDP IP恢复：" + SettingForm.sUdpIp);
+            ShowStat(listBox1, "UDP 端口恢复：" + SettingForm.sUdpPort);
 
 
             List<string> listSql = new List<string>();
@@ -1427,10 +1566,20 @@ namespace IrRfidUHFDemo
                 SettingForm.sSyncMax = sSyncMax;
             }
 
-            ShowStat(listBox1, bOK ? "参数OK！" : "参数恢复失败，请重新操作！");
+            ShowStat(listBox1, bOK ? "参数已恢复！" : "参数恢复失败，请重试！");
             ShowStat(listBox1, "--------------");
 
-            ShowStat(listBox1, "全部同步完成！");
+
+
+            if (sSyncMax.Length == 0)
+            {
+                ShowStat(listBox1, "获取同步号失败，请重试！");
+            }
+            else
+            {
+                ShowStat(listBox1, "全部同步完成！");
+            }
+
             ShowStat(listBox1, "");
             ShowStat(listBox1, "finish-all");
         }
@@ -1473,13 +1622,22 @@ namespace IrRfidUHFDemo
 
                 if (str.Equals("finish-all"))
                 {
-                    buttonSyncIni.Enabled = true; 
-                    int nIdex = lstBox.Items.Add(str);
+                    buttonSyncIni.Enabled = true;
+                   // int nIdex = lstBox.Items.Add(str);
                     bSyncing = false;
+                    iniData();
+                    if (bIsFirstIni)
+                    {
+                        MessageBox.Show("初始化完成！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
+                        this.Close();
+                    }
                 }
                 else if (str.Equals("finish-diff"))
                 {
-                    buttonSyncDiff.Enabled = true; int nIdex = lstBox.Items.Add(str);
+                    buttonSyncDiff.Enabled = true;
+                  //  int nIdex = lstBox.Items.Add(str);
+                    iniData();
+                    this.Text = string.Format("Asset System(待同步：{0})",0);
                 }
                 else
                 {
@@ -1504,21 +1662,21 @@ namespace IrRfidUHFDemo
         private void comboBoxInvListNo_SelectedIndexChanged(object sender, EventArgs e)
         {
             comboBoxDept.Items.Clear();
-            string sSql = "select distinct dept from inv_list where inv_no = \'" + comboBoxInvListNo.Text + "\'  order by use_dept";
+            string sSql = "select distinct dept from inv_list where inv_no = \'" + comboBoxInvListNo.Text + "\'  order by dept";
             SQLiteDataReader reader = SQLiteHelper.ExecuteReader(sSql);
             while (reader.Read())
             {
-                comboBoxDept.Items.Add(reader["use_dept"].ToString());
+                comboBoxDept.Items.Add(reader["dept"].ToString());
             }
             reader.Close();
             comboBoxDept.Items.Add("");
 
             comboBoxMan.Items.Clear();
-            sSql = "select distinct duty_man from inv_list where inv_no = \'" + comboBoxInvListNo.Text + "\' order by use_man";
+            sSql = "select distinct duty_man from inv_list where inv_no = \'" + comboBoxInvListNo.Text + "\' order by duty_man";
             reader = SQLiteHelper.ExecuteReader(sSql);
             while (reader.Read())
             {
-                comboBoxMan.Items.Add(reader["use_man"].ToString());
+                comboBoxMan.Items.Add(reader["duty_man"].ToString());
             }
             reader.Close();
             comboBoxMan.Items.Add("");
@@ -1537,7 +1695,7 @@ namespace IrRfidUHFDemo
         }
         private void GetInvList()
         {
-            bool blist = true; 
+            bool blist = true;
             nAll = 0;
             nExp = 0;
             nCheck = 0;
@@ -1545,12 +1703,12 @@ namespace IrRfidUHFDemo
             string sSql = "select * from inv_list where inv_no = \'" + comboBoxInvListNo.Text + "\'";
             if (comboBoxDept.Text.Length != 0)
             {
-                sSql += " and use_dept = \'" + comboBoxDept.Text + "\'";
+                sSql += " and dept = \'" + comboBoxDept.Text + "\'";
                 blist = false;
             }
             if (comboBoxMan.Text.Length != 0)
             {
-                sSql += " and use_man = \'" + comboBoxMan.Text + "\'";
+                sSql += " and duty_man = \'" + comboBoxMan.Text + "\'";
                 blist = false;
             }
             if (comboBoxAddr.Text.Length != 0)
@@ -1580,7 +1738,7 @@ namespace IrRfidUHFDemo
                 if (sResult == "自动盘点")
                 {
                     lvi.BackColor = Color.FromArgb(124, 255, 0);
-                    nCheck ++;
+                    nCheck++;
                 }
                 else if (sResult == "手动盘点")
                 {
@@ -1589,7 +1747,7 @@ namespace IrRfidUHFDemo
                 }
                 else if (sResult == "丢失")
                 {
-                    lvi.BackColor = Color.FromArgb(255,0,0);
+                    lvi.BackColor = Color.FromArgb(255, 0, 0);
                     nCheck++;
                 }
                 else if (sResult == "报废")
@@ -1614,7 +1772,14 @@ namespace IrRfidUHFDemo
             {
                 label8.Text = "总数：" + nAll.ToString();
             }
-            label4.Text = string.Format("总计 {0};已盘 {1};异常 {2};未盘点 {3}.", nAll, nCheck, nExp, nAll - nCheck);
+            //label4.Text = string.Format("总计 {0};已盘 {1};异常 {2};未盘点 {3}.", nAll, nCheck, nExp, nAll - nCheck);
+            sumCheckText();
+        }
+        void sumCheckText()
+        {
+            string sText = string.Format("总计{0};已盘{1};异常{2};未盘{3}. --{4}--", nAll, nCheck, nExp, nAll - nCheck,bIsCheckHide?"︾":"︽");
+            buttonHideCheck.Text = sText;
+
         }
 
         private void comboBoxDept_SelectedIndexChanged(object sender, EventArgs e)
@@ -1630,6 +1795,12 @@ namespace IrRfidUHFDemo
         private void comboBoxMan_SelectedIndexChanged(object sender, EventArgs e)
         {
             GetInvList();
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            buttonSyncDiff_Click(null, null);
+            timer2.Enabled = false;
         }
     }
 }

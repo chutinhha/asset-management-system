@@ -93,8 +93,10 @@ namespace AssMngSys
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
                 string sAssId = dataGridView1.Rows[i].Cells["×Ê²ú±àÂë"].Value.ToString();
-                sSql = string.Format(@"insert into inv_list(pid,ass_id,ass_nam,stat,stat_sub,duty_man,vender,ass_desc,addr,dept,inv_no,
-                cre_man,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}')",
+                string sId = textBoxInvId.Text.Replace("#", "") + i.ToString();
+                sSql = string.Format
+                    (@"insert into inv_list(id,pid,ass_id,ass_nam,stat,stat_sub,duty_man,vender,ass_desc,addr,dept,inv_no,cre_man,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}')",
+                    sId,
                     dataGridView1.Rows[i].Cells[0].Value.ToString(),
                     dataGridView1.Rows[i].Cells[1].Value.ToString(),
                     dataGridView1.Rows[i].Cells[2].Value.ToString(),

@@ -55,52 +55,52 @@ namespace IrRfidUHFDemo
         {
             if (sTyp == "领用")
             {
-                buttonOK.Text = "领用";
-                buttonReturn.Text = "退领";
+                buttonOK.Text = "领用(F1)";
+                buttonReturn.Text = "退领(Ent)";
                 buttonReturn.Visible = true;
             }
             else if (sTyp == "借用")
             {
-                buttonOK.Text = "借用";
-                buttonReturn.Text = "归还";
+                buttonOK.Text = "借用(F1)";
+                buttonReturn.Text = "归还(Ent)";
                 buttonReturn.Visible = true;
             }
             else if (sTyp == "维修")
             {
-                buttonOK.Text = "开始";
-                buttonReturn.Text = "结束";
+                buttonOK.Text = "送修(F1)";
+                buttonReturn.Text = "修返(Ent)";
                 buttonReturn.Visible = true;
             }
             else if (sTyp == "外出")
             {
-                buttonOK.Text = "外出";
-                buttonReturn.Text = "返回";
+                buttonOK.Text = "外出(F1)";
+                buttonReturn.Text = "返回(Ent)";
                 buttonReturn.Visible = true;
             }
             else if (sTyp == "租还")
             {
-                buttonOK.Text = "租还";
-                buttonReturn.Visible = false;
+                buttonReturn.Text = "租还(Ent)";
+                buttonOK.Visible = false;
             }
-            else if (sTyp == "退还")
+            else if (sTyp == "退返")
             {
-                buttonOK.Text = "退还";
-                buttonReturn.Visible = false;
+                buttonReturn.Text = "退返(Ent)";
+                buttonOK.Visible = false;
             }
             else if (sTyp == "报废")
             {
-                buttonOK.Text = "报废";
-                buttonReturn.Visible = false;
+                buttonReturn.Text = "报废(Ent)";
+                buttonOK.Visible = false;
             }
             else if (sTyp == "报失")
             {
-                buttonOK.Text = "报失";
-                buttonReturn.Visible = false;
+                buttonReturn.Text = "报失(Ent)";
+                buttonOK.Visible = false;
             }
             else if (sTyp == "转出")
             {
-                buttonOK.Text = "转出";
-                buttonReturn.Visible = false;
+                buttonReturn.Text = "转出(Ent)";
+                buttonOK.Visible = false;
             }
             //获取人员列表
             string sSql = "select distinct emp_nam from emp order by emp_nam asc";

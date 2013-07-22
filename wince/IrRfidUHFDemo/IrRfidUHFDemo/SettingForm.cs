@@ -19,6 +19,8 @@ namespace IrRfidUHFDemo
         public static string sWebSrvUrl = "";
         public static string sCompany = "";
         public static string sSyncMax = "0";
+        public static string sUser = "";
+        public static string sPass = "";
         public SettingForm()
         {
             InitializeComponent();
@@ -33,8 +35,6 @@ namespace IrRfidUHFDemo
             {
                 sParmId = reader["parm_id"].ToString();
                 sParmVal = reader["parm_val"].ToString();
-                //sCompany = reader["company"].ToString();
-                //sStat = reader["stat"].ToString();
                 if (sParmId.Equals("client_id"))
                 {
                     sClientId = sParmVal;
@@ -63,7 +63,12 @@ namespace IrRfidUHFDemo
                 else if (sParmId.Equals("sync_max"))
                 {
                     sSyncMax = sParmVal;
-                }                
+                }
+                else if (sParmId.Equals("store_accont"))
+                {
+                    sUser = reader["parm_nam"].ToString();
+                    sPass = sParmVal;
+                } 
             }
             reader.Close();
         }
@@ -82,6 +87,12 @@ namespace IrRfidUHFDemo
             //LoginForm.setting.sPort = textBoxPort.Text;
             //LoginForm.setting.Save();
 
+            if (comboBoxClientId.Text.Length == 0)
+            {
+                MessageBox.Show("客户端号不能为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                return;
+            }
+
             List<string> listSql = new List<string>();
             listSql.Add(string.Format("update sys_parms set parm_val = '{0}' where parm_id = '{1}'", comboBoxClientId.Text, "client_id"));
             listSql.Add(string.Format("update sys_parms set parm_val = '{0}' where parm_id = '{1}'", textBoxWebSrvIp.Text, "websrv_ip"));
@@ -97,12 +108,12 @@ namespace IrRfidUHFDemo
                 sUdpIp = textBoxIp.Text;
                 sUdpPort = textBoxPort.Text;
                 sWebSrvUrl = "http://" + sWebSrvIp + "/AssWebSrv/Service.asmx";
-                MessageBox.Show("设置OK!");
+                MessageBox.Show("设置OK!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
                 this.Close();
             }
             else
             {
-                MessageBox.Show("设置失败！\r\n" + SQLiteHelper.sLastErr);
+                MessageBox.Show("设置失败！\r\n" + SQLiteHelper.sLastErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
             }
         }
 
@@ -122,5 +133,20 @@ namespace IrRfidUHFDemo
                 buttonCancel_Click(null, null);
             }
         }
+
+        private void buttonTest_Click(object sender, EventArgs e)
+        {
+            string sErr;
+            string sWebSrvUrl = "http://" + textBoxWebSrvIp.Text + "/AssWebSrv/Service.asmx";
+            if (MainForm.getWSStatus(sWebSrvUrl, out sErr))
+            {
+                MessageBox.Show("测试OK!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
+            }
+            else
+            {
+                MessageBox.Show("不可用！\r\n" + sErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+            }
+
+       }
     }
 }

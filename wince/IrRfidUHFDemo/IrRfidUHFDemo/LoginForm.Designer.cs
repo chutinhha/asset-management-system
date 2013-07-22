@@ -165,7 +165,7 @@
             this.textBoxUser.Name = "textBoxUser";
             this.textBoxUser.Size = new System.Drawing.Size(129, 23);
             this.textBoxUser.TabIndex = 17;
-            this.textBoxUser.Text = "000";
+            this.textBoxUser.Text = "030022";
             // 
             // textBoxPass
             // 
@@ -174,7 +174,7 @@
             this.textBoxPass.PasswordChar = '*';
             this.textBoxPass.Size = new System.Drawing.Size(129, 23);
             this.textBoxPass.TabIndex = 17;
-            this.textBoxPass.Text = "123";
+            this.textBoxPass.Text = "030022";
             // 
             // buttonLogin
             // 

@@ -68,12 +68,12 @@ namespace IrRfidUHFDemo
             this.label8 = new System.Windows.Forms.Label();
             this.comboBoxInvListNo = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.comboBoxMan = new System.Windows.Forms.ComboBox();
             this.comboBoxAddr = new System.Windows.Forms.ComboBox();
             this.comboBoxDept = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.timer2 = new System.Windows.Forms.Timer();
             this.tabPage5.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -83,9 +83,9 @@ namespace IrRfidUHFDemo
             // 
             // buttonRead
             // 
-            this.buttonRead.Location = new System.Drawing.Point(1, 232);
+            this.buttonRead.Location = new System.Drawing.Point(1, 237);
             this.buttonRead.Name = "buttonRead";
-            this.buttonRead.Size = new System.Drawing.Size(76, 35);
+            this.buttonRead.Size = new System.Drawing.Size(76, 30);
             this.buttonRead.TabIndex = 1;
             this.buttonRead.Text = "读取(F1)";
             this.buttonRead.Click += new System.EventHandler(this.buttonRead_Click);
@@ -103,9 +103,9 @@ namespace IrRfidUHFDemo
             // 
             // buttonClear
             // 
-            this.buttonClear.Location = new System.Drawing.Point(81, 232);
+            this.buttonClear.Location = new System.Drawing.Point(81, 237);
             this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(76, 35);
+            this.buttonClear.Size = new System.Drawing.Size(76, 30);
             this.buttonClear.TabIndex = 12;
             this.buttonClear.Text = "清除(Ent)";
             this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
@@ -117,9 +117,9 @@ namespace IrRfidUHFDemo
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(161, 232);
+            this.buttonCancel.Location = new System.Drawing.Point(161, 237);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(76, 35);
+            this.buttonCancel.Size = new System.Drawing.Size(76, 30);
             this.buttonCancel.TabIndex = 13;
             this.buttonCancel.Text = "返回(F3)";
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -177,12 +177,12 @@ namespace IrRfidUHFDemo
             this.tabPage2.Controls.Add(this.buttonOut);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(230, 202);
+            this.tabPage2.Size = new System.Drawing.Size(230, 207);
             this.tabPage2.Text = "管理";
             // 
             // buttonHide
             // 
-            this.buttonHide.Location = new System.Drawing.Point(-4, 101);
+            this.buttonHide.Location = new System.Drawing.Point(-4, 106);
             this.buttonHide.Name = "buttonHide";
             this.buttonHide.Size = new System.Drawing.Size(235, 15);
             this.buttonHide.TabIndex = 14;
@@ -191,7 +191,7 @@ namespace IrRfidUHFDemo
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(58, 81);
+            this.label6.Location = new System.Drawing.Point(58, 88);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(175, 17);
             this.label6.Text = "*按F4键显示资产明细!";
@@ -203,20 +203,20 @@ namespace IrRfidUHFDemo
             this.listView1.FullRowSelect = true;
             this.listView1.Location = new System.Drawing.Point(-4, 0);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(238, 101);
+            this.listView1.Size = new System.Drawing.Size(238, 106);
             this.listView1.TabIndex = 1;
             this.listView1.View = System.Windows.Forms.View.Details;
             // 
             // labelHit
             // 
-            this.labelHit.Location = new System.Drawing.Point(58, 123);
+            this.labelHit.Location = new System.Drawing.Point(58, 128);
             this.labelHit.Name = "labelHit";
             this.labelHit.Size = new System.Drawing.Size(169, 21);
             this.labelHit.Text = "总共: 0，有效: 0 ";
             // 
             // buttonTransfer
             // 
-            this.buttonTransfer.Location = new System.Drawing.Point(171, 174);
+            this.buttonTransfer.Location = new System.Drawing.Point(171, 179);
             this.buttonTransfer.Name = "buttonTransfer";
             this.buttonTransfer.Size = new System.Drawing.Size(54, 26);
             this.buttonTransfer.TabIndex = 0;
@@ -225,7 +225,7 @@ namespace IrRfidUHFDemo
             // 
             // buttonRepair
             // 
-            this.buttonRepair.Location = new System.Drawing.Point(2, 146);
+            this.buttonRepair.Location = new System.Drawing.Point(2, 151);
             this.buttonRepair.Name = "buttonRepair";
             this.buttonRepair.Size = new System.Drawing.Size(54, 26);
             this.buttonRepair.TabIndex = 0;
@@ -234,7 +234,7 @@ namespace IrRfidUHFDemo
             // 
             // buttonBorrow
             // 
-            this.buttonBorrow.Location = new System.Drawing.Point(58, 146);
+            this.buttonBorrow.Location = new System.Drawing.Point(58, 151);
             this.buttonBorrow.Name = "buttonBorrow";
             this.buttonBorrow.Size = new System.Drawing.Size(54, 26);
             this.buttonBorrow.TabIndex = 0;
@@ -243,7 +243,7 @@ namespace IrRfidUHFDemo
             // 
             // buttonDiscard
             // 
-            this.buttonDiscard.Location = new System.Drawing.Point(115, 174);
+            this.buttonDiscard.Location = new System.Drawing.Point(115, 179);
             this.buttonDiscard.Name = "buttonDiscard";
             this.buttonDiscard.Size = new System.Drawing.Size(54, 26);
             this.buttonDiscard.TabIndex = 0;
@@ -252,7 +252,7 @@ namespace IrRfidUHFDemo
             // 
             // buttonRent
             // 
-            this.buttonRent.Location = new System.Drawing.Point(171, 146);
+            this.buttonRent.Location = new System.Drawing.Point(171, 151);
             this.buttonRent.Name = "buttonRent";
             this.buttonRent.Size = new System.Drawing.Size(54, 26);
             this.buttonRent.TabIndex = 0;
@@ -261,7 +261,7 @@ namespace IrRfidUHFDemo
             // 
             // buttonSend
             // 
-            this.buttonSend.Location = new System.Drawing.Point(2, 119);
+            this.buttonSend.Location = new System.Drawing.Point(2, 124);
             this.buttonSend.Name = "buttonSend";
             this.buttonSend.Size = new System.Drawing.Size(54, 26);
             this.buttonSend.TabIndex = 0;
@@ -270,7 +270,7 @@ namespace IrRfidUHFDemo
             // 
             // buttonLose
             // 
-            this.buttonLose.Location = new System.Drawing.Point(58, 174);
+            this.buttonLose.Location = new System.Drawing.Point(58, 179);
             this.buttonLose.Name = "buttonLose";
             this.buttonLose.Size = new System.Drawing.Size(54, 26);
             this.buttonLose.TabIndex = 0;
@@ -279,7 +279,7 @@ namespace IrRfidUHFDemo
             // 
             // buttonReject
             // 
-            this.buttonReject.Location = new System.Drawing.Point(2, 174);
+            this.buttonReject.Location = new System.Drawing.Point(2, 179);
             this.buttonReject.Name = "buttonReject";
             this.buttonReject.Size = new System.Drawing.Size(54, 26);
             this.buttonReject.TabIndex = 0;
@@ -288,7 +288,7 @@ namespace IrRfidUHFDemo
             // 
             // buttonOut
             // 
-            this.buttonOut.Location = new System.Drawing.Point(115, 146);
+            this.buttonOut.Location = new System.Drawing.Point(115, 151);
             this.buttonOut.Name = "buttonOut";
             this.buttonOut.Size = new System.Drawing.Size(54, 26);
             this.buttonOut.TabIndex = 0;
@@ -305,7 +305,7 @@ namespace IrRfidUHFDemo
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(230, 202);
+            this.tabPage1.Size = new System.Drawing.Size(230, 207);
             this.tabPage1.Text = "采集";
             // 
             // label5
@@ -363,7 +363,7 @@ namespace IrRfidUHFDemo
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(238, 231);
+            this.tabControl1.Size = new System.Drawing.Size(238, 236);
             this.tabControl1.TabIndex = 11;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -374,7 +374,6 @@ namespace IrRfidUHFDemo
             this.tabPage4.Controls.Add(this.label8);
             this.tabPage4.Controls.Add(this.comboBoxInvListNo);
             this.tabPage4.Controls.Add(this.label7);
-            this.tabPage4.Controls.Add(this.label4);
             this.tabPage4.Controls.Add(this.comboBoxMan);
             this.tabPage4.Controls.Add(this.comboBoxAddr);
             this.tabPage4.Controls.Add(this.comboBoxDept);
@@ -382,7 +381,7 @@ namespace IrRfidUHFDemo
             this.tabPage4.Controls.Add(this.label3);
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(230, 202);
+            this.tabPage4.Size = new System.Drawing.Size(230, 207);
             this.tabPage4.Text = "盘点";
             // 
             // buttonHideCheck
@@ -400,9 +399,9 @@ namespace IrRfidUHFDemo
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listView2.ContextMenu = this.contextMenuShowDetail;
             this.listView2.FullRowSelect = true;
-            this.listView2.Location = new System.Drawing.Point(-2, 91);
+            this.listView2.Location = new System.Drawing.Point(-2, 86);
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(236, 90);
+            this.listView2.Size = new System.Drawing.Size(236, 125);
             this.listView2.TabIndex = 2;
             this.listView2.View = System.Windows.Forms.View.Details;
             // 
@@ -428,13 +427,6 @@ namespace IrRfidUHFDemo
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(50, 20);
             this.label7.Text = "清单：";
-            // 
-            // label4
-            // 
-            this.label4.Location = new System.Drawing.Point(0, 184);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(226, 20);
-            this.label4.Text = "总计 0;已盘 0;异常 0;未盘点 0.";
             // 
             // comboBoxMan
             // 
@@ -474,6 +466,11 @@ namespace IrRfidUHFDemo
             this.label3.Size = new System.Drawing.Size(51, 19);
             this.label3.Text = "部门：";
             // 
+            // timer2
+            // 
+            this.timer2.Interval = 3000;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -487,7 +484,7 @@ namespace IrRfidUHFDemo
             this.Controls.Add(this.tabControl1);
             this.KeyPreview = true;
             this.Name = "MainForm";
-            this.Text = "Read2PcForm";
+            this.Text = "Asset System";
             this.Load += new System.EventHandler(this.Read2PcForm_Load);
             this.Closing += new System.ComponentModel.CancelEventHandler(this.Read2PcForm_Closing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Read2PcForm_KeyUp);
@@ -538,7 +535,6 @@ namespace IrRfidUHFDemo
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox comboBoxInvListNo;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBoxMan;
         private System.Windows.Forms.ComboBox comboBoxDept;
         private System.Windows.Forms.Label label3;
@@ -546,5 +542,6 @@ namespace IrRfidUHFDemo
         private System.Windows.Forms.ComboBox comboBoxAddr;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button buttonHideCheck;
+        private System.Windows.Forms.Timer timer2;
     }
 }

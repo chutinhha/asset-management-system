@@ -52,12 +52,26 @@ namespace IrRfidUHFDemo
 
             SettingForm.LoadSetting();
 
+            textBoxUser.Text = SettingForm.sUser;
+            textBoxPass.Text = SettingForm.sPass;
+
+            if (textBoxPass.Text.Length != 0)
+            {
+                checkBoxStorePass.Checked = true;
+            }
+            
+
             if (SettingForm.sClientId.Equals("PC") || SettingForm.sClientId.Length == 0)
             {
                 SettingForm.sClientId = "";
                 MessageBox.Show("初次使用，请设置客户端ID!\r\r注：请勿与其他手持机重复，否则会发生同步错误！");
                 SettingForm dlg = new SettingForm();
                 dlg.ShowDialog();
+                //初始化同步
+                MainForm f = new MainForm(this);
+                f.bIsFirstIni = true;
+                f.ShowDialog();
+
             }
             //setting.Load(sCodePath + "\\setting.xml");
             //IniFile f = new IniFile();
@@ -85,6 +99,12 @@ namespace IrRfidUHFDemo
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
+
+            if (textBoxUser.Text.Length == 0 || textBoxPass.Text.Length == 0)
+            {
+                MessageBox.Show("账号或密码不能为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                return;
+            }
             //SQLite方式
             string sSql = "select * from user where user_no = \'" + textBoxUser.Text + "\'";
             SQLiteDataReader reader = SQLiteHelper.ExecuteReader(sSql, null);
@@ -94,57 +114,9 @@ namespace IrRfidUHFDemo
             {
                 sPass = reader["pass"].ToString();
                 sUserName = reader["user_nam"].ToString();
-               // sCompany = reader["company"].ToString();
                 sStat = reader["stat"].ToString();
             }
             reader.Close();
-            ///XML方式
-            //string sPass = "";
-            //string sFilename = LoginForm.sCodePath + "\\user.xml";
-            //XmlDocument xmlDoc = new XmlDocument();
-            //xmlDoc.Load(sFilename);
-            //XmlNodeList xnl = xmlDoc.SelectSingleNode("user").ChildNodes;
-            //foreach (XmlNode xnf in xnl)
-            //{
-            //    XmlElement xe = (XmlElement)xnf;
-            //    XmlNodeList xnf1 = xe.ChildNodes;
-            //    //寻找PID
-            //    bool bFindPid = false;
-            //    foreach (XmlNode xn2 in xnf1)
-            //    {
-            //        if (xn2.Name == "user_no")
-            //        {
-            //            if (xn2.InnerText == textBoxUser.Text)
-            //            {
-            //                bFindPid = true;
-            //            }
-            //            break;
-            //        }
-            //    }//xn2
-            //    if (bFindPid)
-            //    {
-            //        foreach (XmlNode xn2 in xnf1)
-            //        {
-            //            if (xn2.Name == "pass")
-            //            {
-            //                sPass = xn2.InnerText;
-            //            }
-            //            else  if (xn2.Name == "user_nam")
-            //            {
-            //                sUserName = xn2.InnerText;
-            //            }
-            //            else if (xn2.Name == "role")
-            //            {
-            //                sRole = xn2.InnerText;
-            //            }
-            //            else if (xn2.Name == "company")
-            //            {
-            //                sCompany = xn2.InnerText;
-            //            }
-            //        }
-            //        break;
-            //    }
-            //}
             if (!bLogin)
             {
                 if (sPass.Equals(textBoxPass.Text))
@@ -162,10 +134,29 @@ namespace IrRfidUHFDemo
 " + SettingForm.sCompany + @"
 欢迎使用!";
                         buttonStart.Visible = true;
+
+                        if (checkBoxStorePass.Checked)
+                        {
+                            sSql = string.Format("update sys_parms set  parm_nam = '{0}',parm_val = '{1}' where parm_id = 'store_accont'", textBoxUser.Text, sPass);
+                            SQLiteHelper.ExecuteNonQuery(sSql, null);
+                            SettingForm.sUser = textBoxUser.Text;
+                            SettingForm.sPass = textBoxPass.Text;
+                        }
+                        else
+                        {
+                            sSql = string.Format("update sys_parms set  parm_nam = '{0}',parm_val = '{1}' where parm_id = 'store_accont'", textBoxUser.Text, "");
+                            SQLiteHelper.ExecuteNonQuery(sSql, null);
+                            SettingForm.sUser = textBoxUser.Text;
+                            SettingForm.sPass = "";
+                            textBoxPass.Text = "";
+                        }
+
                         MainForm dlg = new MainForm(this);
                         dlg.ShowDialog();
                        // nRet = 1;
                        // this.Close();
+
+
                     }
                     else
                     {
@@ -237,7 +228,7 @@ namespace IrRfidUHFDemo
             }
             else if (e.KeyCode == Keys.F1)
             {
-              //  buttonRead2Pc_Click(null, null);
+                buttonStart_Click(null, null);
             }
             else if (e.KeyCode == Keys.Enter)
             {

@@ -521,64 +521,7 @@ namespace AssMngSys
         }
         private bool AssChange(string sTyp, string sDept, string sMan, string sAddr, string sReason, out string sErr, List<string> listAssid)
         {
-            List<string> listSql = new List<string>();
-            List<string> listSqlLog = new List<string>();
-            string sUpd = string.Format("update ass_list set stat_sub = '{0}',use_man = '{1}',use_dept = '{2}',mod_tm = '{3}'", sTyp, sMan, sDept, MainForm.getDateTime());
-            //if (sAddr.Length != 0)
-            //{
-            //    sUpd += ",addr = '" + sAddr + "' ";
-            //}
-            string sIns = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr) select ass_id,'{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}',addr from ass_list ", sTyp, sMan, MainForm.getDate(), MainForm.sUserName,MainForm.getDateTime(), MainForm.sCompany, sDept, sReason);
-            foreach (string sAssId in listAssid)
-            {
-                //更新
-                string sSqlUpd = sUpd + " where ass_id = '" + sAssId + "'";
-
-                string sSqlUpdLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-                    sTyp, "0", sSqlUpd.Replace("'", "\\'"), MainForm.sClientId, sAssId, MainForm.getDateTime());
-
-                //插入
-                string sSqlIns = sIns + " where ass_id = '" + sAssId + "'";
-
-                string sSqlInsLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-                    sTyp, "0", sSqlIns.Replace("'", "\\'"), MainForm.sClientId, sAssId, MainForm.getDateTime());
-
-                listSql.Add(sSqlUpd);
-                listSql.Add(sSqlIns);
-                listSqlLog.Add(sSqlUpdLog);
-                listSqlLog.Add(sSqlInsLog);
-            }
-            bool bOK = false;
-            foreach (string sTmp in listSqlLog)
-            {
-                listSql.Add(sTmp);
-            }
-            bOK = MysqlHelper.ExecuteNoQueryTran(listSql);
-            sErr = MysqlHelper.sLastErr;
-            return bOK;
-        }
-
-        private void DeptSelectChanged(ComboBox dept, ComboBox emp)
-        {
-            //获取人员列表
-            emp.Text = "";
-            emp.Items.Clear();
-            string sSql = "select emp_nam from emp where dept_nam = \'" + dept.Text + "\'";
-            MySqlDataReader reader = MysqlHelper.ExecuteReader(sSql);
-            while (reader.Read())
-            {
-                emp.Items.Add(reader["emp_nam"].ToString());
-            }
-
-            if (emp.Items.Count == 1)
-            {
-                emp.SelectedIndex = 0;
-            }
-            else
-            {
-                emp.Focus();
-                emp.DroppedDown = true;
-            }
+            return AssSupply.AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, listAssid);
         }
 
         private void comboBoxDept_SelectedIndexChanged(object sender, EventArgs e)

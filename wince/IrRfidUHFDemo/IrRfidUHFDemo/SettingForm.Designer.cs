@@ -43,6 +43,7 @@ namespace IrRfidUHFDemo
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.buttonTest = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonSaveSet
@@ -104,7 +105,7 @@ namespace IrRfidUHFDemo
             // 
             this.textBoxWebSrvIp.Location = new System.Drawing.Point(69, 93);
             this.textBoxWebSrvIp.Name = "textBoxWebSrvIp";
-            this.textBoxWebSrvIp.Size = new System.Drawing.Size(109, 23);
+            this.textBoxWebSrvIp.Size = new System.Drawing.Size(101, 23);
             this.textBoxWebSrvIp.TabIndex = 16;
             // 
             // label2
@@ -148,12 +149,22 @@ namespace IrRfidUHFDemo
             this.label8.Size = new System.Drawing.Size(210, 20);
             this.label8.Text = "-- UDPÕ®–≈…Ë÷√ ---------------------";
             // 
+            // buttonTest
+            // 
+            this.buttonTest.Location = new System.Drawing.Point(176, 93);
+            this.buttonTest.Name = "buttonTest";
+            this.buttonTest.Size = new System.Drawing.Size(53, 23);
+            this.buttonTest.TabIndex = 31;
+            this.buttonTest.Text = "≤‚ ‘";
+            this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
+            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(238, 268);
+            this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.comboBoxClientId);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSaveSet);
@@ -171,7 +182,7 @@ namespace IrRfidUHFDemo
             this.Name = "SettingForm";
             this.Text = "Setting";
             this.Load += new System.EventHandler(this.Setting_Load);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SettingForm_KeyUp);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SettingForm_KeyUp);
             this.ResumeLayout(false);
 
         }
@@ -191,5 +202,6 @@ namespace IrRfidUHFDemo
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button buttonTest;
     }
 }

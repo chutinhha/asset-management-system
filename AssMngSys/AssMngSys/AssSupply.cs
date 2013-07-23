@@ -46,6 +46,7 @@ namespace AssMngSys
             {
                 comboBoxDept.Items.Add(reader["dept_nam"].ToString());
             }
+            reader.Close();
             //获取人员列表
             sSql = "select distinct emp_nam from emp order by convert(emp_nam using gb2312) asc";
             reader = MysqlHelper.ExecuteReader(sSql);
@@ -53,6 +54,7 @@ namespace AssMngSys
             {
                 comboBoxMan.Items.Add(reader["emp_nam"].ToString());
             }
+            reader.Close();
             //获取地址列表
             sSql = "select distinct addr_no from addr";
             reader = MysqlHelper.ExecuteReader(sSql);
@@ -60,6 +62,7 @@ namespace AssMngSys
             {
                 comboBoxAddr.Items.Add(reader["addr_no"].ToString());
             }
+            reader.Close();
         }
 
         private void RecvDataEvent(object sender, RecvEventArgs e)
@@ -514,7 +517,7 @@ namespace AssMngSys
             }
             else//借用，归还，送修，修返，外出，返回
             {
-                sUpd = string.Format("update ass_list set stat_sub = '{0}',use_man = '{1}',use_dept = '{2}',mod_tm = '{3}'", sTyp, sMan, sDept, MainForm.getDateTime());
+                sUpd = string.Format("update ass_list set stat_sub = '{0}',duty_man = '{1}',dept = '{2}',mod_tm = '{3}'", sTyp, sMan, sDept, MainForm.getDateTime());
             }
 
             string sSql = "";
@@ -522,7 +525,7 @@ namespace AssMngSys
             {
                 if (sAssId.Length == 0) continue;
                 //更新
-                sSql = sUpd + " where ass_id = '" + sAssId + "'";
+                sSql = sUpd + " where ass_id = '" + sAssId + "' and ynenable = 'Y'";
                 listSql.Add(sSql);
                 //插入
                 sSql = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')",

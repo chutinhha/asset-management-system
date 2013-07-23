@@ -103,7 +103,8 @@ namespace IrRfidUHFDemo
             }
             else
             {
-                buttonSyncDiff_Click(null,null);
+                 timer2.Enabled = true;
+                 ShowStat(listBox1, "自动同步中 ...");
             }
 
 
@@ -266,9 +267,26 @@ namespace IrRfidUHFDemo
             if (bOK)
             {
                 listView2.Items[nIndex].SubItems[ChkIndex.result].Text = sTpe;
-                listView2.Items[nIndex].BackColor = Color.FromArgb(0, 255, 0);
-                nCheck++;
-                //label4.Text = string.Format("总计 {0};已盘 {1};异常 {2};未盘点 {3}.", nAll, nCheck, nExp, nAll - nCheck);
+                if (sTpe == "自动盘点")
+                {
+                    listView2.Items[nIndex].BackColor = Color.FromArgb(124, 255, 0);
+                    nCheck++;
+                }
+                else if (sTpe == "手动盘点")
+                {
+                    listView2.Items[nIndex].BackColor = Color.FromArgb(0, 255, 0);
+                    nCheck++;
+                }
+                else if (sTpe == "丢失")
+                {
+                    listView2.Items[nIndex].BackColor = Color.FromArgb(255, 0, 0);
+                    nCheck++;
+                }
+                else if (sTpe == "报废")
+                {
+                    listView2.Items[nIndex].BackColor = Color.FromArgb(255, 69, 0);
+                    nExp++;
+                }
                 sumCheckText();
             }
             else
@@ -535,7 +553,7 @@ namespace IrRfidUHFDemo
             sAssId = "";
             sStat = "";
             //SQLite方式
-            string sSql = "select ass_id,stat from ass_list where pid = \'" + sPid + "\'";
+            string sSql = "select ass_id,stat from ass_list where pid = \'" + sPid + "\'  and ynenable = 'Y'";
             SQLiteDataReader reader = SQLiteHelper.ExecuteReader(sSql, null);
             if (reader.Read())
             {
@@ -548,7 +566,7 @@ namespace IrRfidUHFDemo
         {
             string sStat = "";
             //SQLite方式
-            string sSql = "select stat from ass_list where pid = \'" + sPid + "\'";
+            string sSql = "select stat from ass_list where pid = \'" + sPid + "\' and ynenable = 'Y'";
             SQLiteDataReader reader = SQLiteHelper.ExecuteReader(sSql, null);
             if (reader.Read())
             {
@@ -675,13 +693,14 @@ namespace IrRfidUHFDemo
                     if (bOK)
                     {
                         MessageBox.Show("操作成功！");
+                        buttonSyncDiff_Click(null, null);
                     }
                     else
                     {
                         MessageBox.Show("操作失败！\r\n" + sErr);
                     }
                 }
-                else if (checkoptform.sOptTyp == "报废" || checkoptform.sOptTyp == "报失")
+                else if (checkoptform.sOptTyp == "报废" || checkoptform.sOptTyp == "丢失")
                 {
                     GetReasonForm f = new GetReasonForm(checkoptform.sOptTyp);
                     f.ShowDialog();
@@ -960,7 +979,7 @@ namespace IrRfidUHFDemo
             {
                 if (sAssId.Length == 0) continue;
                 //更新
-                sSql = sUpd + " where ass_id = '" + sAssId + "'";
+                sSql = sUpd + " where ass_id = '" + sAssId + "' and ynenable = 'Y'";
                 listSql.Add(sSql);
                 //插入
                 sSql = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')",
@@ -1461,7 +1480,7 @@ namespace IrRfidUHFDemo
                     string sAssId = dataRow["ass_id"].ToString();
                     ShowStat(listBox1, "内容:" + sAssId + " " + sTyp);
                     listSql.Add(sSqlContent);
-                    Console.Out.WriteLine(sSqlContent);
+                 //   Console.Out.WriteLine(sSqlContent);
                 }
                 listSql.Add(string.Format("update sys_parms set parm_val = '{0}' where parm_id = '{1}'", sMax, "sync_max"));
 
@@ -1475,7 +1494,7 @@ namespace IrRfidUHFDemo
                 else
                 {
                     ShowStat(listBox1, "提交失败!" + SQLiteHelper.sLastErr);
-                    Console.Out.WriteLine(SQLiteHelper.sLastErr);
+                  //  Console.Out.WriteLine(SQLiteHelper.sLastErr);
                     MessageBox.Show(SQLiteHelper.sLastErr);
                 }
             }

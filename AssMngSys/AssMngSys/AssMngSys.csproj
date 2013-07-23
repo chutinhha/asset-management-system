@@ -48,11 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssInput.cs">
+    <Compile Include="NewAssDlg.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AssInput.Designer.cs">
-      <DependentUpon>AssInput.cs</DependentUpon>
+    <Compile Include="NewAssDlg.Designer.cs">
+      <DependentUpon>NewAssDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AssInput_Bak.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AssInput_Bak.Designer.cs">
+      <DependentUpon>AssInput_Bak.cs</DependentUpon>
     </Compile>
     <Compile Include="AssUse.cs">
       <SubType>Form</SubType>
@@ -60,17 +66,17 @@
     <Compile Include="AssUse.Designer.cs">
       <DependentUpon>AssUse.cs</DependentUpon>
     </Compile>
-    <Compile Include="AssSupplyBak.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AssSupplyBak.Designer.cs">
-      <DependentUpon>AssSupplyBak.cs</DependentUpon>
-    </Compile>
     <Compile Include="AssLogoff.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AssLogoff.Designer.cs">
       <DependentUpon>AssLogoff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AssInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AssInput.Designer.cs">
+      <DependentUpon>AssInput.cs</DependentUpon>
     </Compile>
     <Compile Include="QryAssList.cs">
       <SubType>Form</SubType>
@@ -117,20 +123,24 @@
     <Compile Include="MysqlHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AssInput.resx">
+    <EmbeddedResource Include="NewAssDlg.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>AssInput.cs</DependentUpon>
+      <DependentUpon>NewAssDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AssInput_Bak.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AssInput_Bak.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AssUse.resx">
       <DependentUpon>AssUse.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="AssSupplyBak.resx">
-      <DependentUpon>AssSupplyBak.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="AssLogoff.resx">
       <DependentUpon>AssLogoff.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AssInput.resx">
+      <DependentUpon>AssInput.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="QryAssList.resx">
@@ -221,6 +231,48 @@
     </None>
     <None Include="Web References\WebSrv\Service.disco" />
     <None Include="Web References\WebSrv\Service.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\find.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\remove.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\note pad.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\copy.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\forward.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ok.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\call.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\db.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user group.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imac.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\info.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\run.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

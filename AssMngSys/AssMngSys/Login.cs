@@ -11,8 +11,8 @@ namespace AssMngSys
 {
     public partial class Login : Form
     {
-        public string sCompany = "深圳总公司";
-        public string sUserName = "SYS";
+        public string sCompany = "";
+        public string sUserName = "";
         public  int nRet = 0;//0 登陆失败，1 登陆成功，2 取消登陆
         public Login()
         {

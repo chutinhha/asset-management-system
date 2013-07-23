@@ -92,9 +92,9 @@ namespace IrRfidUHFDemo
                 buttonReturn.Text = "报废(Ent)";
                 buttonOK.Visible = false;
             }
-            else if (sTyp == "报失")
+            else if (sTyp == "丢失")
             {
-                buttonReturn.Text = "报失(Ent)";
+                buttonReturn.Text = "丢失(Ent)";
                 buttonOK.Visible = false;
             }
             else if (sTyp == "转出")

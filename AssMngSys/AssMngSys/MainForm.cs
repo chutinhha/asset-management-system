@@ -67,19 +67,19 @@ namespace AssMngSys
             //treeView1.EndUpdate();
             treeView1.BeginUpdate();
             treeView1.Nodes.Clear();
-      //      treeView1.ImageList = imageList1;
-       //     treeView1.ImageIndex = 0;
-      //      treeView1.SelectedImageIndex = 1;
+            treeView1.ImageList = imageList1;
+           treeView1.ImageIndex = 0;
+           treeView1.SelectedImageIndex = 1;
             treeView1.Nodes.Add("基本资料");
-            //treeView1.Nodes[0].ImageIndex = 2;
-            //treeView1.Nodes[0].SelectedImageIndex = 3;
+            treeView1.Nodes[0].ImageIndex = 2;
+            treeView1.Nodes[0].SelectedImageIndex = 3;
             treeView1.Nodes[0].Nodes.Add("资产登记");
             //treeView1.Nodes[0].Nodes.Add("标签打印");
             //treeView1.Nodes[0].Nodes.Add("资产入库");
 
             treeView1.Nodes.Add("资产管理");
-            //treeView1.Nodes[1].ImageIndex = 2;
-            //treeView1.Nodes[1].SelectedImageIndex = 3;
+            treeView1.Nodes[1].ImageIndex = 2;
+            treeView1.Nodes[1].SelectedImageIndex = 3;
             treeView1.Nodes[1].Nodes.Add("领用管理");
             treeView1.Nodes[1].Nodes.Add("使用管理");
             treeView1.Nodes[1].Nodes.Add("资产注销");
@@ -87,13 +87,13 @@ namespace AssMngSys
             //treeView1.Nodes[1].Nodes.Add("资产报废");
             //treeView1.Nodes[1].Nodes.Add("资产转出");
             treeView1.Nodes.Add("资产盘点");
-            //treeView1.Nodes[2].ImageIndex = 2;
-            //treeView1.Nodes[2].SelectedImageIndex = 3;
+            treeView1.Nodes[2].ImageIndex = 2;
+            treeView1.Nodes[2].SelectedImageIndex = 3;
             treeView1.Nodes[2].Nodes.Add("创建清单");
             treeView1.Nodes[2].Nodes.Add("清单查询");
             treeView1.Nodes.Add("查询统计");
- //           treeView1.Nodes[3].ImageIndex = 2;
-//            treeView1.Nodes[3].SelectedImageIndex = 3;
+            treeView1.Nodes[3].ImageIndex = 2;
+            treeView1.Nodes[3].SelectedImageIndex = 3;
             treeView1.Nodes[3].Nodes.Add("资产清单");
             treeView1.Nodes[3].Nodes.Add("资产历史");
             treeView1.EndUpdate();
@@ -229,23 +229,20 @@ namespace AssMngSys
                 curForm = null;
             }
 
-            AddLog(treeView1.SelectedNode.Text);
+           // AddLog(treeView1.SelectedNode.Text);
             if (treeView1.SelectedNode.Text.Equals("资产登记"))
             {
-               // MessageBox.Show(treeView1.SelectedNode.Text.ToString());
                 splitContainer1.Panel2.Controls.Clear();//这里是清空panel2中的控件的。
                 AssInput obj = new AssInput(this);
                 obj.TopLevel = false;
                 obj.MdiParent = this;//这句代码也要写上，否则会出错。
                 obj.Parent = splitContainer1.Panel2;   //Form3的parent是panel2.  
-                obj.textBoxLog = textBoxLog;
+                //obj.textBoxLog = textBoxLog;
                 obj.FormBorderStyle = FormBorderStyle.None;
                 obj.WindowState = FormWindowState.Maximized;
                 obj.BringToFront();
-                obj.Anchor = AnchorStyles.Left | AnchorStyles.Top; //AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-                //obj.Dock = DockStyle.Fill;     
+                obj.Anchor = AnchorStyles.Left | AnchorStyles.Top;
                 obj.Show();
-               
                 curForm = obj;
             }
             else if (treeView1.SelectedNode.Text.Equals("领用管理"))
@@ -353,6 +350,7 @@ namespace AssMngSys
                 obj.Show();
                 curForm = obj;
             }
+
         }
 
         private void textBoxLog_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -410,7 +408,36 @@ namespace AssMngSys
         private void MenuItemQuit_Click(object sender, EventArgs e)
         {
              this.Close();
-        }    
+        }
 
+        private void ttoolStripButtonAssInput_Click(object sender, EventArgs e)
+        {
+            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[0];
+            treeView1_DoubleClick(null, null);
+        }
+
+        private void toolStripButtonSupply_Click(object sender, EventArgs e)
+        {
+            treeView1.SelectedNode = treeView1.Nodes[1].Nodes[0];
+            treeView1_DoubleClick(null, null);
+        }
+
+        private void toolStripButtonUse_Click(object sender, EventArgs e)
+        {
+            treeView1.SelectedNode = treeView1.Nodes[1].Nodes[1];
+            treeView1_DoubleClick(null, null);
+        }
+
+        private void toolStripButtonLogoff_Click(object sender, EventArgs e)
+        {
+            treeView1.SelectedNode = treeView1.Nodes[1].Nodes[2];
+            treeView1_DoubleClick(null, null);
+        }
+
+        private void toolStripButtonInv_Click(object sender, EventArgs e)
+        {
+            treeView1.SelectedNode = treeView1.Nodes[2].Nodes[0];
+            treeView1_DoubleClick(null, null);
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace AssMngSys
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
+            //MessageBox.Show(int32.MaxValue.ToString());
             if (textBoxUser.Text.Length == 0 || textBoxPass.Text.Length == 0)
             {
                 MessageBox.Show("账号密码不能为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -31,11 +31,7 @@ namespace AssMngSys
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvList));
             this.label1 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.comboBoxDept = new System.Windows.Forms.ComboBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
             this.buttonQry = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
@@ -67,10 +63,16 @@ namespace AssMngSys
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.comboBoxInvNo = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonQryHistory = new System.Windows.Forms.Button();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.bindingSource2 = new System.Windows.Forms.BindingSource(this.components);
-            this.buttonDelete = new System.Windows.Forms.Button();
+            this.comboBoxAddr = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
@@ -87,22 +89,11 @@ namespace AssMngSys
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(339, 33);
+            this.label1.Location = new System.Drawing.Point(15, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 0;
             this.label1.Text = "部门：";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(3, 31);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(84, 16);
-            this.checkBox1.TabIndex = 1;
-            this.checkBox1.Text = "录入日期：";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // comboBoxDept
             // 
@@ -112,43 +103,20 @@ namespace AssMngSys
             this.comboBoxDept.DropDownWidth = 450;
             this.comboBoxDept.FormattingEnabled = true;
             this.comboBoxDept.IntegralHeight = false;
-            this.comboBoxDept.Location = new System.Drawing.Point(386, 28);
+            this.comboBoxDept.Location = new System.Drawing.Point(62, 18);
             this.comboBoxDept.Name = "comboBoxDept";
             this.comboBoxDept.Size = new System.Drawing.Size(349, 20);
             this.comboBoxDept.TabIndex = 11;
             // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Enabled = false;
-            this.dateTimePicker1.Location = new System.Drawing.Point(87, 27);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(113, 21);
-            this.dateTimePicker1.TabIndex = 12;
-            // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.Enabled = false;
-            this.dateTimePicker2.Location = new System.Drawing.Point(216, 28);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(113, 21);
-            this.dateTimePicker2.TabIndex = 12;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(202, 33);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(11, 12);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "-";
-            // 
             // buttonQry
             // 
-            this.buttonQry.Location = new System.Drawing.Point(751, 21);
+            this.buttonQry.Image = global::AssMngSys.Properties.Resources.find;
+            this.buttonQry.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonQry.Location = new System.Drawing.Point(350, 51);
             this.buttonQry.Name = "buttonQry";
             this.buttonQry.Size = new System.Drawing.Size(121, 36);
             this.buttonQry.TabIndex = 14;
-            this.buttonQry.Text = "查询";
+            this.buttonQry.Text = "    查询(&Q)";
             this.buttonQry.UseVisualStyleBackColor = true;
             this.buttonQry.Click += new System.EventHandler(this.buttonQry_Click);
             // 
@@ -158,11 +126,11 @@ namespace AssMngSys
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 104);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 97);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(872, 343);
+            this.dataGridView1.Size = new System.Drawing.Size(872, 350);
             this.dataGridView1.TabIndex = 15;
             // 
             // bindingNavigator1
@@ -262,18 +230,20 @@ namespace AssMngSys
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(750, 63);
+            this.buttonSave.Image = global::AssMngSys.Properties.Resources.save;
+            this.buttonSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonSave.Location = new System.Drawing.Point(732, 52);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(122, 35);
             this.buttonSave.TabIndex = 14;
-            this.buttonSave.Text = "保存";
+            this.buttonSave.Text = "    保存(&S)";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(494, 74);
+            this.label3.Location = new System.Drawing.Point(484, 64);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 0;
@@ -281,7 +251,7 @@ namespace AssMngSys
             // 
             // textBoxInvId
             // 
-            this.textBoxInvId.Location = new System.Drawing.Point(559, 69);
+            this.textBoxInvId.Location = new System.Drawing.Point(543, 60);
             this.textBoxInvId.Name = "textBoxInvId";
             this.textBoxInvId.Size = new System.Drawing.Size(176, 21);
             this.textBoxInvId.TabIndex = 17;
@@ -306,10 +276,12 @@ namespace AssMngSys
             this.tabPage1.Controls.Add(this.bindingNavigator1);
             this.tabPage1.Controls.Add(this.dataGridView1);
             this.tabPage1.Controls.Add(this.textBoxInvId);
+            this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.checkBox1);
             this.tabPage1.Controls.Add(this.buttonSave);
+            this.tabPage1.Controls.Add(this.comboBoxAddr);
             this.tabPage1.Controls.Add(this.comboBoxDept);
             this.tabPage1.Controls.Add(this.buttonQry);
             this.tabPage1.Controls.Add(this.dateTimePicker2);
@@ -439,11 +411,11 @@ namespace AssMngSys
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(-1, 75);
+            this.dataGridView2.Location = new System.Drawing.Point(-1, 58);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowTemplate.Height = 23;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(872, 374);
+            this.dataGridView2.Size = new System.Drawing.Size(872, 391);
             this.dataGridView2.TabIndex = 25;
             // 
             // comboBoxInvNo
@@ -463,25 +435,86 @@ namespace AssMngSys
             this.label4.TabIndex = 18;
             this.label4.Text = "清单号：";
             // 
-            // buttonQryHistory
-            // 
-            this.buttonQryHistory.Location = new System.Drawing.Point(248, 17);
-            this.buttonQryHistory.Name = "buttonQryHistory";
-            this.buttonQryHistory.Size = new System.Drawing.Size(115, 35);
-            this.buttonQryHistory.TabIndex = 23;
-            this.buttonQryHistory.Text = "查询";
-            this.buttonQryHistory.UseVisualStyleBackColor = true;
-            this.buttonQryHistory.Click += new System.EventHandler(this.buttonQryHistory_Click);
-            // 
             // buttonDelete
             // 
+            this.buttonDelete.Image = global::AssMngSys.Properties.Resources.stop;
+            this.buttonDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonDelete.Location = new System.Drawing.Point(369, 17);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(115, 35);
             this.buttonDelete.TabIndex = 23;
-            this.buttonDelete.Text = "删除";
+            this.buttonDelete.Text = "    删除(&D)";
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            // 
+            // buttonQryHistory
+            // 
+            this.buttonQryHistory.Image = global::AssMngSys.Properties.Resources.find;
+            this.buttonQryHistory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonQryHistory.Location = new System.Drawing.Point(248, 17);
+            this.buttonQryHistory.Name = "buttonQryHistory";
+            this.buttonQryHistory.Size = new System.Drawing.Size(115, 35);
+            this.buttonQryHistory.TabIndex = 23;
+            this.buttonQryHistory.Text = "    查询(&Q)";
+            this.buttonQryHistory.UseVisualStyleBackColor = true;
+            this.buttonQryHistory.Click += new System.EventHandler(this.buttonQryHistory_Click);
+            // 
+            // comboBoxAddr
+            // 
+            this.comboBoxAddr.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxAddr.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.comboBoxAddr.DropDownHeight = 300;
+            this.comboBoxAddr.FormattingEnabled = true;
+            this.comboBoxAddr.IntegralHeight = false;
+            this.comboBoxAddr.Location = new System.Drawing.Point(477, 18);
+            this.comboBoxAddr.Name = "comboBoxAddr";
+            this.comboBoxAddr.Size = new System.Drawing.Size(228, 20);
+            this.comboBoxAddr.TabIndex = 11;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(430, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 12);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "地点：";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(216, 64);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(11, 12);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "-";
+            // 
+            // dateTimePicker2
+            // 
+            this.dateTimePicker2.Enabled = false;
+            this.dateTimePicker2.Location = new System.Drawing.Point(230, 59);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.Size = new System.Drawing.Size(113, 21);
+            this.dateTimePicker2.TabIndex = 12;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(17, 62);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(84, 16);
+            this.checkBox1.TabIndex = 1;
+            this.checkBox1.Text = "录入日期：";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Enabled = false;
+            this.dateTimePicker1.Location = new System.Drawing.Point(101, 58);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(113, 21);
+            this.dateTimePicker1.TabIndex = 12;
             // 
             // InvList
             // 
@@ -515,11 +548,7 @@ namespace AssMngSys
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.ComboBox comboBoxDept;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonQry;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.BindingNavigator bindingNavigator1;
@@ -555,5 +584,11 @@ namespace AssMngSys
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.BindingSource bindingSource2;
         private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ComboBox comboBoxAddr;
+        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.Label label2;
     }
 }

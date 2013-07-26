@@ -39,11 +39,13 @@ namespace AssMngSys
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.textBoxId = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonCopy = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonMod = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDel = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonQry = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonCopy = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonPrint = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
@@ -70,7 +72,7 @@ namespace AssMngSys
             this.dataGridView1.RowHeadersWidth = 50;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(869, 515);
+            this.dataGridView1.Size = new System.Drawing.Size(876, 515);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             // 
@@ -147,15 +149,22 @@ namespace AssMngSys
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonAdd,
-            this.toolStripButtonCopy,
             this.toolStripButtonMod,
             this.toolStripButtonDel,
-            this.toolStripButtonQry});
+            this.toolStripButtonQry,
+            this.toolStripButtonCopy,
+            this.toolStripSeparator1,
+            this.toolStripButtonPrint});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(881, 25);
             this.toolStrip1.TabIndex = 17;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButtonAdd
             // 
@@ -165,6 +174,16 @@ namespace AssMngSys
             this.toolStripButtonAdd.Size = new System.Drawing.Size(49, 22);
             this.toolStripButtonAdd.Text = "新增";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
+            // 
+            // toolStripButtonCopy
+            // 
+            this.toolStripButtonCopy.Image = global::AssMngSys.Properties.Resources.copy;
+            this.toolStripButtonCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonCopy.Name = "toolStripButtonCopy";
+            this.toolStripButtonCopy.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButtonCopy.Text = "复制";
+            this.toolStripButtonCopy.ToolTipText = "复制(新增类似资产)";
+            this.toolStripButtonCopy.Click += new System.EventHandler(this.toolStripButtonCopy_Click);
             // 
             // toolStripButtonMod
             // 
@@ -177,7 +196,7 @@ namespace AssMngSys
             // 
             // toolStripButtonDel
             // 
-            this.toolStripButtonDel.Image = global::AssMngSys.Properties.Resources.note_pad;
+            this.toolStripButtonDel.Image = global::AssMngSys.Properties.Resources.file_edit;
             this.toolStripButtonDel.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDel.Name = "toolStripButtonDel";
             this.toolStripButtonDel.Size = new System.Drawing.Size(49, 22);
@@ -193,15 +212,15 @@ namespace AssMngSys
             this.toolStripButtonQry.Text = "查询";
             this.toolStripButtonQry.Click += new System.EventHandler(this.toolStripButtonQry_Click);
             // 
-            // toolStripButtonCopy
+            // toolStripButtonPrint
             // 
-            this.toolStripButtonCopy.Image = global::AssMngSys.Properties.Resources.copy;
-            this.toolStripButtonCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonCopy.Name = "toolStripButtonCopy";
-            this.toolStripButtonCopy.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButtonCopy.Text = "复制";
-            this.toolStripButtonCopy.ToolTipText = "复制(新增类似资产)";
-            this.toolStripButtonCopy.Click += new System.EventHandler(this.toolStripButtonCopy_Click);
+            this.toolStripButtonPrint.Image = global::AssMngSys.Properties.Resources.print;
+            this.toolStripButtonPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonPrint.Name = "toolStripButtonPrint";
+            this.toolStripButtonPrint.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButtonPrint.Text = "打印";
+            this.toolStripButtonPrint.ToolTipText = "打印选中项";
+            this.toolStripButtonPrint.Click += new System.EventHandler(this.toolStripButtonPrint_Click);
             // 
             // bindingNavigatorMoveFirstItem
             // 
@@ -288,5 +307,7 @@ namespace AssMngSys
         private System.Windows.Forms.ToolStripButton toolStripButtonDel;
         private System.Windows.Forms.ToolStripButton toolStripButtonQry;
         private System.Windows.Forms.ToolStripButton toolStripButtonCopy;
+        private System.Windows.Forms.ToolStripButton toolStripButtonPrint;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

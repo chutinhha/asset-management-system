@@ -47,16 +47,16 @@ namespace AssMngSys
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.textBoxUser);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(12, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(331, 168);
+            this.groupBox1.Size = new System.Drawing.Size(331, 171);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "登陆";
+            this.groupBox1.Text = "欢迎使用!";
             // 
             // textBoxPass
             // 
-            this.textBoxPass.Location = new System.Drawing.Point(107, 68);
+            this.textBoxPass.Location = new System.Drawing.Point(106, 68);
             this.textBoxPass.Name = "textBoxPass";
             this.textBoxPass.PasswordChar = '*';
             this.textBoxPass.Size = new System.Drawing.Size(146, 21);
@@ -66,28 +66,32 @@ namespace AssMngSys
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(167, 106);
+            this.buttonCancel.Image = global::AssMngSys.Properties.Resources.forward;
+            this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonCancel.Location = new System.Drawing.Point(164, 113);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(86, 32);
             this.buttonCancel.TabIndex = 3;
-            this.buttonCancel.Text = "取消";
+            this.buttonCancel.Text = "   取消";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // buttonLogin
             // 
-            this.buttonLogin.Location = new System.Drawing.Point(75, 106);
+            this.buttonLogin.Image = global::AssMngSys.Properties.Resources.user_group;
+            this.buttonLogin.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonLogin.Location = new System.Drawing.Point(71, 113);
             this.buttonLogin.Name = "buttonLogin";
             this.buttonLogin.Size = new System.Drawing.Size(86, 32);
             this.buttonLogin.TabIndex = 2;
-            this.buttonLogin.Text = "登陆";
+            this.buttonLogin.Text = "   登陆";
             this.buttonLogin.UseVisualStyleBackColor = true;
             this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(66, 71);
+            this.label2.Location = new System.Drawing.Point(65, 71);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 1;
@@ -96,7 +100,7 @@ namespace AssMngSys
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(66, 41);
+            this.label1.Location = new System.Drawing.Point(65, 41);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 1;
@@ -104,7 +108,7 @@ namespace AssMngSys
             // 
             // textBoxUser
             // 
-            this.textBoxUser.Location = new System.Drawing.Point(107, 36);
+            this.textBoxUser.Location = new System.Drawing.Point(106, 36);
             this.textBoxUser.Name = "textBoxUser";
             this.textBoxUser.Size = new System.Drawing.Size(146, 21);
             this.textBoxUser.TabIndex = 0;
@@ -116,7 +120,7 @@ namespace AssMngSys
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(355, 203);
+            this.ClientSize = new System.Drawing.Size(355, 196);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

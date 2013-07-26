@@ -73,12 +73,23 @@ namespace IrRfidUHFDemo
             this.comboBoxDept = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.buttonSelectAss = new System.Windows.Forms.Button();
+            this.buttonReadBarcode = new System.Windows.Forms.Button();
+            this.textBoxYnWrite = new System.Windows.Forms.TextBox();
+            this.textBoxAssId = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.textBoxPid = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.timer2 = new System.Windows.Forms.Timer();
+            this.label1WriteMsg = new System.Windows.Forms.Label();
             this.tabPage5.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonRead
@@ -131,7 +142,7 @@ namespace IrRfidUHFDemo
             this.tabPage5.Controls.Add(this.buttonSyncDiff);
             this.tabPage5.Location = new System.Drawing.Point(4, 25);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(230, 202);
+            this.tabPage5.Size = new System.Drawing.Size(230, 207);
             this.tabPage5.Text = "同步";
             // 
             // listBox1
@@ -360,6 +371,7 @@ namespace IrRfidUHFDemo
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -466,10 +478,96 @@ namespace IrRfidUHFDemo
             this.label3.Size = new System.Drawing.Size(51, 19);
             this.label3.Text = "部门：";
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.label1WriteMsg);
+            this.tabPage3.Controls.Add(this.buttonSelectAss);
+            this.tabPage3.Controls.Add(this.buttonReadBarcode);
+            this.tabPage3.Controls.Add(this.textBoxYnWrite);
+            this.tabPage3.Controls.Add(this.textBoxAssId);
+            this.tabPage3.Controls.Add(this.label11);
+            this.tabPage3.Controls.Add(this.textBoxPid);
+            this.tabPage3.Controls.Add(this.label10);
+            this.tabPage3.Controls.Add(this.label4);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(230, 207);
+            this.tabPage3.Text = "发卡";
+            // 
+            // buttonSelectAss
+            // 
+            this.buttonSelectAss.Location = new System.Drawing.Point(138, 17);
+            this.buttonSelectAss.Name = "buttonSelectAss";
+            this.buttonSelectAss.Size = new System.Drawing.Size(68, 33);
+            this.buttonSelectAss.TabIndex = 2;
+            this.buttonSelectAss.Text = "选择";
+            this.buttonSelectAss.Click += new System.EventHandler(this.buttonSelectAss_Click);
+            // 
+            // buttonReadBarcode
+            // 
+            this.buttonReadBarcode.Location = new System.Drawing.Point(68, 17);
+            this.buttonReadBarcode.Name = "buttonReadBarcode";
+            this.buttonReadBarcode.Size = new System.Drawing.Size(64, 33);
+            this.buttonReadBarcode.TabIndex = 2;
+            this.buttonReadBarcode.Text = "读条码";
+            this.buttonReadBarcode.Click += new System.EventHandler(this.buttonReadBarcode_Click);
+            // 
+            // textBoxYnWrite
+            // 
+            this.textBoxYnWrite.Location = new System.Drawing.Point(92, 120);
+            this.textBoxYnWrite.Name = "textBoxYnWrite";
+            this.textBoxYnWrite.ReadOnly = true;
+            this.textBoxYnWrite.Size = new System.Drawing.Size(114, 23);
+            this.textBoxYnWrite.TabIndex = 1;
+            // 
+            // textBoxAssId
+            // 
+            this.textBoxAssId.Location = new System.Drawing.Point(92, 89);
+            this.textBoxAssId.Name = "textBoxAssId";
+            this.textBoxAssId.ReadOnly = true;
+            this.textBoxAssId.Size = new System.Drawing.Size(114, 23);
+            this.textBoxAssId.TabIndex = 1;
+            // 
+            // label11
+            // 
+            this.label11.Location = new System.Drawing.Point(17, 122);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(81, 20);
+            this.label11.Text = "是否已发：";
+            // 
+            // textBoxPid
+            // 
+            this.textBoxPid.Location = new System.Drawing.Point(92, 56);
+            this.textBoxPid.Name = "textBoxPid";
+            this.textBoxPid.Size = new System.Drawing.Size(114, 23);
+            this.textBoxPid.TabIndex = 1;
+            this.textBoxPid.TextChanged += new System.EventHandler(this.textBoxPid_TextChanged);
+            // 
+            // label10
+            // 
+            this.label10.Location = new System.Drawing.Point(17, 91);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(81, 20);
+            this.label10.Text = "资产编码：";
+            // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(17, 59);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(81, 20);
+            this.label4.Text = "标签喷码：";
+            // 
             // timer2
             // 
             this.timer2.Interval = 3000;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
+            // label1WriteMsg
+            // 
+            this.label1WriteMsg.Location = new System.Drawing.Point(3, 152);
+            this.label1WriteMsg.Name = "label1WriteMsg";
+            this.label1WriteMsg.Size = new System.Drawing.Size(224, 53);
+            this.label1WriteMsg.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // MainForm
             // 
@@ -493,6 +591,7 @@ namespace IrRfidUHFDemo
             this.tabPage1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -543,5 +642,15 @@ namespace IrRfidUHFDemo
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button buttonHideCheck;
         private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TextBox textBoxPid;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button buttonReadBarcode;
+        private System.Windows.Forms.Button buttonSelectAss;
+        private System.Windows.Forms.TextBox textBoxAssId;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox textBoxYnWrite;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label1WriteMsg;
     }
 }

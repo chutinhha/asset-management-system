@@ -157,6 +157,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>CheckOptForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SelectAssForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SelectAssForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SetQForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>SetQForm.cs</DependentUpon>
@@ -187,6 +191,13 @@
     </Compile>
     <Compile Include="CheckOptForm.Designer.cs">
       <DependentUpon>CheckOptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scanner.cs" />
+    <Compile Include="SelectAssForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectAssForm.Designer.cs">
+      <DependentUpon>SelectAssForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SetQForm.cs">
       <SubType>Form</SubType>

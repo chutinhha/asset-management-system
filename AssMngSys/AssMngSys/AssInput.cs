@@ -38,7 +38,7 @@ namespace AssMngSys
             this.ShowInTaskbar = false;
 
 
-            sSQLSelect = "select Id ID,ass_id 资产编号,fin_id 财务编码,pid 标签喷码,tid 标签ID,cat_no 类别编码,typ 类型,ass_nam 资产名称,ass_desc 资产描述,ass_pri 资产金额,reg_date 登记日期,dept 所属部门,addr 所在地点,use_co 所在公司,stat 库存状态,stat_sub 使用状态,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,mfr_date 生产日期,unit 单位,num 数量,ppu 单价,duty_man 保管人员,company 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间,input_typ 购置类型 from ass_list where ynenable = 'Y' ";
+            sSQLSelect = "select Id ID,ass_id 资产编号,fin_id 财务编码,pid 标签喷码,tid 标签ID,typ 类型,ass_nam 资产名称,ass_desc 资产描述,ass_pri 资产金额,reg_date 登记日期,dept 所属部门,addr 所在地点,use_co 所在公司,stat 库存状态,stat_sub 使用状态,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,mfr_date 生产日期,unit 单位,num 数量,ppu 单价,duty_man 保管人员,company 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间,input_typ 购置类型 from ass_list where ynenable = 'Y' ";
 
             string sSql = sSQLSelect;
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
@@ -101,13 +101,16 @@ namespace AssMngSys
         }
         private void toolStripButtonCopy_Click(object sender, EventArgs e)
         {
-            NewAssDlg dlg = new NewAssDlg(mf, dataGridView1);
-            dlg.sOptType = "复制";
-            dlg.ShowDialog();
-            if (dlg.bDone)
+            if (dataGridView1.SelectedRows.Count != 0)
             {
-                resetData();
-                bs.MoveLast();
+                NewAssDlg dlg = new NewAssDlg(mf, dataGridView1);
+                dlg.sOptType = "复制";
+                dlg.ShowDialog();
+                if (dlg.bDone)
+                {
+                    resetData();
+                    bs.MoveLast();
+                }
             }
         }
         private void toolStripButtonMod_Click(object sender, EventArgs e)
@@ -175,13 +178,27 @@ namespace AssMngSys
 
         private void toolStripButtonQry_Click(object sender, EventArgs e)
         {
-
+            QryAssDlg dlg = new QryAssDlg(mf);
+            dlg.ShowDialog();
+            if (dlg.sSqlCondition.Length != 0)
+            {
+                DataTable dt = MysqlHelper.ExecuteDataTable(sSQLSelect + dlg.sSqlCondition);
+                bs.DataSource = dt;
+            }
         }
         private void resetData()
         {
             //获取列表
             DataTable dt = MysqlHelper.ExecuteDataTable(sSQLSelect);
             bs.DataSource = dt;
+        }
+
+        private void toolStripButtonPrint_Click(object sender, EventArgs e)
+        {
+            //PrintTxt simple = new PrintTxt("D:\\12.txt", "txt");
+            //PrintTxt simple = new PrintTxt("D:\\Water lilies.jpg", "image"); 
+            PrintDlg dlg = new PrintDlg(dataGridView1);
+            dlg.ShowDialog();
         }
     }
 }

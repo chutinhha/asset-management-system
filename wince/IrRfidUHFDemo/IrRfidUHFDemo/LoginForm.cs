@@ -35,9 +35,10 @@ namespace IrRfidUHFDemo
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            //打开电源
-            HTApi.WIrUHFOpenPower();
-            HTApi.WIrUHFConnect(2);
+            ////打开电源
+            //HTApi.WIrUHFOpenPower();
+            //HTApi.WIrUHFConnect(2);
+            Scanner.openUHF();
 
             //最大化
             this.WindowState = FormWindowState.Maximized;
@@ -82,8 +83,8 @@ namespace IrRfidUHFDemo
 
         private void LoginForm_Closed(object sender, EventArgs e)
         {
-            HTApi.WIrUHFDisconnect();
-            HTApi.WIrUHFClosePower();
+            //HTApi.WIrUHFDisconnect();
+            //HTApi.WIrUHFClosePower();
         }
 
         //private void buttonRead2Pc_Click(object sender, EventArgs e)
@@ -173,7 +174,7 @@ namespace IrRfidUHFDemo
             {
                 buttonStart.Visible = false;
                 bLogin = false;
-                buttonLogin.Text = "登陆";
+                buttonLogin.Text = "登陆(Ent)";
                 textBoxUser.Visible = true;
                 textBoxPass.Visible = true;
                 buttonLogin.Visible = true;

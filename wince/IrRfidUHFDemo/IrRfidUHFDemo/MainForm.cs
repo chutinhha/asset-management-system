@@ -59,10 +59,13 @@ namespace IrRfidUHFDemo
 
         static string sIp;
         static string sPort;
-        enum Page { onepcs = 0, inv, check, sync };
+        enum Page { onepcs = 0, inv, check, sync, wrtag };
         int nCurTab = 0;
         LoginForm loginForm = null;
         private System.Net.Sockets.UdpClient sendUdpClient;
+
+        public string sBarcode;
+        HTApi.PWSCAN_CALLBACK scanCall;
 
         public MainForm(LoginForm f)
         {
@@ -107,7 +110,13 @@ namespace IrRfidUHFDemo
                  ShowStat(listBox1, "自动同步中 ...");
             }
 
+            //scanCall = new HTApi.PWSCAN_CALLBACK(ScanCallBack);
+            //HTApi.WScanSetCallBack(scanCall);
 
+            //HTApi.WScanOpenPower();
+            //HTApi.W1DScanConnect(2);
+            ////设置声音
+            //HTApi.WScanSetSound(true); ;
 
         }
         private void iniData()
@@ -126,10 +135,12 @@ namespace IrRfidUHFDemo
         {
             if (tabControl1.SelectedIndex == (int)Page.onepcs)//单次读取
             {
+                Scanner.openUHF();
                 readData();
             }
             else if (tabControl1.SelectedIndex == (int)Page.inv) //循环读取
             {
+                Scanner.openUHF();
                 InvFun();
             }
             else if (tabControl1.SelectedIndex == (int)Page.sync)//发送数据到PC
@@ -138,8 +149,116 @@ namespace IrRfidUHFDemo
             }
             else if (tabControl1.SelectedIndex == (int)Page.check)//发送数据到PC
             {
+                Scanner.openUHF();
                 CheckFun();
             }
+            else if (tabControl1.SelectedIndex == (int)Page.wrtag)//发卡
+            {
+                Scanner.openUHF();
+                WriteTag();
+            }       
+        }
+        private void WriteTag()
+        {
+            if (textBoxPid.Text.Length == 0)
+            {
+                MessageBox.Show("请先获取标签喷码！");
+                return;
+            }
+            else if (textBoxAssId.Text.Length == 0)
+            {
+                MessageBox.Show("该资产不存在，请重新输入！");
+                return;
+            }
+            //else if (textBoxYnWrite.Text == "Y")
+            //{
+            //    if (MessageBox.Show("该标签已发，是否继续？",
+            //        "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes) ;
+            //    {
+            //        return;
+            //    }
+            //}
+            string sWriteData = "000000000000" + textBoxPid.Text;
+            byte[] writedata = new byte[100];
+            StringToHexByte(sWriteData.Trim(), writedata);//转换为16进制
+
+            //EPC
+            byte uBank = 1;
+            byte _offset = 2;
+            byte _length = 6;
+            bool bOK = true;
+            //1.写入
+            if (1 == HTApi.WIrUHFWriteData(uBank, _offset, _length, ref writedata[0]))
+            {
+                bOK = true;
+                label1WriteMsg.Text = "*写卡成功!";
+                PlaySound("\\Windows\\critical.wav", IntPtr.Zero, 0x0001);
+            }
+            else
+            {
+                bOK = false;
+                label1WriteMsg.Text = "*写卡失败!";
+
+            }
+            
+            if (!bOK)
+            {
+                return;
+            }
+            
+            label1WriteMsg.Update();
+
+            ////2.写锁
+            //byte[] epc = new byte[100];
+            //StringToHexByte(sWriteData, epc);
+            //byte uSelect = 0;//epc
+            //byte uAction = 2;//写锁，密码为0可写，密码非0时，需输入正确密码才可写
+            //byte[] password = new byte[100];
+            ////转换为16进制
+            //string sPass = "88888888";
+            //StringToHexByte(sPass, password);
+            //if (1 == HTApi.WIrUHFLockTag(uSelect, uAction, ref password[0], 12, ref epc[0]))
+            //{
+            //    bOK = false;
+            //    PlaySound("\\Windows\\critical.wav", IntPtr.Zero, 0x0001);
+            //    label1WriteMsg.Text = "*锁定成功!";
+            //}
+            //else
+            //{
+            //    bOK = false;
+            //    label1WriteMsg.Text = "*锁定失败!";
+            //}
+
+            //if (!bOK)
+            //{
+            //    return;
+            //}
+
+            //label1WriteMsg.Update();
+
+            //3.更新DB
+            List<string> listSql = new List<string>();
+            string sAssId = textBoxAssId.Text;
+            string sSql = string.Format("update ass_list set ynwrite = 'Y' where ass_id = '{0}' and ynenable = 'Y'",sAssId);
+            listSql.Add(sSql);
+            string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
+                "发卡", "0", sSql.Replace("'", "''"), SettingForm.sClientId, sAssId, LoginForm.getDateTime());
+            listSql.Add(sSqlLog);
+
+            bOK = SQLiteHelper.ExecuteNoQueryTran(listSql);
+            string sErr = SQLiteHelper.sLastErr;
+            if (bOK)
+            {
+                label1WriteMsg.Text = "*发卡OK! 标签喷码:" + textBoxPid.Text;
+                PlaySound("\\Windows\\critical.wav", IntPtr.Zero, 0x0001);
+                textBoxPid.Text = "";
+            }
+            else
+            {
+                label1WriteMsg.Text = "*发卡失败!";
+            }
+
+
         }
         private void CheckFun()
         {
@@ -300,37 +419,21 @@ namespace IrRfidUHFDemo
         private void readData()
         {
             labelMsg.Text = "";
-
             //byte _offset = Convert.ToByte(textBoxOff.Text.Trim());
             //byte _length = Convert.ToByte(textBoxlen.Text.Trim());
-
             byte[] nTagCount = new byte[1];
             byte[] uReadData = new byte[512];
             string strEpc = "";
             string strTid = "";
-            //byte uBank = 0;
-
-
-            //if (epcButton.Checked)
-            //{
-            //    uBank = 1;
-            //}
-            //else if (userButton.Checked)
-            //{
-            //    uBank = 3;
-            //}
-            //else if (tidButton.Checked)
-            //{
-            //    uBank = 2;
-            //}
             //读取EPC
+            byte uBank = 1;
             byte _offset = 2;
             byte _length = 6;
             bool bOK = true;
 
             Array.Clear(nTagCount, 0, 1);
             Array.Clear(uReadData, 0, 512);
-            if (1 == HTApi.WIrUHFReadData(1, _offset, _length, ref nTagCount[0], ref uReadData[0]))
+            if (1 == HTApi.WIrUHFReadData(uBank, _offset, _length, ref nTagCount[0], ref uReadData[0]))
             {
                 //显示一张标签
                 int _recLength = uReadData[0];
@@ -515,8 +618,8 @@ namespace IrRfidUHFDemo
                 lvi.SubItems.Add("");
                 lvi.SubItems[(int)MngIndex.epc].Text = sOnetagInfo;
                 lvi.SubItems[(int)MngIndex.pid].Text = sPid;
-                string sAssId, sStat;
-                GetAssInfo(sPid, out sAssId, out sStat);
+                string sAssId, sStat,sYnPrint;
+                GetAssInfo(sPid, out sAssId, out sStat, out sYnPrint);
                 lvi.SubItems[(int)MngIndex.stat].Text = sStat;
                 lvi.SubItems[(int)MngIndex.cnt].Text = "1";//读取次数
                 lvi.SubItems[(int)MngIndex.assid].Text = sAssId;
@@ -548,17 +651,19 @@ namespace IrRfidUHFDemo
                 // this.listView1.EndUpdate();  //结束数据处理，UI界面一次性绘
             }
         }
-        private void GetAssInfo(string sPid, out string sAssId, out string sStat)
+        private void GetAssInfo(string sPid, out string sAssId, out string sStat,out string sYnWrite)
         {
             sAssId = "";
             sStat = "";
+            sYnWrite = "";
             //SQLite方式
-            string sSql = "select ass_id,stat from ass_list where pid = \'" + sPid + "\'  and ynenable = 'Y'";
+            string sSql = "select ass_id,stat,ynwrite from ass_list where pid = \'" + sPid + "\'  and ynenable = 'Y'";
             SQLiteDataReader reader = SQLiteHelper.ExecuteReader(sSql, null);
             if (reader.Read())
             {
                 sAssId = reader["ass_id"].ToString();
                 sStat = reader["stat"].ToString();
+                sYnWrite = reader["ynwrite"].ToString();
             }
             reader.Close();
         }
@@ -672,11 +777,16 @@ namespace IrRfidUHFDemo
             }
             else if (tabControl1.SelectedIndex == (int)Page.sync)//同步
             {
+                listBox1.Items.Clear();
             }
             else if (tabControl1.SelectedIndex == (int)Page.check)//盘点
             {
                 CheckOpt();
-            }//tabControl1.SelectedIndex
+            }
+            else if (tabControl1.SelectedIndex == (int)Page.check)//盘点
+            {
+                textBoxPid.Text = "";
+            }       
         }
 
         private void CheckOpt()
@@ -791,6 +901,11 @@ namespace IrRfidUHFDemo
                 buttonRead.Text = "开始(F1)";
                 buttonClear.Text = "操作(Ent)";
             }
+            else if (tabControl1.SelectedIndex == (int)Page.wrtag)//盘点
+            {
+                buttonRead.Text = "发卡(F1)";
+                buttonClear.Text = "清除(Ent)";
+            }
         }
 
         private void Read2PcForm_Closing(object sender, CancelEventArgs e)
@@ -799,6 +914,8 @@ namespace IrRfidUHFDemo
             {
                 InvFun();//停止寻卡线程
             }
+            Scanner.closeUHF();
+            Scanner.close1D();
         }
         //private bool GetAssList()
         //{
@@ -1583,8 +1700,8 @@ namespace IrRfidUHFDemo
             if (bOK)
             {
                 SettingForm.sSyncMax = sSyncMax;
+                SettingForm.LoadSetting();
             }
-
             ShowStat(listBox1, bOK ? "参数已恢复！" : "参数恢复失败，请重试！");
             ShowStat(listBox1, "--------------");
 
@@ -1820,6 +1937,62 @@ namespace IrRfidUHFDemo
         {
             buttonSyncDiff_Click(null, null);
             timer2.Enabled = false;
+        }
+
+        private void buttonReadBarcode_Click(object sender, EventArgs e)
+        {
+            scanCall = new HTApi.PWSCAN_CALLBACK(ScanCallBack);
+            HTApi.WScanSetCallBack(scanCall);
+            Scanner.open1D();
+            HTApi.W1DScanStart(true);//true 单次扫描 false 多次扫描
+            System.Diagnostics.Debug.WriteLine("buttonReadBarcode_Click!" );
+        }
+        
+        private void ScanCallBack(IntPtr readBuf, int dwLen)
+        {
+            byte[] newm = new byte[dwLen];
+            Marshal.Copy(readBuf, newm, 0, dwLen);
+            sBarcode = Encoding.Default.GetString(newm, 0, dwLen);
+            textBoxPid.BeginInvoke(new InvokeDelegate(ShowBarcode));
+        }
+        public void ShowBarcode()
+        {
+            textBoxPid.Text = sBarcode;
+        }
+
+        private void buttonSelectAss_Click(object sender, EventArgs e)
+        {
+            SelectAssForm dlg= new SelectAssForm();
+            dlg.ShowDialog();
+            textBoxPid.Text = dlg.sPid;
+            textBoxYnWrite.Text = dlg.sYnWrite;
+        }
+
+        private void textBoxPid_TextChanged(object sender, EventArgs e)
+        {
+            string sPid = textBoxPid.Text;
+            string sAssId, sStat, sYnWrite;
+            if (sPid.Length == 12)
+            {
+                GetAssInfo(sPid, out sAssId, out sStat, out sYnWrite);
+                textBoxAssId.Text = sAssId;
+                textBoxYnWrite.Text = sYnWrite;
+                if (sAssId.Length != 0)
+                {
+                    label1WriteMsg.Text = "*准备OK,发卡请对准标签！";
+                }
+                else
+                {
+                    label1WriteMsg.Text = "*无该标签信息！";
+                }
+                
+            }
+            else
+            {
+                label1WriteMsg.Text = "*数据有误(应为12字节)，请重新获取！";
+                textBoxAssId.Text = "";
+                textBoxYnWrite.Text = "";
+            }
         }
     }
 }

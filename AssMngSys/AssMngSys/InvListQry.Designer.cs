@@ -32,6 +32,8 @@ namespace AssMngSys
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvListQry));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.buttonDelete = new System.Windows.Forms.Button();
+            this.buttonQryHistory = new System.Windows.Forms.Button();
             this.bindingNavigator2 = new System.Windows.Forms.BindingNavigator(this.components);
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
@@ -45,8 +47,6 @@ namespace AssMngSys
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.comboBoxInvNo = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.buttonDelete = new System.Windows.Forms.Button();
-            this.buttonQryHistory = new System.Windows.Forms.Button();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.bindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
@@ -73,12 +73,12 @@ namespace AssMngSys
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.buttonDelete);
+            this.tabPage2.Controls.Add(this.buttonQryHistory);
             this.tabPage2.Controls.Add(this.bindingNavigator2);
             this.tabPage2.Controls.Add(this.dataGridView2);
             this.tabPage2.Controls.Add(this.comboBoxInvNo);
             this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.buttonDelete);
-            this.tabPage2.Controls.Add(this.buttonQryHistory);
             this.tabPage2.Location = new System.Drawing.Point(4, 21);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -86,6 +86,30 @@ namespace AssMngSys
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "清单查询";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // buttonDelete
+            // 
+            this.buttonDelete.Image = global::AssMngSys.Properties.Resources.stop;
+            this.buttonDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonDelete.Location = new System.Drawing.Point(373, 17);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(115, 35);
+            this.buttonDelete.TabIndex = 28;
+            this.buttonDelete.Text = "    删除(&D)";
+            this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            // 
+            // buttonQryHistory
+            // 
+            this.buttonQryHistory.Image = global::AssMngSys.Properties.Resources.find;
+            this.buttonQryHistory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonQryHistory.Location = new System.Drawing.Point(252, 17);
+            this.buttonQryHistory.Name = "buttonQryHistory";
+            this.buttonQryHistory.Size = new System.Drawing.Size(115, 35);
+            this.buttonQryHistory.TabIndex = 27;
+            this.buttonQryHistory.Text = "    查询(&Q)";
+            this.buttonQryHistory.UseVisualStyleBackColor = true;
+            this.buttonQryHistory.Click += new System.EventHandler(this.buttonQryHistory_Click);
             // 
             // bindingNavigator2
             // 
@@ -188,11 +212,11 @@ namespace AssMngSys
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(-1, 75);
+            this.dataGridView2.Location = new System.Drawing.Point(-1, 58);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowTemplate.Height = 23;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(872, 374);
+            this.dataGridView2.Size = new System.Drawing.Size(872, 391);
             this.dataGridView2.TabIndex = 25;
             // 
             // comboBoxInvNo
@@ -211,26 +235,6 @@ namespace AssMngSys
             this.label4.Size = new System.Drawing.Size(53, 12);
             this.label4.TabIndex = 18;
             this.label4.Text = "清单号：";
-            // 
-            // buttonDelete
-            // 
-            this.buttonDelete.Location = new System.Drawing.Point(369, 17);
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(115, 35);
-            this.buttonDelete.TabIndex = 23;
-            this.buttonDelete.Text = "删除";
-            this.buttonDelete.UseVisualStyleBackColor = true;
-            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
-            // 
-            // buttonQryHistory
-            // 
-            this.buttonQryHistory.Location = new System.Drawing.Point(248, 17);
-            this.buttonQryHistory.Name = "buttonQryHistory";
-            this.buttonQryHistory.Size = new System.Drawing.Size(115, 35);
-            this.buttonQryHistory.TabIndex = 23;
-            this.buttonQryHistory.Text = "查询";
-            this.buttonQryHistory.UseVisualStyleBackColor = true;
-            this.buttonQryHistory.Click += new System.EventHandler(this.buttonQryHistory_Click);
             // 
             // InvListQry
             // 
@@ -261,7 +265,6 @@ namespace AssMngSys
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ComboBox comboBoxInvNo;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button buttonQryHistory;
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.BindingNavigator bindingNavigator2;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
@@ -276,5 +279,6 @@ namespace AssMngSys
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.BindingSource bindingSource2;
         private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.Button buttonQryHistory;
     }
 }

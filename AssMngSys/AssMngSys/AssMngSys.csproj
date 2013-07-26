@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Barcode.cs" />
     <Compile Include="NewAssDlg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,6 +78,19 @@
     </Compile>
     <Compile Include="AssInput.Designer.cs">
       <DependentUpon>AssInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintDlg.Designer.cs">
+      <DependentUpon>PrintDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintTxt.cs" />
+    <Compile Include="QryAssDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QryAssDlg.Designer.cs">
+      <DependentUpon>QryAssDlg.cs</DependentUpon>
     </Compile>
     <Compile Include="QryAssList.cs">
       <SubType>Form</SubType>
@@ -143,6 +157,14 @@
       <DependentUpon>AssInput.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="PrintDlg.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PrintDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QryAssDlg.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>QryAssDlg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="QryAssList.resx">
       <DependentUpon>QryAssList.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -180,6 +202,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>TagPrint.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Welcome.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Welcome.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -206,6 +232,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Welcome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Welcome.Designer.cs">
+      <DependentUpon>Welcome.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +305,54 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\run.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\file_edit.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\print.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\print_preview.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\asset.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trash.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cut.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\repair.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reload.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\key.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tools.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\home.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

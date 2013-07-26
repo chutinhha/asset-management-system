@@ -119,8 +119,6 @@ namespace IrRfidUHFDemo
             comboBox2.Items.Add("Ð´Ëø");
             comboBox2.Items.Add("ÓÀ¾ÃËø");
             comboBox2.SelectedIndex = 2;
-
-
         }
 
     }    

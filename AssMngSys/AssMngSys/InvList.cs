@@ -28,13 +28,23 @@ namespace AssMngSys
 
             textBoxInvId.Text = DateTime.Now.ToString("yyyyMMdd#01");
             //获取部门列表
-            string sSql = "select distinct dept_nam from emp";
+            string sSql = "select distinct dept_nam from emp order by convert(dept_nam using gb2312) asc";
             MySqlDataReader reader = MysqlHelper.ExecuteReader(sSql);
             while (reader.Read())
             {
                 comboBoxDept.Items.Add(reader["dept_nam"].ToString());
             }
+            reader.Close();
             comboBoxDept.Items.Add("");
+
+            sSql = "select distinct addr from ass_list order by convert(addr using gb2312) asc";
+            reader = MysqlHelper.ExecuteReader(sSql);
+            while (reader.Read())
+            {
+                comboBoxAddr.Items.Add(reader["addr"].ToString());
+            }
+            comboBoxAddr.Items.Add("");
+            reader.Close();
         }
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -46,7 +56,7 @@ namespace AssMngSys
         {
             string sStartDate = string.Format("{0}-{1:00}-{2:00}", dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, dateTimePicker1.Value.Day);
             string sEndDate = string.Format("{0}-{1:00}-{2:00}", dateTimePicker2.Value.Year, dateTimePicker2.Value.Month, dateTimePicker2.Value.Day);
-            string sSql = "select pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 库存状态, stat_sub 使用状态,duty_man 保管人员,vender 品牌, ass_desc 资产描述,addr 所在地点 ,dept 部门 from ass_list where 1=1 ";
+            string sSql = "select pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 库存状态, stat_sub 使用状态,duty_man 保管人员,vender 品牌, ass_desc 资产描述,addr 所在地点 ,dept 部门 from ass_list where ynenable = 'Y' ";
 
             if (checkBox1.Checked)
             {
@@ -54,8 +64,13 @@ namespace AssMngSys
             }
             if (comboBoxDept.Text.Length != 0)
             {
-                sSql += string.Format(" and use_dept = '{0}'", comboBoxDept.Text);
+                sSql += string.Format(" and dept = '{0}'", comboBoxDept.Text);
             }
+            if (comboBoxAddr.Text.Length != 0)
+            {
+                sSql += string.Format(" and addr = '{0}'", comboBoxAddr.Text);
+            }
+
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
             bindingSource1.DataSource = dt;
             bindingNavigator1.BindingSource = bindingSource1;

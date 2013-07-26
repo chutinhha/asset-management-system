@@ -100,6 +100,19 @@ namespace AssMngSys
 
             AddLog("----欢迎使用!----");
             AddLog("<双击清空>");
+
+            splitContainer1.Panel2.Controls.Clear();//这里是清空panel2中的控件的。
+            Welcome obj = new Welcome();
+            obj.TopLevel = false;
+            obj.MdiParent = this;//这句代码也要写上，否则会出错。
+            obj.Parent = splitContainer1.Panel2;   //Form3的parent是panel2.  
+            //obj.textBoxLog = textBoxLog;
+            obj.FormBorderStyle = FormBorderStyle.None;
+            obj.WindowState = FormWindowState.Maximized;
+            obj.BringToFront();
+            obj.Anchor = AnchorStyles.Left | AnchorStyles.Top;
+            obj.Show();
+            curForm = obj;
             
 
         }
@@ -350,7 +363,21 @@ namespace AssMngSys
                 obj.Show();
                 curForm = obj;
             }
-
+            else
+            {
+                splitContainer1.Panel2.Controls.Clear();//这里是清空panel2中的控件的。
+                Welcome obj = new Welcome();
+                obj.TopLevel = false;
+                obj.MdiParent = this;//这句代码也要写上，否则会出错。
+                obj.Parent = splitContainer1.Panel2;   //Form3的parent是panel2.  
+                //obj.textBoxLog = textBoxLog;
+                obj.FormBorderStyle = FormBorderStyle.None;
+                obj.WindowState = FormWindowState.Maximized;
+                obj.BringToFront();
+                obj.Anchor = AnchorStyles.Left | AnchorStyles.Top;
+                obj.Show();
+                curForm = obj;
+            }
         }
 
         private void textBoxLog_MouseDoubleClick(object sender, MouseEventArgs e)

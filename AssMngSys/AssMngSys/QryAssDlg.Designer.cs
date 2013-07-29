@@ -55,7 +55,7 @@ namespace AssMngSys
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 40;
-            this.label1.Text = "资产编号：";
+            this.label1.Text = "资产编码：";
             // 
             // textBoxAssId
             // 

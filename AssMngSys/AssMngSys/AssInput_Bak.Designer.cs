@@ -121,7 +121,7 @@ namespace AssMngSys
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 3;
-            this.label1.Text = "资产编号：";
+            this.label1.Text = "资产编码：";
             // 
             // textBoxFinId
             // 
@@ -231,7 +231,7 @@ namespace AssMngSys
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(65, 12);
             this.label11.TabIndex = 3;
-            this.label11.Text = "资产描述：";
+            this.label11.Text = "备注：";
             // 
             // dataGridView1
             // 
@@ -330,7 +330,7 @@ namespace AssMngSys
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(65, 12);
             this.label17.TabIndex = 3;
-            this.label17.Text = "生产日期：";
+            this.label17.Text = "购置日期：";
             // 
             // comboBoxUnit
             // 

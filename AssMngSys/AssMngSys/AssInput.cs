@@ -38,7 +38,7 @@ namespace AssMngSys
             this.ShowInTaskbar = false;
 
 
-            sSQLSelect = "select Id ID,ass_id 资产编号,fin_id 财务编码,pid 标签喷码,tid 标签ID,typ 类型,ass_nam 资产名称,ass_desc 资产描述,ass_pri 资产金额,reg_date 登记日期,dept 所属部门,addr 所在地点,use_co 所在公司,stat 库存状态,stat_sub 使用状态,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,mfr_date 生产日期,unit 单位,num 数量,ppu 单价,duty_man 保管人员,company 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间,input_typ 购置类型 from ass_list where ynenable = 'Y' ";
+            sSQLSelect = "select Id ID,ass_id 资产编码,fin_id 财务编码,pid 标签喷码,tid 标签ID,typ 类型,ass_nam 资产名称,dev_mode 设备型号,ass_desc 备注,ass_pri 资产金额,input_typ 购置类型,input_date 购置日期,dept 所属部门,addr 所在地点,use_co 所在公司,stat 库存状态,stat_sub 使用状态,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,num 数量,unit 单位,ppu 单价,duty_man 保管人员,company 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间 from ass_list where ynenable = 'Y' ";
 
             string sSql = sSQLSelect;
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
@@ -148,7 +148,7 @@ namespace AssMngSys
                     for(int i = 0; i < dataGridView1.SelectedRows.Count; i++)
                     {
                         string sId = dataGridView1.SelectedRows[i].Cells["ID"].Value.ToString();
-                        string sAssId = dataGridView1.SelectedRows[i].Cells["资产编号"].Value.ToString();
+                        string sAssId = dataGridView1.SelectedRows[i].Cells["资产编码"].Value.ToString();
                         sSql = sSqlUpd + sId + "'";
                         listSql.Add(sSql);
                         string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",

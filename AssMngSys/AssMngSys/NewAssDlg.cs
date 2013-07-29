@@ -19,7 +19,7 @@ namespace AssMngSys
 
         private string sAssIdCur;
         private string sPidCur;
-        public NewAssDlg(MainForm f,DataGridView dv)
+        public NewAssDlg(MainForm f, DataGridView dv)
         {
             InitializeComponent();
             mf = f;
@@ -63,7 +63,7 @@ namespace AssMngSys
             comboBoxInputTyp.Items.Add("转入");
             comboBoxInputTyp.Items.Add("其他");
 
-            this.Text = string.Format("资产{0}",sOptType);
+            this.Text = string.Format("资产{0}", sOptType);
 
             if (sOptType == "修改" || sOptType == "复制")
             {
@@ -76,25 +76,26 @@ namespace AssMngSys
                 else
                 {
                     sPidCur = dataGridView1.SelectedRows[0].Cells["标签喷码"].Value.ToString();
-                    sAssIdCur = dataGridView1.SelectedRows[0].Cells["资产编号"].Value.ToString();
+                    sAssIdCur = dataGridView1.SelectedRows[0].Cells["资产编码"].Value.ToString();
                     textBoxAssId.Text = sAssIdCur;
                     textBoxPid.Text = sPidCur;
                     textBoxTid.Text = dataGridView1.SelectedRows[0].Cells["标签ID"].Value.ToString();
                 }
                 textBoxFinId.Text = dataGridView1.SelectedRows[0].Cells["财务编码"].Value.ToString();
-                textBoxAssPri.Text = dataGridView1.SelectedRows[0].Cells["资产金额"].Value.ToString();
-                textBoxPpu.Text = dataGridView1.SelectedRows[0].Cells["单价"].Value.ToString();
-               // comboBoxCat.Text = dataGridView1.SelectedRows[0].Cells["类别编码"].Value.ToString();
                 comboBoxTyp.Text = dataGridView1.SelectedRows[0].Cells["类型"].Value.ToString();
                 comboBoxAssNam.Text = dataGridView1.SelectedRows[0].Cells["资产名称"].Value.ToString();
-                textBoxNum.Text = dataGridView1.SelectedRows[0].Cells["数量"].Value.ToString();
+
+                textBoxNum.Text = dataGridView1.SelectedRows[0].Cells["数量"].Value.ToString(); 
+                textBoxPpu.Text = dataGridView1.SelectedRows[0].Cells["单价"].Value.ToString();
+                textBoxAssPri.Text = dataGridView1.SelectedRows[0].Cells["资产金额"].Value.ToString();
+
                 textBoxSupplier.Text = dataGridView1.SelectedRows[0].Cells["供应商"].Value.ToString();
                 textBoxSupplierInfo.Text = dataGridView1.SelectedRows[0].Cells["供应商信息"].Value.ToString();
                 textBoxVender.Text = dataGridView1.SelectedRows[0].Cells["厂商品牌"].Value.ToString();
-                textBoxMfrDate.Text = dataGridView1.SelectedRows[0].Cells["生产日期"].Value.ToString();
+                textBoxInputDate.Text = dataGridView1.SelectedRows[0].Cells["购置日期"].Value.ToString();
                 comboBoxUnit.Text = dataGridView1.SelectedRows[0].Cells["单位"].Value.ToString();
                 textBoxSn.Text = dataGridView1.SelectedRows[0].Cells["序列号"].Value.ToString();
-                textBoxAssDesc.Text = dataGridView1.SelectedRows[0].Cells["资产描述"].Value.ToString();
+                textBoxAssDesc.Text = dataGridView1.SelectedRows[0].Cells["备注"].Value.ToString();
                 textBoxId.Text = dataGridView1.SelectedRows[0].Cells["ID"].Value.ToString();
                 comboBoxInputTyp.Text = dataGridView1.SelectedRows[0].Cells["购置类型"].Value.ToString();
                 comboBoxAddr.Text = dataGridView1.SelectedRows[0].Cells["所在地点"].Value.ToString();
@@ -102,16 +103,17 @@ namespace AssMngSys
                 comboBoxStatSub.Text = dataGridView1.SelectedRows[0].Cells["使用状态"].Value.ToString();
                 comboBoxDept.Text = dataGridView1.SelectedRows[0].Cells["所属部门"].Value.ToString();
                 comboBoxDutyMan.Text = dataGridView1.SelectedRows[0].Cells["保管人员"].Value.ToString();
+                textBoxDevMode.Text = dataGridView1.SelectedRows[0].Cells["设备型号"].Value.ToString();
             }
             else//新增
             {
                 textBoxPid.Text = getNewPid();
             }
-          //  pictureBox1.Image = BarCode.BuildBarCode(textBoxPid.Text);
+            //  pictureBox1.Image = BarCode.BuildBarCode(textBoxPid.Text);
             //IP提示
-         //   IPHostEntry ipe = Dns.GetHostEntry(Dns.GetHostName());
-         //   IPAddress ipa = ipe.AddressList[0];
-         //     groupBox2.Text = string.Format("电子标签信息(请用手持机扫描，本地IP：{0})", ipa.ToString());
+            //   IPHostEntry ipe = Dns.GetHostEntry(Dns.GetHostName());
+            //   IPAddress ipa = ipe.AddressList[0];
+            //     groupBox2.Text = string.Format("电子标签信息(请用手持机扫描，本地IP：{0})", ipa.ToString());
             //获取类别列表
             string sSql = "select distinct cat_nam from ass_cat order by convert(cat_nam using gb2312) asc";
             MySqlDataReader reader = MysqlHelper.ExecuteReader(sSql);
@@ -164,7 +166,7 @@ namespace AssMngSys
             string sNewPid = "000000000001";
             string sSql = "select max(pid) maxpid from ass_list where ynenable = 'Y'";
             MySqlDataReader reader = MysqlHelper.ExecuteReader(sSql);
-            if(reader.Read())
+            if (reader.Read())
             {
                 sNewPid = reader["maxpid"].ToString();
                 if (sNewPid.Length == 0) sNewPid = "000000000000";
@@ -228,9 +230,9 @@ namespace AssMngSys
             }
             string sSqlIns = string.Format(@"insert into ass_list
                 (cre_tm,ass_id,fin_id,pid,tid,ass_nam,ass_desc,ass_pri,reg_date,typ,
-                supplier,sn,vender,mfr_date,unit,num,ppu,company,cre_man,supplier_info,input_typ,addr,dept,duty_man,stat,stat_sub) 
+                supplier,sn,vender,input_date,unit,num,ppu,company,cre_man,supplier_info,input_typ,addr,dept,duty_man,stat,stat_sub,dev_mode) 
                 values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}',
-                '{11}','{12}','{13}','{14}','{15}','{16}','{17}','{18}','{19}','{20}','{21}','{22}','{23}','{24}','{25}')",
+                '{11}','{12}','{13}','{14}','{15}','{16}','{17}','{18}','{19}','{20}','{21}','{22}','{23}','{24}','{25}','{26}')",
                 MainForm.getDateTime(),
                 textBoxAssId.Text,
                 textBoxFinId.Text,
@@ -245,7 +247,7 @@ namespace AssMngSys
                 textBoxSupplier.Text,
                 textBoxSn.Text,
                 textBoxVender.Text,
-                textBoxMfrDate.Text,
+                textBoxInputDate.Text,
                 comboBoxUnit.Text,
                 textBoxNum.Text,
                 textBoxPpu.Text,
@@ -257,7 +259,8 @@ namespace AssMngSys
                 comboBoxDept.Text,
                 comboBoxDutyMan.Text,
                 comboBoxStat.Text,
-                comboBoxStatSub.Text
+                comboBoxStatSub.Text,
+                textBoxDevMode.Text
                 );
 
             string sSqlInsLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
@@ -300,7 +303,7 @@ namespace AssMngSys
                 reader.Close();
             }
 
-            if (textBoxPid.Text .Length != 0 && textBoxPid.Text != sPidCur)
+            if (textBoxPid.Text.Length != 0 && textBoxPid.Text != sPidCur)
             {
                 string sSql = "select ass_id from ass_list where pid = '" + textBoxPid.Text + "' and ynenable = 'Y'";
                 MySqlDataReader reader = MysqlHelper.ExecuteReader(sSql);
@@ -313,10 +316,10 @@ namespace AssMngSys
                 }
                 reader.Close();
             }
-            
+
             string sSqlUpd = string.Format(@"update ass_list set fin_id = '{0}',ass_id = '{1}', ass_nam = '{2}', ass_desc = '{3}', ass_pri = '{4}', mod_tm = '{5}',
-typ = '{6}', supplier = '{7}', supplier_info = '{8}', sn = '{9}',vender = '{10}', mfr_date = '{11}', unit = '{12}', 
-num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',addr = '{18}',pid = '{19}',tid = '{20}',dept ='{21}',duty_man ='{22}',stat ='{23}',stat_sub ='{24}' where id = '{25}'",
+typ = '{6}', supplier = '{7}', supplier_info = '{8}', sn = '{9}',vender = '{10}', input_date = '{11}', unit = '{12}', 
+num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',addr = '{18}',pid = '{19}',tid = '{20}',dept ='{21}',duty_man ='{22}',stat ='{23}',stat_sub ='{24}',dev_mode = '{25}' where id = '{26}'",
                     textBoxFinId.Text,
                     textBoxAssId.Text,
                     comboBoxAssNam.Text,
@@ -328,7 +331,7 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
                     textBoxSupplierInfo.Text,
                     textBoxSn.Text,
                     textBoxVender.Text,
-                    textBoxMfrDate.Text,
+                    textBoxInputDate.Text,
                     comboBoxUnit.Text,
                     textBoxNum.Text,
                     textBoxPpu.Text,
@@ -342,6 +345,7 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
                     comboBoxDutyMan.Text,
                     comboBoxStat.Text,
                     comboBoxStatSub.Text,
+                    textBoxDevMode.Text,
                     textBoxId.Text);
 
             string sSqlInsLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
@@ -378,7 +382,7 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
         {
             string str = comboBoxTyp.SelectedItem.ToString();
             comboBoxAssNam.Items.Clear();
-            string sSql = "select distinct prd_nam from ass_cat where cat_nam = '"+ str +"'order by convert(prd_nam using gb2312) asc";
+            string sSql = "select distinct prd_nam from ass_cat where cat_nam = '" + str + "'order by convert(prd_nam using gb2312) asc";
             MySqlDataReader reader = MysqlHelper.ExecuteReader(sSql);
             while (reader.Read())
             {
@@ -395,7 +399,26 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
             textBoxPid.Text = getNewPid();
-           // pictureBox1.Image = BarCode.BuildBarCode(textBoxPid.Text);
+            // pictureBox1.Image = BarCode.BuildBarCode(textBoxPid.Text);
+        }
+
+        private void textBoxPpu_TextChanged(object sender, EventArgs e)
+        {
+            textBoxAssPri.Text = string.Format("{0:0.00}",Convert.ToDouble(textBoxPpu.Text) * Convert.ToInt32(textBoxNum.Text));
+        }
+
+        private void textBoxNum_TextChanged(object sender, EventArgs e)
+        {
+            textBoxAssPri.Text = string.Format("{0:0.00}", Convert.ToDouble(textBoxPpu.Text) * Convert.ToInt32(textBoxNum.Text));
+        }
+
+        private void textBoxNum_KeyPress(object sender, KeyPressEventArgs e)
+        {
+             //如果输入的不是数字键，也不是回车键、Backspace键，则取消该输入
+            if (!(Char.IsNumber(e.KeyChar)) && e.KeyChar!=(char)13 && e.KeyChar!=(char)8)
+            {
+                e.Handled = true;
+            } 
         }
 
     }

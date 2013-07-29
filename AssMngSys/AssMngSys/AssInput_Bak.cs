@@ -84,7 +84,7 @@ namespace AssMngSys
             radioButtonModify.Checked = false;
             radioButtonQuery.Checked = false;
 
-            sSQLSelect = "select Id ID,ass_id 资产编号,fin_id 财务编码,pid 标签喷码,tid 标签ID,cat_no 类别编码,typ 类型,ass_nam 资产名称,ass_desc 资产描述,ass_pri 资产金额,reg_date 登记日期,dept 部门,duty_man 责任人员,addr 所在地点,use_co 所在公司,f_getStat(stat,stat_sub) 状态,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,mfr_date 生产日期,unit 单位,num 数量,ppu 单价,duty_man 责任人,company 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间,input_typ 购置类型 from ass_list";
+            sSQLSelect = "select Id ID,ass_id 资产编码,fin_id 财务编码,pid 标签喷码,tid 标签ID,cat_no 类别编码,typ 类型,ass_nam 资产名称,ass_desc 备注,ass_pri 资产金额,reg_date 登记日期,dept 部门,duty_man 责任人员,addr 所在地点,use_co 所在公司,f_getStat(stat,stat_sub) 状态,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,input_date 购置日期,unit 单位,num 数量,ppu 单价,duty_man 责任人,company 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间,input_typ 购置类型 from ass_list";
 
             string sSql = sSQLSelect;
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
@@ -92,7 +92,7 @@ namespace AssMngSys
             bindingNavigator1.BindingSource = bs;
             dataGridView1.DataSource = bs;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            textBoxAssId.DataBindings.Add("Text", bs, "资产编号");
+            textBoxAssId.DataBindings.Add("Text", bs, "资产编码");
             textBoxFinId.DataBindings.Add("Text", bs, "财务编码");
             textBoxAssPri.DataBindings.Add("Text", bs, "资产金额");
             textBoxPpu.DataBindings.Add("Text", bs, "单价");
@@ -103,12 +103,12 @@ namespace AssMngSys
             textBoxSupplier.DataBindings.Add("Text", bs, "供应商");
             textBoxSupplierInfo.DataBindings.Add("Text", bs, "供应商信息");
             textBoxVender.DataBindings.Add("Text", bs, "厂商品牌");
-            textBoxMfrDate.DataBindings.Add("Text", bs, "生产日期");
+            textBoxMfrDate.DataBindings.Add("Text", bs, "购置日期");
             comboBoxUnit.DataBindings.Add("Text", bs, "单位");
             textBoxSn.DataBindings.Add("Text", bs, "序列号");
             //textBoxPid.DataBindings.Add("Text", bs, "标签喷码");
             //textBoxTid.DataBindings.Add("Text", bs, "标签ID");
-            textBoxAssDesc.DataBindings.Add("Text", bs, "资产描述");
+            textBoxAssDesc.DataBindings.Add("Text", bs, "备注");
             textBoxId.DataBindings.Add("Text", bs, "ID");
             comboBoxInputTyp.DataBindings.Add("Text", bs, "购置类型");
             comboBoxAddr.DataBindings.Add("Text", bs, "所在地点");
@@ -192,7 +192,7 @@ namespace AssMngSys
             }
             string sSqlIns = string.Format(@"insert into ass_list
                 (cre_tm,ass_id,fin_id,pid,tid,cat_no,ass_nam,ass_desc,ass_pri,reg_date,typ,
-                supplier,sn,vender,mfr_date,unit,num,ppu,company,cre_man,supplier_info,input_typ,addr) 
+                supplier,sn,vender,input_date,unit,num,ppu,company,cre_man,supplier_info,input_typ,addr) 
                 values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}',
                 '{11}','{12}','{13}','{14}','{15}','{16}','{17}','{18}','{19}','{20}','{21}','{22}')",
                 MainForm.getDateTime(),
@@ -242,7 +242,7 @@ namespace AssMngSys
 //        {
 //            if (textBoxAssId.Text.Equals(""))
 //            {
-//                MessageBox.Show("资产编号不能为空!");
+//                MessageBox.Show("资产编码不能为空!");
 //                return;
 //            }
 //            if (comboBoxCat.Text.Equals(""))
@@ -256,7 +256,7 @@ namespace AssMngSys
 //                cmd = myConn.CreateCommand();//sql命令对象，表示要对sql数据库执行一个sql语句
 //                cmd.CommandText = @"insert into ass_list
 //                    (cre_tm,ass_id,fin_id,pid,tid,cat_no,ass_nam,ass_desc,ass_pri,reg_date,typ,
-//                    supplier,sn,vender,mfr_date,unit,num,ppu,company,cre_man,supplier_info,input_typ,addr) 
+//                    supplier,sn,vender,input_date,unit,num,ppu,company,cre_man,supplier_info,input_typ,addr) 
         //                    values(CURRENT_TIMESTAMP,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15,@16,@17,@18,@19,@20,@21,@22))";//sql语句@表示参数
 //                cmd.Parameters.Add("@1", MySqlDbType.VarChar).Value = textBoxAssId.Text;
 //                cmd.Parameters.Add("@2", MySqlDbType.VarChar).Value = textBoxFinId.Text;
@@ -317,7 +317,7 @@ namespace AssMngSys
 //                myConn.Open();
 //                cmd.CommandText = @"update ass_list set 
         //ass_id = @1, fin_id = @2, cat_no = @5, ass_nam = @6, ass_desc = @7, ass_pri = @8, mod_tm = CURRENT_TIMESTAMP,
-//typ = @9, supplier = @10, supplier_info = @11, sn = @12,vender = @13, mfr_date = @14, unit = @15, num = @16, ppu = @17, 
+//typ = @9, supplier = @10, supplier_info = @11, sn = @12,vender = @13, input_date = @14, unit = @15, num = @16, ppu = @17, 
 //memo = @18, mod_man = @19,input_typ = @20,input_typ = @21 where id = @22";
 //                cmd.Parameters.Add("@1", MySqlDbType.VarChar).Value = textBoxAssId.Text;
 //                cmd.Parameters.Add("@2", MySqlDbType.VarChar).Value = textBoxFinId.Text;
@@ -358,7 +358,7 @@ namespace AssMngSys
         private void ModifyData()
         {
             string sSqlUpd = string.Format(@"update ass_list set fin_id = '{0}',cat_no = '{1}', ass_nam = '{2}', ass_desc = '{3}', ass_pri = '{4}', mod_tm = '{5}',
-typ = '{6}', supplier = '{7}', supplier_info = '{8}', sn = '{9}',vender = '{10}', mfr_date = '{11}', unit = '{12}', 
+typ = '{6}', supplier = '{7}', supplier_info = '{8}', sn = '{9}',vender = '{10}', input_date = '{11}', unit = '{12}', 
 num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',addr = '{18}' where id = '{19}'",
                     //textBoxAssId.Text,
                     textBoxFinId.Text,

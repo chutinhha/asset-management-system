@@ -36,13 +36,14 @@ namespace AssMngSys
             this.textBoxId = new System.Windows.Forms.TextBox();
             this.textBoxTid = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.textBoxMfrDate = new System.Windows.Forms.TextBox();
+            this.textBoxInputDate = new System.Windows.Forms.TextBox();
             this.comboBoxUnit = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -50,6 +51,7 @@ namespace AssMngSys
             this.textBoxPpu = new System.Windows.Forms.TextBox();
             this.textBoxAssPri = new System.Windows.Forms.TextBox();
             this.textBoxNum = new System.Windows.Forms.TextBox();
+            this.textBoxDevMode = new System.Windows.Forms.TextBox();
             this.textBoxVender = new System.Windows.Forms.TextBox();
             this.textBoxSn = new System.Windows.Forms.TextBox();
             this.textBoxSupplierInfo = new System.Windows.Forms.TextBox();
@@ -78,10 +80,11 @@ namespace AssMngSys
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label11 = new System.Windows.Forms.Label();
             this.textBoxAssDesc = new System.Windows.Forms.TextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonRefresh = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label24 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -111,13 +114,15 @@ namespace AssMngSys
             this.tabPage1.Controls.Add(this.textBoxId);
             this.tabPage1.Controls.Add(this.textBoxTid);
             this.tabPage1.Controls.Add(this.label18);
-            this.tabPage1.Controls.Add(this.textBoxMfrDate);
+            this.tabPage1.Controls.Add(this.textBoxInputDate);
             this.tabPage1.Controls.Add(this.comboBoxUnit);
             this.tabPage1.Controls.Add(this.label21);
             this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.label15);
+            this.tabPage1.Controls.Add(this.label24);
             this.tabPage1.Controls.Add(this.label17);
+            this.tabPage1.Controls.Add(this.label23);
             this.tabPage1.Controls.Add(this.label16);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.label12);
@@ -125,6 +130,7 @@ namespace AssMngSys
             this.tabPage1.Controls.Add(this.textBoxPpu);
             this.tabPage1.Controls.Add(this.textBoxAssPri);
             this.tabPage1.Controls.Add(this.textBoxNum);
+            this.tabPage1.Controls.Add(this.textBoxDevMode);
             this.tabPage1.Controls.Add(this.textBoxVender);
             this.tabPage1.Controls.Add(this.textBoxSn);
             this.tabPage1.Controls.Add(this.textBoxSupplierInfo);
@@ -150,7 +156,7 @@ namespace AssMngSys
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(319, 224);
+            this.label19.Location = new System.Drawing.Point(84, 24);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(95, 12);
             this.label19.TabIndex = 42;
@@ -158,7 +164,7 @@ namespace AssMngSys
             // 
             // textBoxPid
             // 
-            this.textBoxPid.Location = new System.Drawing.Point(321, 200);
+            this.textBoxPid.Location = new System.Drawing.Point(86, 39);
             this.textBoxPid.Name = "textBoxPid";
             this.textBoxPid.ReadOnly = true;
             this.textBoxPid.Size = new System.Drawing.Size(150, 21);
@@ -193,18 +199,18 @@ namespace AssMngSys
             this.label18.Text = "标签TID：";
             this.label18.Visible = false;
             // 
-            // textBoxMfrDate
+            // textBoxInputDate
             // 
-            this.textBoxMfrDate.Location = new System.Drawing.Point(322, 121);
-            this.textBoxMfrDate.Name = "textBoxMfrDate";
-            this.textBoxMfrDate.Size = new System.Drawing.Size(123, 21);
-            this.textBoxMfrDate.TabIndex = 39;
-            this.textBoxMfrDate.Text = "2013-06-15";
+            this.textBoxInputDate.Location = new System.Drawing.Point(324, 231);
+            this.textBoxInputDate.Name = "textBoxInputDate";
+            this.textBoxInputDate.Size = new System.Drawing.Size(123, 21);
+            this.textBoxInputDate.TabIndex = 39;
+            this.textBoxInputDate.Text = "2013-06-15";
             // 
             // comboBoxUnit
             // 
             this.comboBoxUnit.FormattingEnabled = true;
-            this.comboBoxUnit.Location = new System.Drawing.Point(396, 83);
+            this.comboBoxUnit.Location = new System.Drawing.Point(397, 119);
             this.comboBoxUnit.Name = "comboBoxUnit";
             this.comboBoxUnit.Size = new System.Drawing.Size(72, 20);
             this.comboBoxUnit.TabIndex = 37;
@@ -212,7 +218,7 @@ namespace AssMngSys
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(486, 89);
+            this.label21.Location = new System.Drawing.Point(490, 124);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(65, 12);
             this.label21.TabIndex = 34;
@@ -221,7 +227,7 @@ namespace AssMngSys
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(249, 88);
+            this.label6.Location = new System.Drawing.Point(250, 124);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 12);
             this.label6.TabIndex = 36;
@@ -230,7 +236,7 @@ namespace AssMngSys
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 86);
+            this.label2.Location = new System.Drawing.Point(250, 87);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 35;
@@ -239,7 +245,7 @@ namespace AssMngSys
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(486, 124);
+            this.label15.Location = new System.Drawing.Point(490, 157);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(65, 12);
             this.label15.TabIndex = 29;
@@ -248,16 +254,25 @@ namespace AssMngSys
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(250, 126);
+            this.label17.Location = new System.Drawing.Point(250, 236);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(65, 12);
             this.label17.TabIndex = 28;
-            this.label17.Text = "生产日期：";
+            this.label17.Text = "购置日期：";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(250, 160);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(65, 12);
+            this.label23.TabIndex = 33;
+            this.label23.Text = "设备型号：";
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(9, 126);
+            this.label16.Location = new System.Drawing.Point(10, 159);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(71, 12);
             this.label16.TabIndex = 33;
@@ -266,7 +281,7 @@ namespace AssMngSys
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(249, 203);
+            this.label4.Location = new System.Drawing.Point(16, 41);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 12);
             this.label4.TabIndex = 32;
@@ -275,7 +290,7 @@ namespace AssMngSys
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(241, 164);
+            this.label12.Location = new System.Drawing.Point(238, 196);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(77, 12);
             this.label12.TabIndex = 32;
@@ -284,7 +299,7 @@ namespace AssMngSys
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(27, 164);
+            this.label13.Location = new System.Drawing.Point(28, 196);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(53, 12);
             this.label13.TabIndex = 31;
@@ -292,78 +307,90 @@ namespace AssMngSys
             // 
             // textBoxPpu
             // 
-            this.textBoxPpu.Location = new System.Drawing.Point(553, 85);
+            this.textBoxPpu.Location = new System.Drawing.Point(557, 120);
             this.textBoxPpu.Name = "textBoxPpu";
             this.textBoxPpu.Size = new System.Drawing.Size(47, 21);
             this.textBoxPpu.TabIndex = 27;
             this.textBoxPpu.Text = "0.00";
             this.textBoxPpu.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBoxPpu.TextChanged += new System.EventHandler(this.textBoxPpu_TextChanged);
+            this.textBoxPpu.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNum_KeyPress);
             // 
             // textBoxAssPri
             // 
-            this.textBoxAssPri.Location = new System.Drawing.Point(603, 85);
+            this.textBoxAssPri.Location = new System.Drawing.Point(607, 120);
             this.textBoxAssPri.Name = "textBoxAssPri";
             this.textBoxAssPri.Size = new System.Drawing.Size(89, 21);
             this.textBoxAssPri.TabIndex = 21;
             this.textBoxAssPri.Text = "0.00";
             this.textBoxAssPri.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBoxAssPri.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNum_KeyPress);
             // 
             // textBoxNum
             // 
-            this.textBoxNum.Location = new System.Drawing.Point(322, 83);
+            this.textBoxNum.Location = new System.Drawing.Point(324, 119);
             this.textBoxNum.Name = "textBoxNum";
             this.textBoxNum.Size = new System.Drawing.Size(68, 21);
             this.textBoxNum.TabIndex = 18;
             this.textBoxNum.Text = "1";
             this.textBoxNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBoxNum.TextChanged += new System.EventHandler(this.textBoxNum_TextChanged);
+            this.textBoxNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNum_KeyPress);
+            // 
+            // textBoxDevMode
+            // 
+            this.textBoxDevMode.Location = new System.Drawing.Point(324, 154);
+            this.textBoxDevMode.Name = "textBoxDevMode";
+            this.textBoxDevMode.Size = new System.Drawing.Size(150, 21);
+            this.textBoxDevMode.TabIndex = 22;
             // 
             // textBoxVender
             // 
-            this.textBoxVender.Location = new System.Drawing.Point(84, 121);
+            this.textBoxVender.Location = new System.Drawing.Point(86, 154);
             this.textBoxVender.Name = "textBoxVender";
             this.textBoxVender.Size = new System.Drawing.Size(150, 21);
             this.textBoxVender.TabIndex = 22;
             // 
             // textBoxSn
             // 
-            this.textBoxSn.Location = new System.Drawing.Point(553, 122);
+            this.textBoxSn.Location = new System.Drawing.Point(557, 154);
             this.textBoxSn.Name = "textBoxSn";
-            this.textBoxSn.Size = new System.Drawing.Size(139, 21);
+            this.textBoxSn.Size = new System.Drawing.Size(141, 21);
             this.textBoxSn.TabIndex = 25;
             // 
             // textBoxSupplierInfo
             // 
-            this.textBoxSupplierInfo.Location = new System.Drawing.Point(322, 160);
+            this.textBoxSupplierInfo.Location = new System.Drawing.Point(324, 192);
             this.textBoxSupplierInfo.Name = "textBoxSupplierInfo";
             this.textBoxSupplierInfo.Size = new System.Drawing.Size(374, 21);
             this.textBoxSupplierInfo.TabIndex = 26;
             // 
             // textBoxSupplier
             // 
-            this.textBoxSupplier.Location = new System.Drawing.Point(84, 161);
+            this.textBoxSupplier.Location = new System.Drawing.Point(86, 193);
             this.textBoxSupplier.Name = "textBoxSupplier";
             this.textBoxSupplier.Size = new System.Drawing.Size(150, 21);
             this.textBoxSupplier.TabIndex = 23;
             // 
             // textBoxFinId
             // 
-            this.textBoxFinId.Location = new System.Drawing.Point(84, 83);
+            this.textBoxFinId.Location = new System.Drawing.Point(324, 82);
             this.textBoxFinId.Name = "textBoxFinId";
-            this.textBoxFinId.Size = new System.Drawing.Size(147, 21);
+            this.textBoxFinId.Size = new System.Drawing.Size(150, 21);
             this.textBoxFinId.TabIndex = 24;
             // 
             // comboBoxInputTyp
             // 
             this.comboBoxInputTyp.FormattingEnabled = true;
-            this.comboBoxInputTyp.Location = new System.Drawing.Point(84, 197);
+            this.comboBoxInputTyp.Location = new System.Drawing.Point(86, 230);
             this.comboBoxInputTyp.Name = "comboBoxInputTyp";
-            this.comboBoxInputTyp.Size = new System.Drawing.Size(143, 20);
+            this.comboBoxInputTyp.Size = new System.Drawing.Size(150, 20);
             this.comboBoxInputTyp.TabIndex = 17;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(15, 200);
+            this.label7.Location = new System.Drawing.Point(16, 233);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(65, 12);
             this.label7.TabIndex = 16;
@@ -372,24 +399,24 @@ namespace AssMngSys
             // comboBoxAssNam
             // 
             this.comboBoxAssNam.FormattingEnabled = true;
-            this.comboBoxAssNam.Location = new System.Drawing.Point(550, 44);
+            this.comboBoxAssNam.Location = new System.Drawing.Point(86, 120);
             this.comboBoxAssNam.Name = "comboBoxAssNam";
-            this.comboBoxAssNam.Size = new System.Drawing.Size(146, 20);
+            this.comboBoxAssNam.Size = new System.Drawing.Size(150, 20);
             this.comboBoxAssNam.TabIndex = 13;
             // 
             // comboBoxTyp
             // 
             this.comboBoxTyp.FormattingEnabled = true;
-            this.comboBoxTyp.Location = new System.Drawing.Point(321, 46);
+            this.comboBoxTyp.Location = new System.Drawing.Point(557, 82);
             this.comboBoxTyp.Name = "comboBoxTyp";
-            this.comboBoxTyp.Size = new System.Drawing.Size(150, 20);
+            this.comboBoxTyp.Size = new System.Drawing.Size(141, 20);
             this.comboBoxTyp.TabIndex = 13;
             this.comboBoxTyp.SelectionChangeCommitted += new System.EventHandler(this.comboBoxTyp_SelectionChangeCommitted);
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(249, 48);
+            this.label20.Location = new System.Drawing.Point(490, 86);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(65, 12);
             this.label20.TabIndex = 11;
@@ -408,7 +435,7 @@ namespace AssMngSys
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(479, 47);
+            this.label5.Location = new System.Drawing.Point(16, 124);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 12);
             this.label5.TabIndex = 12;
@@ -417,15 +444,15 @@ namespace AssMngSys
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 46);
+            this.label1.Location = new System.Drawing.Point(16, 87);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 9;
-            this.label1.Text = "资产编号：";
+            this.label1.Text = "资产编码：";
             // 
             // textBoxAssId
             // 
-            this.textBoxAssId.Location = new System.Drawing.Point(84, 43);
+            this.textBoxAssId.Location = new System.Drawing.Point(86, 82);
             this.textBoxAssId.Name = "textBoxAssId";
             this.textBoxAssId.Size = new System.Drawing.Size(150, 21);
             this.textBoxAssId.TabIndex = 8;
@@ -568,19 +595,28 @@ namespace AssMngSys
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(13, 31);
+            this.label11.Location = new System.Drawing.Point(62, 48);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(65, 12);
+            this.label11.Size = new System.Drawing.Size(41, 12);
             this.label11.TabIndex = 32;
-            this.label11.Text = "资产描述：";
+            this.label11.Text = "备注：";
             // 
             // textBoxAssDesc
             // 
-            this.textBoxAssDesc.Location = new System.Drawing.Point(84, 31);
+            this.textBoxAssDesc.Location = new System.Drawing.Point(109, 45);
             this.textBoxAssDesc.Multiline = true;
             this.textBoxAssDesc.Name = "textBoxAssDesc";
-            this.textBoxAssDesc.Size = new System.Drawing.Size(594, 248);
+            this.textBoxAssDesc.Size = new System.Drawing.Size(318, 21);
             this.textBoxAssDesc.TabIndex = 31;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(4, 367);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(136, 40);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 43;
+            this.pictureBox1.TabStop = false;
             // 
             // buttonCancel
             // 
@@ -611,21 +647,21 @@ namespace AssMngSys
             // buttonRefresh
             // 
             this.buttonRefresh.Image = global::AssMngSys.Properties.Resources.reload;
-            this.buttonRefresh.Location = new System.Drawing.Point(477, 192);
+            this.buttonRefresh.Location = new System.Drawing.Point(242, 31);
             this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(39, 35);
+            this.buttonRefresh.Size = new System.Drawing.Size(39, 33);
             this.buttonRefresh.TabIndex = 41;
             this.buttonRefresh.UseVisualStyleBackColor = true;
             this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
-            // pictureBox1
+            // label24
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(7, 370);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(136, 40);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 43;
-            this.pictureBox1.TabStop = false;
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(322, 255);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(89, 12);
+            this.label24.TabIndex = 28;
+            this.label24.Text = "（YYYY-MM-DD）";
             // 
             // NewAssDlg
             // 
@@ -675,7 +711,6 @@ namespace AssMngSys
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
@@ -702,7 +737,7 @@ namespace AssMngSys
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox textBoxAssDesc;
-        private System.Windows.Forms.TextBox textBoxMfrDate;
+        private System.Windows.Forms.TextBox textBoxInputDate;
         private System.Windows.Forms.TextBox textBoxId;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Button buttonRefresh;
@@ -711,5 +746,9 @@ namespace AssMngSys
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TextBox textBoxDevMode;
+        private System.Windows.Forms.Label label24;
     }
 }

@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using NameApi;
 
-namespace IrRfidUHFDemo
+namespace AssMngSysCe
 {
     public partial class PowerForm : Form
     {

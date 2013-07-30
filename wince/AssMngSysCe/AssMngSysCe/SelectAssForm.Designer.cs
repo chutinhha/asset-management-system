@@ -1,4 +1,4 @@
-namespace IrRfidUHFDemo
+namespace AssMngSysCe
 {
     partial class SelectAssForm
     {

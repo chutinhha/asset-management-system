@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
-namespace IrRfidUHFDemo
+namespace AssMngSysCe
 {
     public partial class HistoryForm : Form
     {

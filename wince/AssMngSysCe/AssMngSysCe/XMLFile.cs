@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Xml;
 using Microsoft.Win32;
 
-namespace IrRfidUHFDemo
+namespace AssMngSysCe
 {
     //public class Reg
     //{

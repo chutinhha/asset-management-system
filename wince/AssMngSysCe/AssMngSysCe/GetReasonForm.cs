@@ -9,7 +9,7 @@ using System.Xml;
 using System.Diagnostics;
 using System.Data.SQLite;
 
-namespace IrRfidUHFDemo
+namespace AssMngSysCe
 {
     public partial class GetReasonForm : Form
     {

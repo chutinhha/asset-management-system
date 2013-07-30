@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列属性集
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("IrRfidUHFDemo")]
+[assembly: AssemblyTitle("AssetMngSysCe")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("liang")]
-[assembly: AssemblyProduct("IrRfidUHFDemo")]
-[assembly: AssemblyCopyright("版权所有 (C) liang 2012")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("AssetMngSysCe")]
+[assembly: AssemblyCopyright("版权所有 (C) zeng 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

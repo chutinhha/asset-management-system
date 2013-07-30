@@ -9,7 +9,7 @@ using System.Xml;
 using System.Data.SQLite;
 using NameApi;
 
-namespace IrRfidUHFDemo
+namespace AssMngSysCe
 {
     public partial class LoginForm : Form
     {

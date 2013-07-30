@@ -7,17 +7,20 @@
     <ProjectGuid>{28A79913-131D-4FE0-B66D-5F4E84CE1E94}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IrRfidUHFDemo</RootNamespace>
-    <AssemblyName>IrRfidUHFDemo</AssemblyName>
+    <RootNamespace>AssMngSysCe</RootNamespace>
+    <AssemblyName>AssMngSysCe</AssemblyName>
     <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PlatformFamilyName>WindowsCE</PlatformFamilyName>
     <PlatformID>E2BECB1F-8C8C-41ba-B736-9BE7D946A398</PlatformID>
     <OSVersion>5.0</OSVersion>
-    <DeployDirSuffix>NandFlash\IrRfidUHFDemo</DeployDirSuffix>
+    <DeployDirSuffix>NandFlash\AssetMngSysCe</DeployDirSuffix>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FormFactorID>
     </FormFactorID>
     <DeployDirPrefix>\</DeployDirPrefix>
+    <ApplicationIcon>asset.ico</ApplicationIcon>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -247,6 +250,9 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Web References\AssWebSrv\Service.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="asset.ico" />
   </ItemGroup>
   <Import Condition="'$(TargetFrameworkVersion)' == 'v1.0'" Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.v1.targets" />
   <Import Condition="'$(TargetFrameworkVersion)' == 'v2.0'" Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />

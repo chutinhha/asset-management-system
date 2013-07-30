@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using NameApi;
 using System.Runtime.InteropServices;
 
-namespace IrRfidUHFDemo
+namespace AssMngSysCe
 {
     public partial class ReadForm : Form
     {

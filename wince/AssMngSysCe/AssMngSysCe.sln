@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IrRfidUHFDemo", "IrRfidUHFDemo\IrRfidUHFDemo.csproj", "{28A79913-131D-4FE0-B66D-5F4E84CE1E94}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssMngSysCe", "AssMngSysCe\AssMngSysCe.csproj", "{28A79913-131D-4FE0-B66D-5F4E84CE1E94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

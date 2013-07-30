@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Data.SQLite;
 
-namespace IrRfidUHFDemo
+namespace AssMngSysCe
 {
     public partial class AssDetailForm : Form
     {

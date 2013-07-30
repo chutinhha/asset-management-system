@@ -6,7 +6,7 @@ using System.Data.SQLite;
 using System.Data;
 using System.Data.Common;
 //SQLiteHelper ²Ù×÷Àà 
-namespace IrRfidUHFDemo
+namespace AssMngSysCe
 {
     public class SQLiteHelper
     {

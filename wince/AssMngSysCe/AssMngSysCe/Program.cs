@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace IrRfidUHFDemo
+namespace AssMngSysCe
 {
     static class Program
     {

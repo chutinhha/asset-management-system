@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
 
-namespace IrRfidUHFDemo
+namespace AssMngSysCe
 {
     public partial class CheckOptForm : Form
     {

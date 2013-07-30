@@ -13,7 +13,7 @@ using System.Threading;
 using System.Xml;
 using System.Data.SQLite;
 
-namespace IrRfidUHFDemo
+namespace AssMngSysCe
 {
     public partial class MainForm : Form
     {
@@ -264,14 +264,14 @@ namespace IrRfidUHFDemo
         {
             if (bChecking == false)
             {
-                buttonRead.Text = "停止";
+                buttonRead.Text = "停止(F1)";
                 bChecking = true;
                 thrCheck = new Thread(new ThreadStart(checkThread));
                 thrCheck.Start();
             }
             else
             {
-                buttonRead.Text = "开始";
+                buttonRead.Text = "开始(F1)";
                 bChecking = false;
                 thrCheck.Abort();
                 thrCheck.Join();
@@ -507,11 +507,11 @@ namespace IrRfidUHFDemo
                 // thrInv = new Thread(new ParameterizedThreadStart(invThread));
                 // thrInv.Start(textBoxIp.Text, textBoxPort.Text);
 
-                buttonRead.Text = "停止";
+                buttonRead.Text = "停止(F1)";
             }
             else
             {
-                buttonRead.Text = "开始";
+                buttonRead.Text = "开始(F1)";
                 bInving = false;
 
                 thrInv.Abort();
@@ -1987,7 +1987,7 @@ namespace IrRfidUHFDemo
                 }
                 
             }
-            else
+            else if (sPid.Length != 0)
             {
                 label1WriteMsg.Text = "*数据有误(应为12字节)，请重新获取！";
                 textBoxAssId.Text = "";

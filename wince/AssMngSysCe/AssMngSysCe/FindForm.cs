@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 //using System.Net.Sockets;
 
 
-namespace IrRfidUHFDemo
+namespace AssMngSysCe
 {
     public partial class FindForm : Form
     {

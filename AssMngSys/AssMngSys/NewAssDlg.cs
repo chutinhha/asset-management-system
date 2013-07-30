@@ -79,7 +79,7 @@ namespace AssMngSys
                     sAssIdCur = dataGridView1.SelectedRows[0].Cells["资产编码"].Value.ToString();
                     textBoxAssId.Text = sAssIdCur;
                     textBoxPid.Text = sPidCur;
-                    textBoxTid.Text = dataGridView1.SelectedRows[0].Cells["标签ID"].Value.ToString();
+                   // textBoxTid.Text = dataGridView1.SelectedRows[0].Cells["标签ID"].Value.ToString();
                 }
                 textBoxFinId.Text = dataGridView1.SelectedRows[0].Cells["财务编码"].Value.ToString();
                 comboBoxTyp.Text = dataGridView1.SelectedRows[0].Cells["类型"].Value.ToString();
@@ -152,7 +152,7 @@ namespace AssMngSys
             }
             reader.Close();
             //获取地点列表
-            sSql = "select distinct addr_no from addr";
+            sSql = "select distinct addr_no from addr order by convert(addr_no using gb2312) asc";
             reader = MysqlHelper.ExecuteReader(sSql);
             while (reader.Read())
             {

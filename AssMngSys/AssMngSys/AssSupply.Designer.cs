@@ -49,7 +49,6 @@ namespace AssMngSys
             this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
             this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.buttonClear = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.labelCnt = new System.Windows.Forms.Label();
@@ -60,7 +59,6 @@ namespace AssMngSys
             this.label5 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.buttonOK = new System.Windows.Forms.Button();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
@@ -69,10 +67,12 @@ namespace AssMngSys
             this.label19 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.buttonClear = new System.Windows.Forms.Button();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
+            this.buttonOK = new System.Windows.Forms.Button();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -187,6 +187,7 @@ namespace AssMngSys
             // 
             // comboBoxAddr
             // 
+            this.comboBoxAddr.DropDownWidth = 180;
             this.comboBoxAddr.FormattingEnabled = true;
             this.comboBoxAddr.Location = new System.Drawing.Point(451, 67);
             this.comboBoxAddr.Name = "comboBoxAddr";
@@ -286,18 +287,6 @@ namespace AssMngSys
             // 
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
             this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // buttonClear
-            // 
-            this.buttonClear.Image = global::AssMngSys.Properties.Resources.stop;
-            this.buttonClear.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.buttonClear.Location = new System.Drawing.Point(137, 217);
-            this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(122, 36);
-            this.buttonClear.TabIndex = 16;
-            this.buttonClear.Text = "    清空(&C)";
-            this.buttonClear.UseVisualStyleBackColor = true;
-            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // label1
             // 
@@ -400,18 +389,6 @@ namespace AssMngSys
             this.label11.TabIndex = 6;
             this.label11.Text = "作业人员  ";
             // 
-            // buttonOK
-            // 
-            this.buttonOK.Image = global::AssMngSys.Properties.Resources.save;
-            this.buttonOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonOK.Location = new System.Drawing.Point(9, 217);
-            this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(122, 36);
-            this.buttonOK.TabIndex = 11;
-            this.buttonOK.Text = "    确认(&S)";
-            this.buttonOK.UseVisualStyleBackColor = true;
-            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
-            // 
             // groupBox10
             // 
             this.groupBox10.Controls.Add(this.comboBox1);
@@ -491,6 +468,18 @@ namespace AssMngSys
             this.tabControl1.Visible = false;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
+            // buttonClear
+            // 
+            this.buttonClear.Image = global::AssMngSys.Properties.Resources.stop;
+            this.buttonClear.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.buttonClear.Location = new System.Drawing.Point(137, 217);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Size = new System.Drawing.Size(122, 36);
+            this.buttonClear.TabIndex = 16;
+            this.buttonClear.Text = "    清空(&C)";
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            // 
             // bindingNavigatorMoveFirstItem
             // 
             this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -526,6 +515,18 @@ namespace AssMngSys
             this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorMoveLastItem.Text = "Move last";
+            // 
+            // buttonOK
+            // 
+            this.buttonOK.Image = global::AssMngSys.Properties.Resources.save;
+            this.buttonOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonOK.Location = new System.Drawing.Point(9, 217);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(122, 36);
+            this.buttonOK.TabIndex = 11;
+            this.buttonOK.Text = "    确认(&S)";
+            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // AssSupply
             // 

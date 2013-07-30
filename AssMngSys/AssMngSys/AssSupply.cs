@@ -9,11 +9,11 @@ using MySql.Data.MySqlClient;
 
 namespace AssMngSys
 {
-    public partial class AssSupply : Form
+    public partial class AssSupply : Form 
     {
         private BindingSource bs = new BindingSource();
 
-        string sSQLSelect = "select Id ID,ass_id 资产编码,fin_id 财务编码,pid 标签喷码,tid 标签ID,cat_no 类别编码,typ 类型,ass_nam 资产名称,stat 库存状态,stat_sub 使用状态,duty_man 保管人员,dept 部门,ass_desc 备注,ass_pri 资产金额,reg_date 登记日期,addr 所在地点,use_co 所在公司,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,input_date 购置日期,unit 单位,num 数量,ppu 单价,duty_man 责任人员,company 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间,input_typ 购置类型 from ass_list";
+        public static string sSQLSelect = "select Id ID,ass_id 资产编码,fin_id 财务编码,pid 标签喷码,typ 资产类型,ass_nam 资产名称,stat 库存状态,stat_sub 使用状态,duty_man 保管人员,dept 部门,ass_desc 备注,ass_pri 资产金额,reg_date 登记日期,addr 所在地点,use_co 所在公司,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,input_date 购置日期,input_typ 购置类型,unit 单位,num 数量,ppu 单价,duty_man 责任人员,company 资产归属,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间 from ass_list";
  
         
         MainForm mf;
@@ -56,7 +56,7 @@ namespace AssMngSys
             }
             reader.Close();
             //获取地址列表
-            sSql = "select distinct addr_no from addr";
+            sSql = "select distinct addr_no from addr order by convert(addr_no using gb2312) asc";
             reader = MysqlHelper.ExecuteReader(sSql);
             while (reader.Read())
             {
@@ -238,15 +238,15 @@ namespace AssMngSys
             string sAddr = comboBoxAddr.Text;
             string sReason = textBoxReason.Text;
             
-            List<string> listAssId = new List<string>();
-            for( int i = 0; i< dataGridView1.RowCount; i++)
-            {
-                string sAssId = dataGridView1.Rows[i].Cells[1].Value.ToString();
-                listAssId.Add(sAssId);
-            }
+            //List<string> listAssId = new List<string>();
+            //for( int i = 0; i< dataGridView1.RowCount; i++)
+            //{
+            //    string sAssId = dataGridView1.Rows[i].Cells["资产编码"].Value.ToString();
+            //    listAssId.Add(sAssId);
+            //}
 
             bool bOK = false;
-            bOK = AssChange(sTyp,sDept, sMan, sAddr, sReason, out sErr,listAssId);
+            bOK = AssSupply.AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, dataGridView1);
 
             return bOK;
 
@@ -443,61 +443,115 @@ namespace AssMngSys
         //    bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, listAssId);
         //    return bOK;
         //}
-        private bool CheckStat(string sNewOpt, out string sStat, out string sStatSub)
+        static public bool CheckStat(string sNewOpt,string sStat, string sStatSub, out string sErr)
         {
-            sStat = "";
-            sStatSub = "";
+            sErr = "";
+            //判断资产是否有效
+            if (sStat != "领用" && sStat != "库存")
+            {
+                sErr = "该资产已" + sStat;
+                return false;
+            }
+
             if (sNewOpt.Equals("领用"))
             {
+                //库存状态下才可以领用
+                if (sStat != "库存")
+                {
+                    sErr = "该资产已领用";
+                    return false;
+                }
             }
             else if (sNewOpt.Equals("退领"))
             {
+                //领用状态下才可以退领
+                if (sStat != "领用")
+                {
+                    sErr = "必须是领用状态";
+                    return false;
+                }
             }
             else if (sNewOpt.Equals("借用"))
             {
+                if (sStatSub.Length != 0 && sStatSub != "归还" && sStatSub != "返回" && sStatSub != "修返")
+                {
+                    sErr = "该资产正处于" + sStatSub + "状态";
+                    return false;
+                }
             }
             else if (sNewOpt.Equals("归还"))
             {
+                //借用状态下才可以归还
+                if (sStatSub != "借用")
+                {
+                    sErr = "必须是借用状态";
+                    return false;
+                }
             }
-            else if (sNewOpt.Equals("开始维修"))
+            else if (sNewOpt.Equals("送修"))
             {
+                //领用或库存状态下才可以 送修
+                if (sStatSub.Length != 0 && sStatSub != "归还" && sStatSub != "返回" && sStatSub != "修返")
+                {
+                    sErr = "该资产正处于" + sStatSub + "状态";
+                    return false;
+                }
             }
-            else if (sNewOpt.Equals("结束维修"))
+            else if (sNewOpt.Equals("修返"))
             {
+                //领用或库存状态下才可以 返修
+                if (sStatSub != "送修")
+                {
+                    sErr = "必须是送修状态";
+                    return false;
+                }
             }
             else if (sNewOpt.Equals("外出"))
             {
+                //领用或库存状态下才可以 外出
+                if (sStatSub.Length != 0 && sStatSub != "归还" && sStatSub != "返回" && sStatSub != "修返")
+                {
+                    sErr = "该资产正处于" + sStatSub + "状态";
+                    return false;
+                }
             }
             else if (sNewOpt.Equals("返回"))
             {
-
+                //外出状态下才可以 返回
+                if (sStatSub != "返回")
+                {
+                    sErr = "必须是返回状态";
+                    return false;
+                }
             }
             else if (sNewOpt.Equals("租还"))
             {
-
+                //领用或库存状态下才可以 租还
             }
             else if (sNewOpt.Equals("退返"))
             {
-
+                //领用或库存状态下才可以 退返
             }
             else if (sNewOpt.Equals("丢失"))
             {
-
+                //领用或库存状态下才可以 丢失
             }
             else if (sNewOpt.Equals("报废"))
             {
-
+                //领用或库存状态下才可以 报废
             }
             else if (sNewOpt.Equals("转出"))
             {
-
+                //领用或库存状态下才可以 转出
             }
             return true;
         }
-        static public bool AssChange(string sTyp, string sDept, string sMan, string sAddr, string sReason, out string sErr, List<string> listAssid)
+        static public bool AssChange(string sTyp, string sDept, string sMan, string sAddr, string sReason, out string sErr, DataGridView dgv)
         {
+            sErr = "";
             List<string> listSql = new List<string>();
             List<string> listSqlLog = new List<string>();
+            List<string> listAssId = new List<string>();
             string sUpd;
             if (sTyp == "领用")// )
             {
@@ -521,28 +575,50 @@ namespace AssMngSys
             }
 
             string sSql = "";
-            foreach (string sAssId in listAssid)
+         //   foreach (string sAssId in listAssid)
+            bool bOK = true;
+            for (int i = 0; i < dgv.Rows.Count; i++)
             {
+                string sAssId = dgv.Rows[i].Cells["资产编码"].Value.ToString();
+                string sStat = dgv.Rows[i].Cells["库存状态"].Value.ToString();
+                string sStatSub = dgv.Rows[i].Cells["使用状态"].Value.ToString();
+                
                 if (sAssId.Length == 0) continue;
+
+                //验证逻辑
+                if (!AssSupply.CheckStat(sTyp, sStat, sStatSub, out sErr))
+                {
+                    sErr = sErr + ",序号：" + (i+1) + "\r\n资产编码：" + sAssId;
+                    bOK = false;
+                    break;
+                }
+                
                 //更新
                 sSql = sUpd + " where ass_id = '" + sAssId + "' and ynenable = 'Y'";
                 listSql.Add(sSql);
+                listAssId.Add(sAssId);
                 //插入
                 sSql = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')",
                 sAssId, sTyp, sMan, MainForm.getDate(), MainForm.sUserName, MainForm.getDateTime(), MainForm.sCompany, sDept, sReason, sAddr);
                 listSql.Add(sSql);
+                listAssId.Add(sAssId);
+            }
+            if (!bOK)
+            {
+                listSql.Clear();
+                listAssId.Clear();
+                return false;
             }
             //同步SQL
             int nCnt = listSql.Count;
             for (int i = 0; i < nCnt; i++)
             {
+                string sAssId = listAssId[i];
                 sSql = listSql[i];
                 string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-                sTyp, "0", sSql.Replace("'", "''"), MainForm.sClientId, listAssid[i / 2], MainForm.getDateTime());
+                sTyp, "0", sSql.Replace("'", "''"), MainForm.sClientId, sAssId, MainForm.getDateTime());
                 listSql.Add(sSqlLog);
             }
-
-            bool bOK = false;
 
             bOK = MysqlHelper.ExecuteNoQueryTran(listSql);
             sErr = MysqlHelper.sLastErr;

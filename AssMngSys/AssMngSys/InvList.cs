@@ -56,7 +56,7 @@ namespace AssMngSys
         {
             string sStartDate = string.Format("{0}-{1:00}-{2:00}", dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, dateTimePicker1.Value.Day);
             string sEndDate = string.Format("{0}-{1:00}-{2:00}", dateTimePicker2.Value.Year, dateTimePicker2.Value.Month, dateTimePicker2.Value.Day);
-            string sSql = "select pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 库存状态, stat_sub 使用状态,duty_man 保管人员,vender 品牌, ass_desc 备注,addr 所在地点 ,dept 部门 from ass_list where ynenable = 'Y' ";
+            string sSql = "select pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 库存状态, stat_sub 使用状态,duty_man 保管人员,vender 品牌, ass_desc 备注,addr 所在地点 ,dept 部门 from ass_list where ynenable = 'Y' and stat in('库存','领用') ";
 
             if (checkBox1.Checked)
             {

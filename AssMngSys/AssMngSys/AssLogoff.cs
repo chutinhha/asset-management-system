@@ -13,8 +13,7 @@ namespace AssMngSys
     {
         private BindingSource bs = new BindingSource();
 
-        string sSQLSelect = "select Id ID,ass_id 资产编码,fin_id 财务编码,pid 标签喷码,tid 标签ID,cat_no 类别编码,typ 类型,ass_nam 资产名称,stat 库存状态,stat_sub 使用状态,duty_man 保管人员,dept 部门,ass_desc 备注,ass_pri 资产金额,reg_date 登记日期,addr 所在地点,use_co 所在公司,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,input_date 购置日期,unit 单位,num 数量,ppu 单价,duty_man 责任人员,company 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间,input_typ 购置类型 from ass_list";
- 
+        string sSQLSelect;
         MainForm mf;
 
         static List<string> aList = new List<string>();
@@ -27,6 +26,8 @@ namespace AssMngSys
 
         private void AssLogoff_Load(object sender, EventArgs e)
         {
+            sSQLSelect = AssSupply.sSQLSelect;
+
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
            // radioButtonApply.Checked = true;
            // radioButtonBorrow.Checked = true;
@@ -347,15 +348,15 @@ namespace AssMngSys
             string sAddr = "";
             string sReason = textBoxReason.Text;
 
-            List<string> listAssId = new List<string>();
-            for (int i = 0; i < dataGridView1.RowCount; i++)
-            {
-                string sAssId = dataGridView1.Rows[i].Cells[1].Value.ToString();
-                listAssId.Add(sAssId);
-            }
+            //List<string> listAssId = new List<string>();
+            //for (int i = 0; i < dataGridView1.RowCount; i++)
+            //{
+            //    string sAssId = dataGridView1.Rows[i].Cells[1].Value.ToString();
+            //    listAssId.Add(sAssId);
+            //}
 
             bool bOK = false;
-            bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, listAssId);
+            bOK = AssSupply.AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, dataGridView1);
             return bOK;
         }
         private bool Rejiect(out string sErr)
@@ -371,15 +372,15 @@ namespace AssMngSys
             string sAddr = "";
             string sReason = textBoxReason.Text;
 
-            List<string> listAssId = new List<string>();
-            for (int i = 0; i < dataGridView1.RowCount; i++)
-            {
-                string sAssId = dataGridView1.Rows[i].Cells[1].Value.ToString();
-                listAssId.Add(sAssId);
-            }
+            //List<string> listAssId = new List<string>();
+            //for (int i = 0; i < dataGridView1.RowCount; i++)
+            //{
+            //    string sAssId = dataGridView1.Rows[i].Cells[1].Value.ToString();
+            //    listAssId.Add(sAssId);
+            //}
 
             bool bOK = false;
-            bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, listAssId);
+            bOK = AssSupply.AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, dataGridView1);
             return bOK;
         }
         private bool Lose(out string sErr)
@@ -395,15 +396,15 @@ namespace AssMngSys
             string sAddr = "";
             string sReason = textBoxReason.Text;
 
-            List<string> listAssId = new List<string>();
-            for (int i = 0; i < dataGridView1.RowCount; i++)
-            {
-                string sAssId = dataGridView1.Rows[i].Cells[1].Value.ToString();
-                listAssId.Add(sAssId);
-            }
+            //List<string> listAssId = new List<string>();
+            //for (int i = 0; i < dataGridView1.RowCount; i++)
+            //{
+            //    string sAssId = dataGridView1.Rows[i].Cells[1].Value.ToString();
+            //    listAssId.Add(sAssId);
+            //}
 
             bool bOK = false;
-            bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, listAssId);
+            bOK = AssSupply.AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, dataGridView1);
             return bOK;
         }
         private bool Discard(out string sErr)
@@ -419,15 +420,15 @@ namespace AssMngSys
             string sAddr = "";
             string sReason = textBoxReason.Text;
 
-            List<string> listAssId = new List<string>();
-            for (int i = 0; i < dataGridView1.RowCount; i++)
-            {
-                string sAssId = dataGridView1.Rows[i].Cells[1].Value.ToString();
-                listAssId.Add(sAssId);
-            }
+            //List<string> listAssId = new List<string>();
+            //for (int i = 0; i < dataGridView1.RowCount; i++)
+            //{
+            //    string sAssId = dataGridView1.Rows[i].Cells[1].Value.ToString();
+            //    listAssId.Add(sAssId);
+            //}
 
             bool bOK = false;
-            bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, listAssId);
+            bOK = AssSupply.AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, dataGridView1);
             return bOK;
         }
         private bool Transfer(out string sErr)
@@ -443,72 +444,18 @@ namespace AssMngSys
             string sAddr = "";
             string sReason = textBoxReason.Text;
 
-            List<string> listAssId = new List<string>();
-            for (int i = 0; i < dataGridView1.RowCount; i++)
-            {
-                string sAssId = dataGridView1.Rows[i].Cells[1].Value.ToString();
-                listAssId.Add(sAssId);
-            }
+            //List<string> listAssId = new List<string>();
+            //for (int i = 0; i < dataGridView1.RowCount; i++)
+            //{
+            //    string sAssId = dataGridView1.Rows[i].Cells[1].Value.ToString();
+            //    listAssId.Add(sAssId);
+            //}
 
             bool bOK = false;
-            bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, listAssId);
+            bOK = AssSupply.AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, dataGridView1);
             return bOK;
         }
-        private bool CheckStat(string sNewOpt, out string sStat, out string sStatSub)
-        {
-            sStat = "";
-            sStatSub = "";
-            if (sNewOpt.Equals("领用"))
-            {
-            }
-            else if (sNewOpt.Equals("退领"))
-            {
-            }
-            else if (sNewOpt.Equals("借用"))
-            {
-            }
-            else if (sNewOpt.Equals("归还"))
-            {
-            }
-            else if (sNewOpt.Equals("开始维修"))
-            {
-            }
-            else if (sNewOpt.Equals("结束维修"))
-            {
-            }
-            else if (sNewOpt.Equals("外出"))
-            {
-            }
-            else if (sNewOpt.Equals("返回"))
-            {
 
-            }
-            else if (sNewOpt.Equals("租还"))
-            {
-
-            }
-            else if (sNewOpt.Equals("退返"))
-            {
-
-            }
-            else if (sNewOpt.Equals("丢失"))
-            {
-
-            }
-            else if (sNewOpt.Equals("报废"))
-            {
-
-            }
-            else if (sNewOpt.Equals("转出"))
-            {
-
-            }
-            return true;
-        }
-        private bool AssChange(string sTyp, string sDept, string sMan, string sAddr, string sReason, out string sErr, List<string> listAssid)
-        {
-            return AssSupply.AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, listAssid);
-        }
         private void DeptSelectChanged(ComboBox dept, ComboBox emp)
         {
             //获取人员列表
@@ -646,6 +593,8 @@ namespace AssMngSys
             if (tabControl1.SelectedTab.Text == "租还")
             {
                 //textBoxReason.Enabled = true;
+                labelMan.Text = "确认人员：";
+                labelReason.Text = "租还原因：";
             }
             else if (tabControl1.SelectedTab.Text == "退还")
             {

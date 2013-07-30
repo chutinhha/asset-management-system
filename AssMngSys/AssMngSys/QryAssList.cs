@@ -45,9 +45,14 @@ namespace AssMngSys
         }
         private void buttonQry_Click(object sender, EventArgs e)
         {
-            string sStartDate = string.Format("{0}-{1:00}-{2:00}",dateTimePicker1.Value.Year,dateTimePicker1.Value.Month,dateTimePicker1.Value.Day);
-            string sEndDate = string.Format("{0}-{1:00}-{2:00}",dateTimePicker2.Value.Year,dateTimePicker2.Value.Month,dateTimePicker2.Value.Day);
-            string sSql = sSQLSelect + string.Format(" where reg_date between '{0}' and '{1}'", sStartDate, sEndDate);
+            //string sStartDate = string.Format("{0}-{1:00}-{2:00}",dateTimePicker1.Value.Year,dateTimePicker1.Value.Month,dateTimePicker1.Value.Day);
+            //string sEndDate = string.Format("{0}-{1:00}-{2:00}",dateTimePicker2.Value.Year,dateTimePicker2.Value.Month,dateTimePicker2.Value.Day);
+            //string sSql = sSQLSelect + string.Format(" where reg_date between '{0}' and '{1}'", sStartDate, sEndDate);
+
+            string sStartDate = string.Format("{0}-{1:00}-{2:00} 00:00:00", dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, dateTimePicker1.Value.Day);
+            string sEndDate = string.Format("{0}-{1:00}-{2:00} 23:59:59", dateTimePicker2.Value.Year, dateTimePicker2.Value.Month, dateTimePicker2.Value.Day);
+            string sSql = sSQLSelect + string.Format(" where cre_tm between '{0}' and '{1}'", sStartDate, sEndDate);
+
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
             bindingSource1.DataSource = dt;
             bindingNavigator1.BindingSource = bindingSource1;

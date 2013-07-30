@@ -74,6 +74,7 @@ namespace AssMngSysCe
             this.label9 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label1WriteMsg = new System.Windows.Forms.Label();
             this.buttonSelectAss = new System.Windows.Forms.Button();
             this.buttonReadBarcode = new System.Windows.Forms.Button();
             this.textBoxYnWrite = new System.Windows.Forms.TextBox();
@@ -83,7 +84,7 @@ namespace AssMngSysCe
             this.label10 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.timer2 = new System.Windows.Forms.Timer();
-            this.label1WriteMsg = new System.Windows.Forms.Label();
+            this.service1 = new AssMngSysCe.AssWebSrv.Service();
             this.tabPage5.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -202,7 +203,7 @@ namespace AssMngSysCe
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(58, 88);
+            this.label6.Location = new System.Drawing.Point(56, 71);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(175, 17);
             this.label6.Text = "*按F4键显示资产明细!";
@@ -367,11 +368,11 @@ namespace AssMngSysCe
             // tabControl1
             // 
             this.tabControl1.ContextMenu = this.contextMenuShowDetail;
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
-            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -398,11 +399,11 @@ namespace AssMngSysCe
             // 
             // buttonHideCheck
             // 
-            this.buttonHideCheck.Location = new System.Drawing.Point(-2, 75);
+            this.buttonHideCheck.Location = new System.Drawing.Point(-3, 113);
             this.buttonHideCheck.Name = "buttonHideCheck";
-            this.buttonHideCheck.Size = new System.Drawing.Size(235, 15);
+            this.buttonHideCheck.Size = new System.Drawing.Size(235, 17);
             this.buttonHideCheck.TabIndex = 15;
-            this.buttonHideCheck.Text = "︽";
+            this.buttonHideCheck.Text = "︾";
             this.buttonHideCheck.Click += new System.EventHandler(this.buttonHideCheck_Click);
             // 
             // listView2
@@ -411,15 +412,15 @@ namespace AssMngSysCe
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listView2.ContextMenu = this.contextMenuShowDetail;
             this.listView2.FullRowSelect = true;
-            this.listView2.Location = new System.Drawing.Point(-2, 86);
+            this.listView2.Location = new System.Drawing.Point(0, 0);
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(236, 125);
+            this.listView2.Size = new System.Drawing.Size(231, 113);
             this.listView2.TabIndex = 2;
             this.listView2.View = System.Windows.Forms.View.Details;
             // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(169, 6);
+            this.label8.Location = new System.Drawing.Point(171, 135);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(61, 20);
             this.label8.Text = "总数 0";
@@ -427,7 +428,7 @@ namespace AssMngSysCe
             // comboBoxInvListNo
             // 
             this.comboBoxInvListNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
-            this.comboBoxInvListNo.Location = new System.Drawing.Point(42, 2);
+            this.comboBoxInvListNo.Location = new System.Drawing.Point(44, 132);
             this.comboBoxInvListNo.Name = "comboBoxInvListNo";
             this.comboBoxInvListNo.Size = new System.Drawing.Size(122, 23);
             this.comboBoxInvListNo.TabIndex = 8;
@@ -435,14 +436,14 @@ namespace AssMngSysCe
             // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(0, 5);
+            this.label7.Location = new System.Drawing.Point(2, 135);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(50, 20);
             this.label7.Text = "清单：";
             // 
             // comboBoxMan
             // 
-            this.comboBoxMan.Location = new System.Drawing.Point(166, 50);
+            this.comboBoxMan.Location = new System.Drawing.Point(168, 180);
             this.comboBoxMan.Name = "comboBoxMan";
             this.comboBoxMan.Size = new System.Drawing.Size(61, 23);
             this.comboBoxMan.TabIndex = 4;
@@ -450,7 +451,7 @@ namespace AssMngSysCe
             // 
             // comboBoxAddr
             // 
-            this.comboBoxAddr.Location = new System.Drawing.Point(41, 50);
+            this.comboBoxAddr.Location = new System.Drawing.Point(43, 180);
             this.comboBoxAddr.Name = "comboBoxAddr";
             this.comboBoxAddr.Size = new System.Drawing.Size(123, 23);
             this.comboBoxAddr.TabIndex = 4;
@@ -458,7 +459,7 @@ namespace AssMngSysCe
             // 
             // comboBoxDept
             // 
-            this.comboBoxDept.Location = new System.Drawing.Point(41, 26);
+            this.comboBoxDept.Location = new System.Drawing.Point(43, 156);
             this.comboBoxDept.Name = "comboBoxDept";
             this.comboBoxDept.Size = new System.Drawing.Size(185, 23);
             this.comboBoxDept.TabIndex = 4;
@@ -466,14 +467,14 @@ namespace AssMngSysCe
             // 
             // label9
             // 
-            this.label9.Location = new System.Drawing.Point(0, 53);
+            this.label9.Location = new System.Drawing.Point(2, 183);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(51, 19);
             this.label9.Text = "地点：";
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(-1, 30);
+            this.label3.Location = new System.Drawing.Point(1, 160);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 19);
             this.label3.Text = "部门：";
@@ -493,6 +494,13 @@ namespace AssMngSysCe
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(230, 207);
             this.tabPage3.Text = "发卡";
+            // 
+            // label1WriteMsg
+            // 
+            this.label1WriteMsg.Location = new System.Drawing.Point(3, 152);
+            this.label1WriteMsg.Name = "label1WriteMsg";
+            this.label1WriteMsg.Size = new System.Drawing.Size(224, 53);
+            this.label1WriteMsg.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // buttonSelectAss
             // 
@@ -562,12 +570,19 @@ namespace AssMngSysCe
             this.timer2.Interval = 3000;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
-            // label1WriteMsg
+            // service1
             // 
-            this.label1WriteMsg.Location = new System.Drawing.Point(3, 152);
-            this.label1WriteMsg.Name = "label1WriteMsg";
-            this.label1WriteMsg.Size = new System.Drawing.Size(224, 53);
-            this.label1WriteMsg.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.service1.AllowAutoRedirect = false;
+            this.service1.ConnectionGroupName = "";
+            this.service1.Credentials = null;
+            this.service1.PreAuthenticate = false;
+            this.service1.Proxy = null;
+            this.service1.RequestEncoding = null;
+            this.service1.SoapVersion = System.Web.Services.Protocols.SoapProtocolVersion.Default;
+            this.service1.Timeout = 100000;
+            this.service1.Url = "http://10.1.1.52/AssWebSrv/Service.asmx";
+            this.service1.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; MS Web Services Client Protocol 2.0.50727.3053" +
+                ")";
             // 
             // MainForm
             // 
@@ -652,5 +667,6 @@ namespace AssMngSysCe
         private System.Windows.Forms.TextBox textBoxYnWrite;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label1WriteMsg;
+        private AssMngSysCe.AssWebSrv.Service service1;
     }
 }

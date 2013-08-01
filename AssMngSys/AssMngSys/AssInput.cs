@@ -33,7 +33,7 @@ namespace AssMngSys
             qryassdlg = new QryAssDlg(mf);
         }
 
-        private void AssInputBak_Load(object sender, EventArgs e)
+        private void AssInput_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'dataSet1.ass_list' table. You can move, or remove it, as needed.
             this.ShowInTaskbar = false;
@@ -51,7 +51,7 @@ namespace AssMngSys
 
         }
 
-        private void AssInputBak_FormClosing(object sender, FormClosingEventArgs e)
+        private void AssInput_FormClosing(object sender, FormClosingEventArgs e)
         {
         }
 
@@ -71,12 +71,6 @@ namespace AssMngSys
                 textBoxLog.AppendText(str);
                 textBoxLog.ScrollToCaret();
             }
-        }
-
-
-
-        private void AssInputBak_Resize(object sender, EventArgs e)
-        {
         }
 
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

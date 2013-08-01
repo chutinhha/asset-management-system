@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Barcode.cs" />
+    <Compile Include="DataGridViewPrinter.cs" />
     <Compile Include="NewAssDlg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -198,10 +199,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="TagPrint.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>TagPrint.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Welcome.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Welcome.cs</DependentUpon>
@@ -222,12 +219,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RecvEnventArgs.cs" />
-    <Compile Include="TagPrint.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TagPrint.Designer.cs">
-      <DependentUpon>TagPrint.cs</DependentUpon>
-    </Compile>
     <Compile Include="Web References\WebSrv\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

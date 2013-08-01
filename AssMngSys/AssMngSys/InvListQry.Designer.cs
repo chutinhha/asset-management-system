@@ -49,6 +49,8 @@ namespace AssMngSys
             this.label4 = new System.Windows.Forms.Label();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.bindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            this.button1 = new System.Windows.Forms.Button();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator2)).BeginInit();
@@ -74,6 +76,7 @@ namespace AssMngSys
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.buttonDelete);
+            this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Controls.Add(this.buttonQryHistory);
             this.tabPage2.Controls.Add(this.bindingNavigator2);
             this.tabPage2.Controls.Add(this.dataGridView2);
@@ -236,6 +239,18 @@ namespace AssMngSys
             this.label4.TabIndex = 18;
             this.label4.Text = "«Âµ•∫≈£∫";
             // 
+            // button1
+            // 
+            this.button1.Image = global::AssMngSys.Properties.Resources.print;
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.Location = new System.Drawing.Point(503, 17);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(115, 35);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "    ¥Ú”°(&P)";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // InvListQry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -280,5 +295,7 @@ namespace AssMngSys
         private System.Windows.Forms.BindingSource bindingSource2;
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.Button buttonQryHistory;
+        private System.Windows.Forms.Button button1;
+        private System.Drawing.Printing.PrintDocument printDocument1;
     }
 }

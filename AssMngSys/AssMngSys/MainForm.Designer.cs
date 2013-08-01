@@ -31,18 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.textBoxLog = new System.Windows.Forms.TextBox();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.ttoolStripButtonAssInput = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonSupply = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonUse = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonLogoff = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonInv = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.开始ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.资产登记ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.领用管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +39,18 @@
             this.资产注销ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.系统ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemQuit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.ttoolStripButtonAssInput = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonSupply = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonUse = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonLogoff = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonInv = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.textBoxLog = new System.Windows.Forms.TextBox();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -68,6 +68,75 @@
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
+            // 开始ToolStripMenuItem
+            // 
+            this.开始ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.资产登记ToolStripMenuItem,
+            this.领用管理ToolStripMenuItem,
+            this.使用管理ToolStripMenuItem,
+            this.资产盘点ToolStripMenuItem,
+            this.资产注销ToolStripMenuItem});
+            this.开始ToolStripMenuItem.Image = global::AssMngSys.Properties.Resources.home;
+            this.开始ToolStripMenuItem.Name = "开始ToolStripMenuItem";
+            this.开始ToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
+            this.开始ToolStripMenuItem.Text = "菜单(&F)";
+            // 
+            // 资产登记ToolStripMenuItem
+            // 
+            this.资产登记ToolStripMenuItem.Image = global::AssMngSys.Properties.Resources.file_edit;
+            this.资产登记ToolStripMenuItem.Name = "资产登记ToolStripMenuItem";
+            this.资产登记ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.资产登记ToolStripMenuItem.Text = "资产登记(&L)";
+            this.资产登记ToolStripMenuItem.Click += new System.EventHandler(this.ttoolStripButtonAssInput_Click);
+            // 
+            // 领用管理ToolStripMenuItem
+            // 
+            this.领用管理ToolStripMenuItem.Image = global::AssMngSys.Properties.Resources.imac;
+            this.领用管理ToolStripMenuItem.Name = "领用管理ToolStripMenuItem";
+            this.领用管理ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.领用管理ToolStripMenuItem.Text = "领用管理(&S)";
+            this.领用管理ToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonSupply_Click);
+            // 
+            // 使用管理ToolStripMenuItem
+            // 
+            this.使用管理ToolStripMenuItem.Image = global::AssMngSys.Properties.Resources.run;
+            this.使用管理ToolStripMenuItem.Name = "使用管理ToolStripMenuItem";
+            this.使用管理ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.使用管理ToolStripMenuItem.Text = "使用管理(&U)";
+            this.使用管理ToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonUse_Click);
+            // 
+            // 资产盘点ToolStripMenuItem
+            // 
+            this.资产盘点ToolStripMenuItem.Image = global::AssMngSys.Properties.Resources.call;
+            this.资产盘点ToolStripMenuItem.Name = "资产盘点ToolStripMenuItem";
+            this.资产盘点ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.资产盘点ToolStripMenuItem.Text = "资产盘点(&I)";
+            this.资产盘点ToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonInv_Click);
+            // 
+            // 资产注销ToolStripMenuItem
+            // 
+            this.资产注销ToolStripMenuItem.Image = global::AssMngSys.Properties.Resources.reload;
+            this.资产注销ToolStripMenuItem.Name = "资产注销ToolStripMenuItem";
+            this.资产注销ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.资产注销ToolStripMenuItem.Text = "资产注销(&O)";
+            this.资产注销ToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonLogoff_Click);
+            // 
+            // 系统ToolStripMenuItem
+            // 
+            this.系统ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuItemQuit});
+            this.系统ToolStripMenuItem.Image = global::AssMngSys.Properties.Resources.info;
+            this.系统ToolStripMenuItem.Name = "系统ToolStripMenuItem";
+            this.系统ToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
+            this.系统ToolStripMenuItem.Text = "系统(&S)";
+            // 
+            // MenuItemQuit
+            // 
+            this.MenuItemQuit.Image = global::AssMngSys.Properties.Resources.delete;
+            this.MenuItemQuit.Name = "MenuItemQuit";
+            this.MenuItemQuit.Size = new System.Drawing.Size(112, 22);
+            this.MenuItemQuit.Text = "退出(&Q)";
+            // 
             // toolStrip1
             // 
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Right;
@@ -83,79 +152,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(24, 572);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 27);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.textBoxLog);
-            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.AutoScroll = true;
-            this.splitContainer1.Panel2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
-            this.splitContainer1.Panel2.Resize += new System.EventHandler(this.splitContainer1_Panel2_Resize);
-            this.splitContainer1.Size = new System.Drawing.Size(1060, 566);
-            this.splitContainer1.SplitterDistance = 155;
-            this.splitContainer1.TabIndex = 3;
-            this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
-            // 
-            // textBoxLog
-            // 
-            this.textBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxLog.Location = new System.Drawing.Point(3, 383);
-            this.textBoxLog.Multiline = true;
-            this.textBoxLog.Name = "textBoxLog";
-            this.textBoxLog.Size = new System.Drawing.Size(147, 183);
-            this.textBoxLog.TabIndex = 1;
-            this.textBoxLog.TextChanged += new System.EventHandler(this.textBoxLog_TextChanged);
-            this.textBoxLog.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.textBoxLog_MouseDoubleClick);
-            // 
-            // treeView1
-            // 
-            this.treeView1.AllowDrop = true;
-            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.treeView1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.treeView1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.treeView1.Indent = 19;
-            this.treeView1.ItemHeight = 25;
-            this.treeView1.Location = new System.Drawing.Point(3, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(146, 378);
-            this.treeView1.StateImageList = this.imageList1;
-            this.treeView1.TabIndex = 0;
-            this.treeView1.DoubleClick += new System.EventHandler(this.treeView1_DoubleClick);
-            // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "file_new.ico");
-            this.imageList1.Images.SetKeyName(1, "note pad.ico");
-            this.imageList1.Images.SetKeyName(2, "folder.ico");
-            this.imageList1.Images.SetKeyName(3, "file open.ico");
-            this.imageList1.Images.SetKeyName(4, "add.ico");
-            this.imageList1.Images.SetKeyName(5, "ok.ico");
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 596);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1087, 22);
-            this.statusStrip1.TabIndex = 5;
-            this.statusStrip1.Text = "statusStrip1";
             // 
             // ttoolStripButtonAssInput
             // 
@@ -217,74 +213,78 @@
             this.toolStripButton1.Text = "退出系统";
             this.toolStripButton1.Click += new System.EventHandler(this.MenuItemQuit_Click);
             // 
-            // 开始ToolStripMenuItem
+            // splitContainer1
             // 
-            this.开始ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.资产登记ToolStripMenuItem,
-            this.领用管理ToolStripMenuItem,
-            this.使用管理ToolStripMenuItem,
-            this.资产盘点ToolStripMenuItem,
-            this.资产注销ToolStripMenuItem});
-            this.开始ToolStripMenuItem.Image = global::AssMngSys.Properties.Resources.home;
-            this.开始ToolStripMenuItem.Name = "开始ToolStripMenuItem";
-            this.开始ToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
-            this.开始ToolStripMenuItem.Text = "菜单(&F)";
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 27);
+            this.splitContainer1.Name = "splitContainer1";
             // 
-            // 资产登记ToolStripMenuItem
+            // splitContainer1.Panel1
             // 
-            this.资产登记ToolStripMenuItem.Image = global::AssMngSys.Properties.Resources.file_edit;
-            this.资产登记ToolStripMenuItem.Name = "资产登记ToolStripMenuItem";
-            this.资产登记ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.资产登记ToolStripMenuItem.Text = "资产登记(&L)";
-            this.资产登记ToolStripMenuItem.Click += new System.EventHandler(this.ttoolStripButtonAssInput_Click);
+            this.splitContainer1.Panel1.Controls.Add(this.textBoxLog);
+            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
             // 
-            // 领用管理ToolStripMenuItem
+            // splitContainer1.Panel2
             // 
-            this.领用管理ToolStripMenuItem.Image = global::AssMngSys.Properties.Resources.imac;
-            this.领用管理ToolStripMenuItem.Name = "领用管理ToolStripMenuItem";
-            this.领用管理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.领用管理ToolStripMenuItem.Text = "领用管理(&S)";
-            this.领用管理ToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonSupply_Click);
+            this.splitContainer1.Panel2.AutoScroll = true;
+            this.splitContainer1.Panel2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
+            this.splitContainer1.Panel2.Resize += new System.EventHandler(this.splitContainer1_Panel2_Resize);
+            this.splitContainer1.Size = new System.Drawing.Size(1060, 566);
+            this.splitContainer1.SplitterDistance = 159;
+            this.splitContainer1.TabIndex = 3;
+            this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             // 
-            // 使用管理ToolStripMenuItem
+            // textBoxLog
             // 
-            this.使用管理ToolStripMenuItem.Image = global::AssMngSys.Properties.Resources.run;
-            this.使用管理ToolStripMenuItem.Name = "使用管理ToolStripMenuItem";
-            this.使用管理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.使用管理ToolStripMenuItem.Text = "使用管理(&U)";
-            this.使用管理ToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonUse_Click);
+            this.textBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxLog.Location = new System.Drawing.Point(3, 383);
+            this.textBoxLog.Multiline = true;
+            this.textBoxLog.Name = "textBoxLog";
+            this.textBoxLog.Size = new System.Drawing.Size(151, 183);
+            this.textBoxLog.TabIndex = 1;
+            this.textBoxLog.TextChanged += new System.EventHandler(this.textBoxLog_TextChanged);
+            this.textBoxLog.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.textBoxLog_MouseDoubleClick);
             // 
-            // 资产盘点ToolStripMenuItem
+            // treeView1
             // 
-            this.资产盘点ToolStripMenuItem.Image = global::AssMngSys.Properties.Resources.call;
-            this.资产盘点ToolStripMenuItem.Name = "资产盘点ToolStripMenuItem";
-            this.资产盘点ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.资产盘点ToolStripMenuItem.Text = "资产盘点(&I)";
-            this.资产盘点ToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonInv_Click);
+            this.treeView1.AllowDrop = true;
+            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.treeView1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.treeView1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.treeView1.Indent = 19;
+            this.treeView1.ItemHeight = 25;
+            this.treeView1.Location = new System.Drawing.Point(3, 0);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(150, 378);
+            this.treeView1.StateImageList = this.imageList1;
+            this.treeView1.TabIndex = 0;
+            this.treeView1.DoubleClick += new System.EventHandler(this.treeView1_DoubleClick);
             // 
-            // 资产注销ToolStripMenuItem
+            // imageList1
             // 
-            this.资产注销ToolStripMenuItem.Image = global::AssMngSys.Properties.Resources.reload;
-            this.资产注销ToolStripMenuItem.Name = "资产注销ToolStripMenuItem";
-            this.资产注销ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.资产注销ToolStripMenuItem.Text = "资产注销(&O)";
-            this.资产注销ToolStripMenuItem.Click += new System.EventHandler(this.toolStripButtonLogoff_Click);
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "file_new.ico");
+            this.imageList1.Images.SetKeyName(1, "note pad.ico");
+            this.imageList1.Images.SetKeyName(2, "folder.ico");
+            this.imageList1.Images.SetKeyName(3, "file open.ico");
+            this.imageList1.Images.SetKeyName(4, "add.ico");
+            this.imageList1.Images.SetKeyName(5, "ok.ico");
             // 
-            // 系统ToolStripMenuItem
+            // statusStrip1
             // 
-            this.系统ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuItemQuit});
-            this.系统ToolStripMenuItem.Image = global::AssMngSys.Properties.Resources.info;
-            this.系统ToolStripMenuItem.Name = "系统ToolStripMenuItem";
-            this.系统ToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
-            this.系统ToolStripMenuItem.Text = "系统(&S)";
-            // 
-            // MenuItemQuit
-            // 
-            this.MenuItemQuit.Image = global::AssMngSys.Properties.Resources.delete;
-            this.MenuItemQuit.Name = "MenuItemQuit";
-            this.MenuItemQuit.Size = new System.Drawing.Size(112, 22);
-            this.MenuItemQuit.Text = "退出(&Q)";
+            this.statusStrip1.Location = new System.Drawing.Point(0, 596);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1087, 22);
+            this.statusStrip1.TabIndex = 5;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // MainForm
             // 

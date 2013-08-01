@@ -22,13 +22,15 @@ namespace AssMngSysCe
             public const int no = 0;
             public const int epc = 1;
             public const int pid = 2;
-            public const int stat = 3;
-            public const int statsub = 4;
-            public const int cnt = 5;
-            public const int assid = 6;
+            public const int assnam = 3;
+            public const int stat = 4;
+            public const int statsub = 5;
+            public const int cnt = 6;
+            public const int assid = 7;
+
         }
         static class ChkIndex
-        {            
+        {
             public const int no = 0;
             public const int pid = 1;
             public const int assid = 2;
@@ -60,7 +62,7 @@ namespace AssMngSysCe
 
         static string sIp;
         static string sPort;
-        enum Page { wrtag = 0, onepcs,inv, check, sync};
+        enum Page { wrtag = 0, onepcs, inv, check, sync };
         int nCurTab = 0;
         LoginForm loginForm = null;
         private System.Net.Sockets.UdpClient sendUdpClient;
@@ -82,10 +84,12 @@ namespace AssMngSysCe
             listView1.Columns.Add("序", 16, HorizontalAlignment.Left);
             listView1.Columns.Add("EPC", 0, HorizontalAlignment.Left);
             listView1.Columns.Add("喷码", 96, HorizontalAlignment.Left);
+            listView1.Columns.Add("资产名称", 60, HorizontalAlignment.Left);
             listView1.Columns.Add("库存状态", 38, HorizontalAlignment.Left);
             listView1.Columns.Add("使用状态", 38, HorizontalAlignment.Left);
-            listView1.Columns.Add("计数", 20, HorizontalAlignment.Left);
+            listView1.Columns.Add("计数", 0, HorizontalAlignment.Left);
             listView1.Columns.Add("资产编码", 60, HorizontalAlignment.Left);
+
 
             listView2.FullRowSelect = true;
             listView2.Columns.Add("序", 16, HorizontalAlignment.Left);
@@ -110,8 +114,8 @@ namespace AssMngSysCe
             }
             else
             {
-                 timer2.Enabled = true;
-                 ShowStat(listBox1, "自动同步中 ...");
+                timer2.Enabled = true;
+                ShowStat(listBox1, "自动同步中 ...");
             }
 
             //scanCall = new HTApi.PWSCAN_CALLBACK(ScanCallBack);
@@ -160,7 +164,7 @@ namespace AssMngSysCe
             {
                 Scanner.openUHF();
                 WriteTag();
-            }       
+            }
         }
         private void WriteTag()
         {
@@ -204,12 +208,12 @@ namespace AssMngSysCe
                 label1WriteMsg.Text = "*写卡失败!";
 
             }
-            
+
             if (!bOK)
             {
                 return;
             }
-            
+
             label1WriteMsg.Update();
 
             ////2.写锁
@@ -243,7 +247,7 @@ namespace AssMngSysCe
             //3.更新DB
             List<string> listSql = new List<string>();
             string sAssId = textBoxAssId.Text;
-            string sSql = string.Format("update ass_list set ynwrite = 'Y' where ass_id = '{0}' and ynenable = 'Y'",sAssId);
+            string sSql = string.Format("update ass_list set ynwrite = 'Y' where ass_id = '{0}' and ynenable = 'Y'", sAssId);
             listSql.Add(sSql);
             string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
                 "发卡", "0", sSql.Replace("'", "''"), SettingForm.sClientId, sAssId, LoginForm.getDateTime());
@@ -351,6 +355,7 @@ namespace AssMngSysCe
                     checkAss(nfind, "自动盘点", out sErr);
                     buttonSyncDiff_Click(null, null);
                 }
+                listView2.Items[nfind].Selected = true;
             }
             else
             {
@@ -604,6 +609,9 @@ namespace AssMngSysCe
                 int nCnt = Convert.ToInt32(sCnt) + 1;
                 String sumFind = nCnt.ToString();
                 listView1.Items[nfind].SubItems[(int)MngIndex.cnt].Text = sumFind;
+                listView1.Items[nfind].Selected = true;
+                listView1.Items[nfind].Focused = true; ;
+                listView1.EnsureVisible(nfind);
             }
             else
             {
@@ -621,15 +629,30 @@ namespace AssMngSysCe
                 lvi.SubItems.Add("");
                 lvi.SubItems.Add("");
                 lvi.SubItems.Add("");
+                lvi.SubItems.Add("");
                 lvi.SubItems[(int)MngIndex.epc].Text = sOnetagInfo;
                 lvi.SubItems[(int)MngIndex.pid].Text = sPid;
-                string sAssId, sStat, sStatSub, sYnWrite;
-                GetAssInfo(sPid, out sAssId, out sStat, out sStatSub, out sYnWrite);
+                string sAssId = "", sAssNam = "", sStat = "", sStatSub = "";
+                //SQLite方式
+                string sSql = "select ass_id,ass_nam,stat,stat_sub,ynwrite from ass_list where pid = \'" + sPid + "\'  and ynenable = 'Y'";
+                SQLiteDataReader reader = SQLiteHelper.ExecuteReader(sSql, null);
+                if (reader.Read())
+                {
+                    sAssId = reader["ass_id"].ToString();
+                    sStat = reader["stat"].ToString();
+                    sStatSub = reader["stat_sub"].ToString();
+                    sAssNam = reader["ass_nam"].ToString();
+                }
+                reader.Close();
+
                 lvi.SubItems[(int)MngIndex.stat].Text = sStat;
                 lvi.SubItems[(int)MngIndex.statsub].Text = sStatSub;
                 lvi.SubItems[(int)MngIndex.cnt].Text = "1";//读取次数
                 lvi.SubItems[(int)MngIndex.assid].Text = sAssId;
+                lvi.SubItems[(int)MngIndex.assnam].Text = sAssNam;
                 this.listView1.Items.Add(lvi);
+                listView1.Items[listView1.Items.Count - 1].Selected = true;
+                listView1.Items[listView1.Items.Count - 1].Focused = true; ;;
                 listView1.EnsureVisible(listView1.Items.Count - 1);
 
                 int nHasStat = 0;
@@ -640,7 +663,7 @@ namespace AssMngSysCe
                     {
                         nHasStat++;
                     }
-                    labelHit.Text = string.Format(@"总共: {0}张，有效: {1}张", listView1.Items.Count, nHasStat);
+                    labelHit.Text = string.Format("{0}/{1}", nHasStat, listView1.Items.Count);
                 }
 
 
@@ -657,7 +680,7 @@ namespace AssMngSysCe
                 // this.listView1.EndUpdate();  //结束数据处理，UI界面一次性绘
             }
         }
-        private void GetAssInfo(string sPid, out string sAssId, out string sStat, out string sStatSub,out string sYnWrite)
+        private void GetAssInfo(string sPid, out string sAssId, out string sStat, out string sStatSub, out string sYnWrite)
         {
             sAssId = "";
             sStat = "";
@@ -735,6 +758,7 @@ namespace AssMngSysCe
             else if (tabControl1.SelectedIndex == (int)Page.inv) //循环读取
             {
                 listView1.Items.Clear();
+                labelHit.Text = "0/0";
             }
             else if (tabControl1.SelectedIndex == (int)Page.sync)//同步
             {
@@ -747,7 +771,7 @@ namespace AssMngSysCe
             else if (tabControl1.SelectedIndex == (int)Page.check)//盘点
             {
                 textBoxPid.Text = "";
-            }       
+            }
         }
 
         private void CheckOpt()
@@ -768,7 +792,7 @@ namespace AssMngSysCe
                     }
                     else
                     {
-                       MessageBox.Show("操作失败！\r\n" + sErr,"提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                        MessageBox.Show("操作失败！\r\n" + sErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
                     }
                 }
                 else if (checkoptform.sOptTyp == "报废" || checkoptform.sOptTyp == "丢失")
@@ -800,7 +824,7 @@ namespace AssMngSysCe
                         }
                         else
                         {
-                            MessageBox.Show("操作失败！\r\n" + sErr,"提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                            MessageBox.Show("操作失败！\r\n" + sErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
                         }
                     }//GetReasonForm
                 }//f.sOptTyp
@@ -964,22 +988,29 @@ namespace AssMngSysCe
             }
             else if (e.KeyCode == Keys.F4)
             {
-                if (listView1.FocusedItem != null && tabControl1.SelectedIndex == (int)Page.inv)
-                {
-                    int nIndex = listView1.Items.IndexOf(listView1.FocusedItem);
-                    string sPid = listView1.Items[nIndex].SubItems[(int)MngIndex.pid].Text;
-                    AssDetailForm fr = new AssDetailForm(sPid);
-                    fr.ShowDialog();
-                }
-                else if (tabControl1.SelectedIndex == (int)Page.onepcs)
-                {
-                    AssDetailForm fr = new AssDetailForm(textBoxEpc.Text);
-                    fr.ShowDialog();
-                }
+                buttonDetail_Click(null, null);
             }
             else if (e.KeyCode == Keys.Enter)
             {
                 buttonClear_Click(null, null);
+            }
+            else if (e.KeyCode == Keys.Back)
+            {
+                if (listView1.FocusedItem != null && tabControl1.SelectedIndex == (int)Page.inv)
+                {
+                    int nIndex = listView1.Items.IndexOf(listView1.FocusedItem);
+                    listView1.Items.RemoveAt(nIndex);
+                    int nHasStat = 0;
+                    for (int k = 0; k < listView1.Items.Count; k++)
+                    {
+                        string sTagStat = listView1.Items[k].SubItems[(int)MngIndex.stat].Text;
+                        if (sTagStat.Length != 0)
+                        {
+                            nHasStat++;
+                        }
+                        labelHit.Text = string.Format(@"{0}/{1}", nHasStat, listView1.Items.Count);
+                    }
+                }
             }
 
             if (tabControl1.SelectedIndex == (int)Page.inv) //循环读取
@@ -1131,7 +1162,7 @@ namespace AssMngSysCe
             }
             return true;
         }
-        private bool AssChange(string sTyp, string sDept, string sMan, string sAddr, string sReason, out string sErr,string sFixPid)
+        private bool AssChange(string sTyp, string sDept, string sMan, string sAddr, string sReason, out string sErr, string sFixPid)
         {
             sErr = "";
             List<string> listSql = new List<string>();
@@ -1163,7 +1194,7 @@ namespace AssMngSysCe
             int nCount;
             if (sFixPid.Length == 0)
             {
-                nCount = listView1.Items.Count; 
+                nCount = listView1.Items.Count;
             }
             else //盘点页面报废、丢失动作调用
             {
@@ -1172,9 +1203,8 @@ namespace AssMngSysCe
             bool bOK = true;
             for (int i = 0; i < nCount; i++)
             {
-                int nIndex;
                 string sAssId, sStat, sStatSub;
-                if (sFixPid.Length == 0) 
+                if (sFixPid.Length == 0)
                 {
                     sAssId = listView1.Items[i].SubItems[(int)MngIndex.assid].Text;
                     sStat = listView1.Items[i].SubItems[(int)MngIndex.stat].Text;
@@ -1183,7 +1213,7 @@ namespace AssMngSysCe
                 else
                 {
                     string sYnWrite;
-                    GetAssInfo(sFixPid,out sAssId, out sStat,out sStatSub,out sYnWrite);
+                    GetAssInfo(sFixPid, out sAssId, out sStat, out sStatSub, out sYnWrite);
                 }
 
                 if (sAssId.Length == 0) continue;
@@ -1253,7 +1283,7 @@ namespace AssMngSysCe
                 //    listAssId.Add(sAssId);
                 //}
                 string sErr;
-                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr,"");
+                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, "");
                 if (bOK)
                 {
                     MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
@@ -1262,7 +1292,7 @@ namespace AssMngSysCe
                 }
                 else
                 {
-                    MessageBox.Show("操作失败！\r\n" + sErr,"提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                    MessageBox.Show("操作失败！\r\n" + sErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
                 }
             }
         }
@@ -1285,7 +1315,7 @@ namespace AssMngSysCe
                 //    listAssId.Add(sAssId);
                 //}
                 string sErr;
-                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr,"");
+                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, "");
                 if (bOK)
                 {
                     MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
@@ -1294,7 +1324,7 @@ namespace AssMngSysCe
                 }
                 else
                 {
-                    MessageBox.Show("操作失败！\r\n" + sErr,"提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                    MessageBox.Show("操作失败！\r\n" + sErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
                 }
             }
         }
@@ -1317,7 +1347,7 @@ namespace AssMngSysCe
                 //    listAssId.Add(sAssId);
                 //}
                 string sErr;
-                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr,"");
+                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, "");
                 if (bOK)
                 {
                     MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
@@ -1326,7 +1356,7 @@ namespace AssMngSysCe
                 }
                 else
                 {
-                    MessageBox.Show("操作失败！\r\n" + sErr,"提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                    MessageBox.Show("操作失败！\r\n" + sErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
                 }
             }
         }
@@ -1349,7 +1379,7 @@ namespace AssMngSysCe
                 //    listAssId.Add(sAssId);
                 //}
                 string sErr;
-                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr,"");
+                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, "");
                 if (bOK)
                 {
                     MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
@@ -1358,7 +1388,7 @@ namespace AssMngSysCe
                 }
                 else
                 {
-                    MessageBox.Show("操作失败！\r\n" + sErr,"提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                    MessageBox.Show("操作失败！\r\n" + sErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
                 }
             }
         }
@@ -1381,7 +1411,7 @@ namespace AssMngSysCe
                 //    listAssId.Add(sAssId);
                 //}
                 string sErr;
-                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr,"");
+                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, "");
                 if (bOK)
                 {
                     MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
@@ -1390,7 +1420,7 @@ namespace AssMngSysCe
                 }
                 else
                 {
-                    MessageBox.Show("操作失败！\r\n" + sErr,"提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                    MessageBox.Show("操作失败！\r\n" + sErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
                 }
             }
         }
@@ -1413,7 +1443,7 @@ namespace AssMngSysCe
                 //    listAssId.Add(sAssId);
                 //}
                 string sErr;
-                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr,"");
+                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, "");
                 if (bOK)
                 {
                     MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
@@ -1422,7 +1452,7 @@ namespace AssMngSysCe
                 }
                 else
                 {
-                    MessageBox.Show("操作失败！\r\n" + sErr,"提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                    MessageBox.Show("操作失败！\r\n" + sErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
                 }
             }
         }
@@ -1445,7 +1475,7 @@ namespace AssMngSysCe
                 //    listAssId.Add(sAssId);
                 //}
                 string sErr;
-                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr,"");
+                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, "");
                 if (bOK)
                 {
                     MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
@@ -1454,7 +1484,7 @@ namespace AssMngSysCe
                 }
                 else
                 {
-                    MessageBox.Show("操作失败！\r\n" + sErr,"提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                    MessageBox.Show("操作失败！\r\n" + sErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
                 }
             }
         }
@@ -1477,7 +1507,7 @@ namespace AssMngSysCe
                 //    listAssId.Add(sAssId);
                 //}
                 string sErr;
-                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr,"");
+                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, "");
                 if (bOK)
                 {
                     MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
@@ -1486,7 +1516,7 @@ namespace AssMngSysCe
                 }
                 else
                 {
-                    MessageBox.Show("操作失败！\r\n" + sErr,"提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                    MessageBox.Show("操作失败！\r\n" + sErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
                 }
             }
         }
@@ -1509,7 +1539,7 @@ namespace AssMngSysCe
                 //    listAssId.Add(sAssId);
                 //}
                 string sErr;
-                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr,"");
+                bool bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, "");
                 if (bOK)
                 {
                     MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk, MessageBoxDefaultButton.Button1);
@@ -1518,7 +1548,7 @@ namespace AssMngSysCe
                 }
                 else
                 {
-                    MessageBox.Show("操作失败！\r\n" + sErr,"提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                    MessageBox.Show("操作失败！\r\n" + sErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
                 }
             }
         }
@@ -1544,8 +1574,8 @@ namespace AssMngSysCe
             //if (buttonHideCheck.Text == "︽")
             if (!bIsCheckHide)
             {
-               // buttonHideCheck.Text = "︾";
-              // listView2.Top = 15;
+                // buttonHideCheck.Text = "︾";
+                // listView2.Top = 15;
                 listView2.Height = 191;
                 buttonHideCheck.Top = 191;
                 bIsCheckHide = true;
@@ -1554,7 +1584,7 @@ namespace AssMngSysCe
             else
             {
                 //buttonHideCheck.Text = "︽";
-               // listView2.Top = 90;
+                // listView2.Top = 90;
                 listView2.Height = 113;
                 buttonHideCheck.Top = 113;
                 bIsCheckHide = false;
@@ -1596,13 +1626,13 @@ namespace AssMngSysCe
         ///   判断webservice是否可用     
         ///   </summary>     
         ///   <returns>true：可用；false：不可用</returns>     
-        static public bool getWSStatus(string url,out string sErr)
+        static public bool getWSStatus(string url, out string sErr)
         {
             sErr = "";
             try
             {
                 HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-                using(HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse())
+                using (HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse())
                 {
                     return true;
                 }
@@ -1611,12 +1641,12 @@ namespace AssMngSysCe
             {
                 if (e.Status == WebExceptionStatus.ProtocolError)
                 {
-                    sErr = string.Format("code:{0}\r\nDesc:{1}",((HttpWebResponse)e.Response).StatusCode,((HttpWebResponse)e.Response).StatusDescription);
+                    sErr = string.Format("code:{0}\r\nDesc:{1}", ((HttpWebResponse)e.Response).StatusCode, ((HttpWebResponse)e.Response).StatusDescription);
                 }
             }
             catch (Exception e)
             {
-              sErr = e.Message;
+                sErr = e.Message;
             }
             return false;
         }
@@ -1624,7 +1654,7 @@ namespace AssMngSysCe
         private void syncDiffThread()
         {
             string sErr;
-            bHasSrv = getWSStatus(SettingForm.sWebSrvUrl,out sErr);
+            bHasSrv = getWSStatus(SettingForm.sWebSrvUrl, out sErr);
             if (!bHasSrv)
             {
                 ShowStat(listBox1, "当前服务器不可用!");
@@ -1707,7 +1737,7 @@ namespace AssMngSysCe
                     string sAssId = dataRow["ass_id"].ToString();
                     ShowStat(listBox1, "内容:" + sAssId + " " + sTyp);
                     listSql.Add(sSqlContent);
-                 //   Console.Out.WriteLine(sSqlContent);
+                    //   Console.Out.WriteLine(sSqlContent);
                 }
                 listSql.Add(string.Format("update sys_parms set parm_val = '{0}' where parm_id = '{1}'", sMax, "sync_max"));
 
@@ -1721,7 +1751,7 @@ namespace AssMngSysCe
                 else
                 {
                     ShowStat(listBox1, "提交失败!" + SQLiteHelper.sLastErr);
-                  //  Console.Out.WriteLine(SQLiteHelper.sLastErr);
+                    //  Console.Out.WriteLine(SQLiteHelper.sLastErr);
                     MessageBox.Show(SQLiteHelper.sLastErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
                 }
             }
@@ -1869,7 +1899,7 @@ namespace AssMngSysCe
                 if (str.Equals("finish-all"))
                 {
                     buttonSyncIni.Enabled = true;
-                   // int nIdex = lstBox.Items.Add(str);
+                    // int nIdex = lstBox.Items.Add(str);
                     bSyncing = false;
                     iniData();
                     if (bIsFirstIni)
@@ -1881,9 +1911,9 @@ namespace AssMngSysCe
                 else if (str.Equals("finish-diff"))
                 {
                     buttonSyncDiff.Enabled = true;
-                  //  int nIdex = lstBox.Items.Add(str);
+                    //  int nIdex = lstBox.Items.Add(str);
                     iniData();
-                    this.Text = string.Format("Asset System(待同步：{0})",0);
+                    this.Text = string.Format("Asset System(待同步：{0})", 0);
                 }
                 else
                 {
@@ -2026,7 +2056,6 @@ namespace AssMngSysCe
         {
             string sText = string.Format("总计{0};已盘{1};异常{2};待盘{3}. --{4}--", nAll, nCheck, nExp, nAll - nCheck - nExp, bIsCheckHide ? "︽" : "︾");
             buttonHideCheck.Text = sText;
-
         }
 
         private void comboBoxDept_SelectedIndexChanged(object sender, EventArgs e)
@@ -2052,13 +2081,22 @@ namespace AssMngSysCe
 
         private void buttonReadBarcode_Click(object sender, EventArgs e)
         {
-            scanCall = new HTApi.PWSCAN_CALLBACK(ScanCallBack);
-            HTApi.WScanSetCallBack(scanCall);
-            Scanner.open1D();
-            HTApi.W1DScanStart(true);//true 单次扫描 false 多次扫描
-            System.Diagnostics.Debug.WriteLine("buttonReadBarcode_Click!" );
+            if (buttonReadBarcode.Text == "读条码")
+            {
+                scanCall = new HTApi.PWSCAN_CALLBACK(ScanCallBack);
+                HTApi.WScanSetCallBack(scanCall);
+                Scanner.open1D();
+                HTApi.W1DScanStart(true);//true 单次扫描 false 多次扫描
+                buttonReadBarcode.Text = "停止";
+            }
+            else
+            {
+                buttonReadBarcode.Text = "读条码";
+                HTApi.W1DScanStop();
+               // Scanner.close1D();
+            }
         }
-        
+
         private void ScanCallBack(IntPtr readBuf, int dwLen)
         {
             byte[] newm = new byte[dwLen];
@@ -2069,11 +2107,12 @@ namespace AssMngSysCe
         public void ShowBarcode()
         {
             textBoxPid.Text = sBarcode;
+            buttonReadBarcode.Text = "读条码";
         }
 
         private void buttonSelectAss_Click(object sender, EventArgs e)
         {
-            SelectAssForm dlg= new SelectAssForm();
+            SelectAssForm dlg = new SelectAssForm();
             dlg.ShowDialog();
             textBoxPid.Text = dlg.sPid;
             textBoxYnWrite.Text = dlg.sYnWrite;
@@ -2082,10 +2121,10 @@ namespace AssMngSysCe
         private void textBoxPid_TextChanged(object sender, EventArgs e)
         {
             string sPid = textBoxPid.Text;
-            string sAssId, sStat,sStatSub, sYnWrite;
+            string sAssId, sStat, sStatSub, sYnWrite;
             if (sPid.Length == 12)
             {
-                GetAssInfo(sPid, out sAssId, out sStat,out sStatSub, out sYnWrite);
+                GetAssInfo(sPid, out sAssId, out sStat, out sStatSub, out sYnWrite);
                 textBoxAssId.Text = sAssId;
                 textBoxYnWrite.Text = sYnWrite;
                 if (sAssId.Length != 0)
@@ -2096,13 +2135,42 @@ namespace AssMngSysCe
                 {
                     label1WriteMsg.Text = "*无该标签信息！";
                 }
-                
+
             }
             else if (sPid.Length != 0)
             {
                 label1WriteMsg.Text = "*数据有误(应为12字节)，请重新获取！";
                 textBoxAssId.Text = "";
                 textBoxYnWrite.Text = "";
+            }
+        }
+
+        private void buttonDetail_Click(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == (int)Page.inv)
+            {
+                if (listView1.FocusedItem != null)
+                {
+                    int nIndex = listView1.Items.IndexOf(listView1.FocusedItem);
+                    string sPid = listView1.Items[nIndex].SubItems[(int)MngIndex.pid].Text;
+                    AssDetailForm fr = new AssDetailForm(sPid);
+                    fr.ShowDialog();  
+                }
+            }
+            else if (tabControl1.SelectedIndex == (int)Page.onepcs)
+            {
+                AssDetailForm fr = new AssDetailForm(textBoxEpc.Text);
+                fr.ShowDialog();
+            }
+            else if (tabControl1.SelectedIndex == (int)Page.check)
+            {
+                if (listView2.FocusedItem != null)
+                {
+                    int nIndex = listView2.Items.IndexOf(listView2.FocusedItem);
+                    string sPid = listView2.Items[nIndex].SubItems[(int)ChkIndex.pid].Text;
+                    AssDetailForm fr = new AssDetailForm(sPid);
+                    fr.ShowDialog();
+                }
             }
         }
     }

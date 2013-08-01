@@ -21,7 +21,7 @@ namespace AssMngSysCe
         private void SelectAss_Load(object sender, EventArgs e)
         {
             string sYnWrite = checkBoxNotWrite.Checked == true ? " and ynwrite = 'N'" : "";
-            string sSql = "select pid 喷码, ass_id 资产编码, ass_id 资产名称, reg_date 登记日期,ynwrite 是否已发 from ass_list where stat in('库存','领用') " + sYnWrite;
+            string sSql = "select pid 喷码, ass_id 资产编码, ass_nam 资产名称, reg_date 登记日期,ynwrite 是否已发 from ass_list where stat in('库存','领用') " + sYnWrite;
             DataSet ds = new DataSet();
             ds = SQLiteHelper.ExecuteQuery(sSql);
             dataGrid1.DataSource = ds.Tables[0];
@@ -44,7 +44,7 @@ namespace AssMngSysCe
         private void checkBoxNotWrite_CheckStateChanged(object sender, EventArgs e)
         {
             string sYnWrite = checkBoxNotWrite.Checked == true ? " and ynwrite = 'N'" : "";
-            string sSql = "select pid 喷码, ass_id 资产编码, ass_id 资产名称, reg_date 登记日期,ynwrite 是否已发 from ass_list where stat in('库存','领用') " + sYnWrite;
+            string sSql = "select pid 喷码, ass_id 资产编码, ass_nam 资产名称, reg_date 登记日期,ynwrite 是否已发 from ass_list where stat in('库存','领用') " + sYnWrite;
             DataSet ds = new DataSet();
             ds = SQLiteHelper.ExecuteQuery(sSql);
             dataGrid1.DataSource = ds.Tables[0];

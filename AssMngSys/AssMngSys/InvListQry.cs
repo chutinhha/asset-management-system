@@ -6,10 +6,14 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System.Drawing.Printing;
+using System.IO;
+
 namespace AssMngSys
 {
     public partial class InvListQry : Form
     {
+        DataGridViewPrinter dgvPrinter;
         MainForm mf;
         public InvListQry(MainForm f)
         {
@@ -69,6 +73,72 @@ namespace AssMngSys
                 MessageBox.Show("删除失败！\r\n" + MysqlHelper.sLastErr, "提示", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //if (checkNull())
+            //{
+            //DataTable dt = new DataTable();
+            //DataRow tableDr;
+            //for (int columnHeader = 0; columnHeader < dgvStock.Columns.Count; columnHeader++)
+            //{
+            //    dt.Columns.Add(new DataColumn(dgvStock.Columns[columnHeader].HeaderText));
+            //}
+            //for (int rowIndex = 0; rowIndex < dgvStock.Rows.Count-1; rowIndex++)
+            //{
+            //    tableDr = dt.NewRow();
+            //    for (int colIndex = 0; colIndex < dgvStock.Columns.Count; colIndex++)
+            //    {
+
+            //        tableDr[colIndex] = dgvStock.Rows[rowIndex].Cells[colIndex].Value.ToString();
+            //    }
+            //    dt.Rows.Add(tableDr);
+            //}
+            //StockPrintReport stockReport = new StockPrintReport();
+            //stockReport.setReportSource(dt);
+            //stockReport.ShowDialog();
+            //}
+            if (setPrinter())
+            {
+                PrintPreviewDialog printView = new PrintPreviewDialog();
+                printView.Document = printDocument1;
+                printView.ShowDialog();
+            }
+        }
+
+
+        private bool setPrinter()
+        {
+            printDocument1 = new PrintDocument();
+            PrintDialog MyPrintDialog = new PrintDialog();
+            MyPrintDialog.AllowCurrentPage = false;
+            MyPrintDialog.AllowPrintToFile = false;
+            MyPrintDialog.AllowSelection = false;
+            MyPrintDialog.AllowSomePages = false;
+            MyPrintDialog.PrintToFile = false;
+            MyPrintDialog.ShowHelp = false;
+            MyPrintDialog.ShowNetwork = false;
+            if (MyPrintDialog.ShowDialog() != DialogResult.OK)
+                return false;
+            printDocument1.PrintPage += new PrintPageEventHandler(printDocument1_PrintPage);
+            string title;
+            printDocument1.DocumentName = "报表";
+            title = printDocument1.DocumentName;  //标题
+            printDocument1.PrinterSettings = MyPrintDialog.PrinterSettings;
+            printDocument1.DefaultPageSettings = MyPrintDialog.PrinterSettings.DefaultPageSettings;
+            printDocument1.DefaultPageSettings.Margins = new Margins(40, 40, 40, 40);
+
+            dgvPrinter = new DataGridViewPrinter(dataGridView2, printDocument1, true, true, title, new Font("Tahoma", 18, FontStyle.Bold, GraphicsUnit.Point), Color.Black, true);
+            return true;
+        }
+
+        void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            bool more = dgvPrinter.DrawDataGridView(e.Graphics);
+            if (more == true)
+                e.HasMorePages = true;
+        }
+
 
     }
 }

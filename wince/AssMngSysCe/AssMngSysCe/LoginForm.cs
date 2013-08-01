@@ -65,7 +65,7 @@ namespace AssMngSysCe
             if (SettingForm.sClientId.Equals("PC") || SettingForm.sClientId.Length == 0)
             {
                 SettingForm.sClientId = "";
-                MessageBox.Show("初次使用，请设置客户端ID!\r\r注：请勿与其他手持机重复，否则会发生同步错误！");
+                MessageBox.Show("初次使用，请设置客户端ID!\r\n注：请勿与其他手持机重复，否则会发生同步错误！");
                 SettingForm dlg = new SettingForm();
                 dlg.ShowDialog();
                 //初始化同步

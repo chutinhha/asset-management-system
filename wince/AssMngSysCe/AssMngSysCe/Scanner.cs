@@ -83,6 +83,7 @@ namespace AssMngSysCe
         {
             if (b1D)
             {
+                HTApi.W1DScanStop();
                 HTApi.W1DScanDisconnect();
                 HTApi.WScanClosePower();
                 b1D = false;

@@ -1,6 +1,6 @@
 namespace AssMngSys
 {
-    partial class QryAssLog
+    partial class CatList
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace AssMngSys
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QryAssLog));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CatList));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
@@ -41,41 +41,43 @@ namespace AssMngSys
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.textBoxPid = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.label5 = new System.Windows.Forms.Label();
+            this.textBoxId = new System.Windows.Forms.TextBox();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonMod = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonDel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonCopy = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.buttonQry = new System.Windows.Forms.Button();
-            this.textBoxAssId = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.checkBoxDate = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.comboBoxOptTyp = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(1, 45);
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 28);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersWidth = 50;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(882, 460);
-            this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.Size = new System.Drawing.Size(876, 515);
+            this.dataGridView1.TabIndex = 6;
+            this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             // 
             // bindingNavigator1
             // 
             this.bindingNavigator1.AddNewItem = null;
-            this.bindingNavigator1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bindingNavigator1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.bindingNavigator1.CountItem = this.bindingNavigatorCountItem;
             this.bindingNavigator1.DeleteItem = null;
             this.bindingNavigator1.Dock = System.Windows.Forms.DockStyle.None;
@@ -89,7 +91,7 @@ namespace AssMngSys
             this.bindingNavigatorMoveNextItem,
             this.bindingNavigatorMoveLastItem,
             this.bindingNavigatorSeparator2});
-            this.bindingNavigator1.Location = new System.Drawing.Point(668, 511);
+            this.bindingNavigator1.Location = new System.Drawing.Point(0, 546);
             this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
             this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
@@ -97,7 +99,7 @@ namespace AssMngSys
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
             this.bindingNavigator1.Size = new System.Drawing.Size(215, 25);
-            this.bindingNavigator1.TabIndex = 3;
+            this.bindingNavigator1.TabIndex = 9;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
             // bindingNavigatorCountItem
@@ -167,128 +169,93 @@ namespace AssMngSys
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
             this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // textBoxPid
+            // textBoxId
             // 
-            this.textBoxPid.Location = new System.Drawing.Point(342, 12);
-            this.textBoxPid.Name = "textBoxPid";
-            this.textBoxPid.Size = new System.Drawing.Size(104, 21);
-            this.textBoxPid.TabIndex = 9;
-            this.textBoxPid.TextChanged += new System.EventHandler(this.textBoxPid_TextChanged);
+            this.textBoxId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxId.Location = new System.Drawing.Point(804, 546);
+            this.textBoxId.Name = "textBoxId";
+            this.textBoxId.ReadOnly = true;
+            this.textBoxId.Size = new System.Drawing.Size(72, 21);
+            this.textBoxId.TabIndex = 2;
+            this.textBoxId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label4
+            // toolStrip1
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(279, 17);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 12);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "标签喷码：";
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonAdd,
+            this.toolStripButtonMod,
+            this.toolStripButtonDel,
+            this.toolStripButtonCopy,
+            this.toolStripSeparator1});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(881, 25);
+            this.toolStrip1.TabIndex = 17;
+            this.toolStrip1.Text = "toolStrip1";
             // 
-            // dateTimePicker1
+            // toolStripButtonAdd
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(51, 11);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(106, 21);
-            this.dateTimePicker1.TabIndex = 13;
+            this.toolStripButtonAdd.Image = global::AssMngSys.Properties.Resources.add;
+            this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonAdd.Name = "toolStripButtonAdd";
+            this.toolStripButtonAdd.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButtonAdd.Text = "新增";
+            this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
-            // dateTimePicker2
+            // toolStripButtonMod
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(168, 12);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(106, 21);
-            this.dateTimePicker2.TabIndex = 13;
+            this.toolStripButtonMod.Image = global::AssMngSys.Properties.Resources.remove;
+            this.toolStripButtonMod.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonMod.Name = "toolStripButtonMod";
+            this.toolStripButtonMod.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButtonMod.Text = "删除";
+            this.toolStripButtonMod.Click += new System.EventHandler(this.toolStripButtonDel_Click);
             // 
-            // label5
+            // toolStripButtonDel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(158, 17);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(11, 12);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "-";
+            this.toolStripButtonDel.Image = global::AssMngSys.Properties.Resources.file_edit;
+            this.toolStripButtonDel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDel.Name = "toolStripButtonDel";
+            this.toolStripButtonDel.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButtonDel.Text = "修改";
+            this.toolStripButtonDel.Click += new System.EventHandler(this.toolStripButtonMod_Click);
             // 
-            // buttonQry
+            // toolStripButtonCopy
             // 
-            this.buttonQry.Image = global::AssMngSys.Properties.Resources.find;
-            this.buttonQry.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonQry.Location = new System.Drawing.Point(794, 4);
-            this.buttonQry.Name = "buttonQry";
-            this.buttonQry.Size = new System.Drawing.Size(89, 35);
-            this.buttonQry.TabIndex = 15;
-            this.buttonQry.Text = "   查询(&Q)";
-            this.buttonQry.UseVisualStyleBackColor = true;
-            this.buttonQry.Click += new System.EventHandler(this.buttonQry_Click);
+            this.toolStripButtonCopy.Image = global::AssMngSys.Properties.Resources.copy;
+            this.toolStripButtonCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonCopy.Name = "toolStripButtonCopy";
+            this.toolStripButtonCopy.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButtonCopy.Text = "复制";
+            this.toolStripButtonCopy.ToolTipText = "复制(新增类似资产)";
+            this.toolStripButtonCopy.Click += new System.EventHandler(this.toolStripButtonCopy_Click);
             // 
-            // textBoxAssId
+            // toolStripSeparator1
             // 
-            this.textBoxAssId.Location = new System.Drawing.Point(514, 13);
-            this.textBoxAssId.Name = "textBoxAssId";
-            this.textBoxAssId.Size = new System.Drawing.Size(117, 21);
-            this.textBoxAssId.TabIndex = 11;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(449, 18);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 12);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "资产编码：";
-            // 
-            // checkBoxDate
-            // 
-            this.checkBoxDate.AutoSize = true;
-            this.checkBoxDate.Location = new System.Drawing.Point(2, 15);
-            this.checkBoxDate.Name = "checkBoxDate";
-            this.checkBoxDate.Size = new System.Drawing.Size(48, 16);
-            this.checkBoxDate.TabIndex = 16;
-            this.checkBoxDate.Text = "日期";
-            this.checkBoxDate.UseVisualStyleBackColor = true;
-            this.checkBoxDate.CheckedChanged += new System.EventHandler(this.checkBoxDate_CheckedChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(636, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 12);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "操作类型：";
-            // 
-            // comboBoxOptTyp
-            // 
-            this.comboBoxOptTyp.FormattingEnabled = true;
-            this.comboBoxOptTyp.Location = new System.Drawing.Point(698, 14);
-            this.comboBoxOptTyp.Name = "comboBoxOptTyp";
-            this.comboBoxOptTyp.Size = new System.Drawing.Size(89, 20);
-            this.comboBoxOptTyp.TabIndex = 17;
-            // 
-            // QryAssLog
+            // CatList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(895, 538);
-            this.Controls.Add(this.comboBoxOptTyp);
-            this.Controls.Add(this.checkBoxDate);
-            this.Controls.Add(this.buttonQry);
-            this.Controls.Add(this.dateTimePicker2);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBoxAssId);
-            this.Controls.Add(this.textBoxPid);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.bindingNavigator1);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(881, 571);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.bindingNavigator1);
+            this.Controls.Add(this.textBoxId);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "QryAssLog";
-            this.Text = "AssLogForm";
-            this.Load += new System.EventHandler(this.AssLogForm_Load);
+            this.Name = "CatList";
+            this.Text = "CatListBak";
+            this.Load += new System.EventHandler(this.CatList_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CatList_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
             this.bindingNavigator1.ResumeLayout(false);
             this.bindingNavigator1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -308,17 +275,13 @@ namespace AssMngSys
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
-        private System.Windows.Forms.TextBox textBoxPid;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBoxId;
         private System.Windows.Forms.BindingSource bindingSource1;
-        private System.Windows.Forms.Button buttonQry;
-        private System.Windows.Forms.TextBox textBoxAssId;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox checkBoxDate;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBoxOptTyp;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
+        private System.Windows.Forms.ToolStripButton toolStripButtonMod;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDel;
+        private System.Windows.Forms.ToolStripButton toolStripButtonCopy;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

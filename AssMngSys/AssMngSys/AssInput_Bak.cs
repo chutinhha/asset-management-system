@@ -213,14 +213,14 @@ namespace AssMngSys
                 comboBoxUnit.Text,
                 textBoxNum.Text,
                 textBoxPpu.Text,
-                MainForm.sCompany, // company
-                "SYS",//cre_man
+                Login.sCompany, // company
+                Login.sUserName,//cre_man
                 textBoxSupplierInfo.Text,
                 comboBoxInputTyp.Text,
                 comboBoxAddr.Text);
 
             string sSqlInsLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-    "新增", "0", sSqlIns.Replace("'", "\\'"), MainForm.sClientId, textBoxAssId.Text,MainForm.getDateTime());
+    "新增", "0", sSqlIns.Replace("'", "\\'"), Login.sClientId, textBoxAssId.Text,MainForm.getDateTime());
 
             List<string> listSql = new List<string>();
             listSql.Add(sSqlIns);
@@ -379,13 +379,13 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
                     textBoxNum.Text,
                     textBoxPpu.Text,
                     "修改备注",//memo
-                    MainForm.sUserName,//mod_man 
+                    Login.sUserName,//mod_man 
                     comboBoxInputTyp.Text,
                     comboBoxAddr.Text,
                     textBoxId.Text);
 
             string sSqlInsLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-    "修改", "0", sSqlUpd.Replace("'", "''"), MainForm.sClientId, textBoxAssId.Text,MainForm.getDateTime());
+    "修改", "0", sSqlUpd.Replace("'", "''"), Login.sClientId, textBoxAssId.Text,MainForm.getDateTime());
 
                 List<string> listSql = new List<string>();
                 listSql.Add(sSqlUpd);
@@ -478,7 +478,7 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
              //插入
             string sReason = string.Format("新：{0} 旧：{1}", textBoxPid.Text,"");
             sSql = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')",
-                textBoxAssId.Text, "标签更换", MainForm.sUserName, MainForm.getDate(), MainForm.sUserName, MainForm.getDateTime(), MainForm.sCompany, "", sReason, "");
+                textBoxAssId.Text, "标签更换", Login.sUserName, MainForm.getDate(), Login.sUserName, MainForm.getDateTime(), Login.sCompany, "", sReason, "");
               listSql.Add(sSql);
             //同步SQL
             int nCnt = listSql.Count;
@@ -486,7 +486,7 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
             {
                 sSql = listSql[i];
                 string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-                "标签更换", "0", sSql.Replace("'", "''"), MainForm.sClientId, textBoxAssId.Text, MainForm.getDateTime());
+                "标签更换", "0", sSql.Replace("'", "''"), Login.sClientId, textBoxAssId.Text, MainForm.getDateTime());
                 listSql.Add(sSqlLog);
             }
 
@@ -553,7 +553,7 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
             string sSqlDel = string.Format("delete from ass_list where id='{0}'",textBoxId.Text);//删除语句，已ID为条件删除
 
             string sSqlInsLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-"删除", "0", sSqlDel.Replace("'", "''"), MainForm.sClientId, textBoxAssId.Text, MainForm.getDateTime());
+"删除", "0", sSqlDel.Replace("'", "''"), Login.sClientId, textBoxAssId.Text, MainForm.getDateTime());
 
             List<string> listSql = new List<string>();
             listSql.Add(sSqlDel);

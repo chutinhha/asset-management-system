@@ -11,8 +11,10 @@ namespace AssMngSys
 {
     public partial class Login : Form
     {
-        public string sCompany = "";
-        public string sUserName = "";
+        static public string sCompany = "";
+        static public string sUserName = "";
+        static public string sRole = "";
+        static public string sClientId = "PC";
         public  int nRet = 0;//0 µÇÂ½Ê§°Ü£¬1 µÇÂ½³É¹¦£¬2 È¡ÏûµÇÂ½
         public Login()
         {
@@ -33,10 +35,12 @@ namespace AssMngSys
             string sStat = "";
             if (reader.Read())
             {
-                sPass = reader["pass"].ToString();
                 sUserName = reader["user_nam"].ToString();
                 sCompany = reader["company"].ToString();
+                sRole = reader["role"].ToString();
+                
                 sStat = reader["stat"].ToString();
+                sPass = reader["pass"].ToString();
             }
             if (sPass.Equals(textBoxPass.Text))
             {

@@ -17,11 +17,10 @@ namespace AssMngSys
 {
     public partial class MainForm : Form
     {
-        static public string sCompany = "深圳总公司";
-        static public string sUserName = "SYS";
-        static public string sClientId = "PC";
+        //static public string sCompany = "";
+        //static public string sUserName = "";
+        //static public string sClientId = "PC";
         Form curForm = null;
-        Login loginForm = null;
         public MySqlConnection myConn = 
             new MySqlConnection("server=localhost;user id=root; password=gv; database=gvdb; pooling=false;port=3306");
 
@@ -36,11 +35,8 @@ namespace AssMngSys
         public static bool messageReceived = false;
         public static bool bIsReceiving = true;
 
-        public MainForm(Login f)
+        public MainForm()
         {
-            loginForm = f;
-            sCompany = f.sCompany;
-            sUserName = f.sUserName;
             InitializeComponent();
         }
         public void AddLog(string str)
@@ -65,17 +61,30 @@ namespace AssMngSys
             //treeView1.Nodes[0].Nodes[1].Nodes.Add("Grandchild");
             //treeView1.Nodes[0].Nodes[1].Nodes[0].Nodes.Add("Great Grandchild");
             //treeView1.EndUpdate();
+
+
             treeView1.BeginUpdate();
             treeView1.Nodes.Clear();
             treeView1.ImageList = imageList1;
-           treeView1.ImageIndex = 0;
-           treeView1.SelectedImageIndex = 1;
+            treeView1.ImageIndex = 0;
+            treeView1.SelectedImageIndex = 1; 
+
             treeView1.Nodes.Add("基本资料");
             treeView1.Nodes[0].ImageIndex = 2;
             treeView1.Nodes[0].SelectedImageIndex = 3;
-            treeView1.Nodes[0].Nodes.Add("资产登记");
-            //treeView1.Nodes[0].Nodes.Add("标签打印");
-            //treeView1.Nodes[0].Nodes.Add("资产入库");
+            treeView1.Nodes[0].Nodes.Add("资产登记"); 
+            treeView1.Nodes[0].Nodes.Add("类别维护");
+            treeView1.Nodes[0].Nodes.Add("人员维护"); 
+            treeView1.Nodes[0].Nodes.Add("地点维护"); 
+            //权限
+            if (Login.sRole != "系统管理员" && Login.sRole != "资产管理员")
+            {
+                treeView1.Nodes[0].ForeColor = System.Drawing.Color.Gray;
+                treeView1.Nodes[0].Nodes[0].ForeColor = System.Drawing.Color.Gray;
+                treeView1.Nodes[0].Nodes[1].ForeColor = System.Drawing.Color.Gray;
+                treeView1.Nodes[0].Nodes[2].ForeColor = System.Drawing.Color.Gray;
+                treeView1.Nodes[0].Nodes[3].ForeColor = System.Drawing.Color.Gray;
+            }
 
             treeView1.Nodes.Add("资产管理");
             treeView1.Nodes[1].ImageIndex = 2;
@@ -83,18 +92,37 @@ namespace AssMngSys
             treeView1.Nodes[1].Nodes.Add("领用管理");
             treeView1.Nodes[1].Nodes.Add("使用管理");
             treeView1.Nodes[1].Nodes.Add("资产注销");
-            //treeView1.Nodes[1].Nodes.Add("资产外出");
-            //treeView1.Nodes[1].Nodes.Add("资产报废");
-            //treeView1.Nodes[1].Nodes.Add("资产转出");
+            //权限
+            if (Login.sRole != "系统管理员" && Login.sRole != "资产管理员")
+            {
+                
+                if (Login.sRole != "实验室管理员")
+                {
+                    treeView1.Nodes[1].ForeColor = System.Drawing.Color.Gray;
+                    treeView1.Nodes[1].Nodes[1].ForeColor = System.Drawing.Color.Gray;
+                }
+                treeView1.Nodes[1].Nodes[0].ForeColor = System.Drawing.Color.Gray;
+                treeView1.Nodes[1].Nodes[2].ForeColor = System.Drawing.Color.Gray;
+            }
+
+
             treeView1.Nodes.Add("资产盘点");
             treeView1.Nodes[2].ImageIndex = 2;
             treeView1.Nodes[2].SelectedImageIndex = 3;
             treeView1.Nodes[2].Nodes.Add("创建清单");
             treeView1.Nodes[2].Nodes.Add("清单查询");
+             //权限
+            if (Login.sRole != "系统管理员" && Login.sRole != "资产管理员")
+            {
+                treeView1.Nodes[2].ForeColor = System.Drawing.Color.Gray;
+                treeView1.Nodes[2].Nodes[0].ForeColor = System.Drawing.Color.Gray;
+                treeView1.Nodes[2].Nodes[1].ForeColor = System.Drawing.Color.Gray;
+            }
+
             treeView1.Nodes.Add("查询统计");
             treeView1.Nodes[3].ImageIndex = 2;
             treeView1.Nodes[3].SelectedImageIndex = 3;
-            treeView1.Nodes[3].Nodes.Add("资产清单");
+            treeView1.Nodes[3].Nodes.Add("资产查询");
             treeView1.Nodes[3].Nodes.Add("资产历史");
             treeView1.EndUpdate();
 
@@ -243,7 +271,12 @@ namespace AssMngSys
             }
 
            // AddLog(treeView1.SelectedNode.Text);
-            if (treeView1.SelectedNode.Text.Equals("资产登记"))
+            string sCurNode = treeView1.SelectedNode.Text;
+            if (treeView1.SelectedNode.ForeColor == System.Drawing.Color.Gray)
+            {
+                sCurNode = "";
+            }
+            if (sCurNode.Equals("资产登记"))
             {
                 splitContainer1.Panel2.Controls.Clear();//这里是清空panel2中的控件的。
                 AssInput obj = new AssInput(this);
@@ -258,7 +291,52 @@ namespace AssMngSys
                 obj.Show();
                 curForm = obj;
             }
-            else if (treeView1.SelectedNode.Text.Equals("领用管理"))
+            else if (sCurNode.Equals("类别维护"))
+            {
+                splitContainer1.Panel2.Controls.Clear();//这里是清空panel2中的控件的。
+                CatList obj = new CatList(this);
+                obj.TopLevel = false;
+                obj.MdiParent = this;//这句代码也要写上，否则会出错。
+                obj.Parent = splitContainer1.Panel2;   //Form3的parent是panel2.  
+               //obj.textBoxLog = textBoxLog;
+                obj.FormBorderStyle = FormBorderStyle.None;
+                obj.WindowState = FormWindowState.Maximized;
+                obj.BringToFront();
+                obj.Anchor = AnchorStyles.Left | AnchorStyles.Top; 
+                obj.Show();
+                curForm = obj;
+            }
+            else if (sCurNode.Equals("人员维护"))
+            {
+                splitContainer1.Panel2.Controls.Clear();//这里是清空panel2中的控件的。
+                EmpList obj = new EmpList(this);
+                obj.TopLevel = false;
+                obj.MdiParent = this;//这句代码也要写上，否则会出错。
+                obj.Parent = splitContainer1.Panel2;   //Form3的parent是panel2.  
+               //obj.textBoxLog = textBoxLog;
+                obj.FormBorderStyle = FormBorderStyle.None;
+                obj.WindowState = FormWindowState.Maximized;
+                obj.BringToFront();
+                obj.Anchor = AnchorStyles.Left | AnchorStyles.Top; 
+                obj.Show();
+                curForm = obj;
+            }      
+            else if (sCurNode.Equals("地点维护"))
+            {
+                splitContainer1.Panel2.Controls.Clear();//这里是清空panel2中的控件的。
+                AddrList obj = new AddrList(this);
+                obj.TopLevel = false;
+                obj.MdiParent = this;//这句代码也要写上，否则会出错。
+                obj.Parent = splitContainer1.Panel2;   //Form3的parent是panel2.  
+               //obj.textBoxLog = textBoxLog;
+                obj.FormBorderStyle = FormBorderStyle.None;
+                obj.WindowState = FormWindowState.Maximized;
+                obj.BringToFront();
+                obj.Anchor = AnchorStyles.Left | AnchorStyles.Top; 
+                obj.Show();
+                curForm = obj;
+            }        
+            else if (sCurNode.Equals("领用管理"))
             {
                 splitContainer1.Panel2.Controls.Clear();//这里是清空panel2中的控件的。
                 AssSupply obj = new AssSupply(this);
@@ -273,7 +351,7 @@ namespace AssMngSys
                 obj.Show();
                 curForm = obj;
             }
-            else if (treeView1.SelectedNode.Text.Equals("使用管理"))
+            else if (sCurNode.Equals("使用管理"))
             {
                 splitContainer1.Panel2.Controls.Clear();//这里是清空panel2中的控件的。
                 AssUse obj = new AssUse(this);
@@ -288,7 +366,7 @@ namespace AssMngSys
                 obj.Show();
                 curForm = obj;
             }
-            else if (treeView1.SelectedNode.Text.Equals("资产注销"))
+            else if (sCurNode.Equals("资产注销"))
             {
                 splitContainer1.Panel2.Controls.Clear();//这里是清空panel2中的控件的。
                 AssLogoff obj = new AssLogoff(this);
@@ -303,7 +381,7 @@ namespace AssMngSys
                 obj.Show();
                 curForm = obj;
             }
-            else if (treeView1.SelectedNode.Text.Equals("资产清单"))
+            else if (sCurNode.Equals("资产查询"))
             {
                 splitContainer1.Panel2.Controls.Clear();//这里是清空panel2中的控件的。
                 QryAssList obj = new QryAssList(this);
@@ -318,7 +396,7 @@ namespace AssMngSys
                 obj.Show();
                 curForm = obj;
             }
-            else if(treeView1.SelectedNode.Text.Equals("资产历史"))
+            else if(sCurNode.Equals("资产历史"))
             {
                 splitContainer1.Panel2.Controls.Clear();//这里是清空panel2中的控件的。
                 QryAssLog obj = new QryAssLog(this);
@@ -333,7 +411,7 @@ namespace AssMngSys
                 obj.Show();
                 curForm = obj;
             }
-            else if (treeView1.SelectedNode.Text.Equals("创建清单"))
+            else if (sCurNode.Equals("创建清单"))
             {
                 splitContainer1.Panel2.Controls.Clear();//这里是清空panel2中的控件的。
                 InvList obj = new InvList(this);
@@ -348,7 +426,7 @@ namespace AssMngSys
                 obj.Show();
                 curForm = obj;
             }
-            else if (treeView1.SelectedNode.Text.Equals("清单查询"))
+            else if (sCurNode.Equals("清单查询"))
             {
                 splitContainer1.Panel2.Controls.Clear();//这里是清空panel2中的控件的。
                 InvListQry obj = new InvListQry(this);

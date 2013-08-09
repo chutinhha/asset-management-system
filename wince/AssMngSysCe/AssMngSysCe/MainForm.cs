@@ -38,7 +38,7 @@ namespace AssMngSysCe
             public const int stat = 4;
             public const int dutyman = 5;
             public const int dept = 6;
-            public const int addr = 6;
+            public const int addr = 7;
             public const int result = 8;
             public const int id = 9;
         }
@@ -79,6 +79,7 @@ namespace AssMngSysCe
         }
         private void Read2PcForm_Load(object sender, EventArgs e)
         {
+            
             this.WindowState = FormWindowState.Maximized;
             listView1.FullRowSelect = true;
             listView1.Columns.Add("序", 16, HorizontalAlignment.Left);
@@ -103,7 +104,7 @@ namespace AssMngSysCe
             listView2.Columns.Add("盘点结果", 40, HorizontalAlignment.Left);
             listView2.Columns.Add("ID", 0, HorizontalAlignment.Left);
 
-            iniData();
+           // iniData();
 
             tabControl1.SelectedIndex = (int)Page.sync;
 
@@ -768,7 +769,7 @@ namespace AssMngSysCe
             {
                 CheckOpt();
             }
-            else if (tabControl1.SelectedIndex == (int)Page.check)//盘点
+            else if (tabControl1.SelectedIndex == (int)Page.wrtag)//盘点
             {
                 textBoxPid.Text = "";
             }
@@ -1171,7 +1172,7 @@ namespace AssMngSysCe
             string sUpd;
             if (sTyp == "领用")// )
             {
-                sUpd = string.Format("update ass_list set stat = '领用',duty_man = '{0}',dept = '{1}',mod_man = '{2}',mod_tm = '{3}'", sMan, sDept, LoginForm.sUserName, LoginForm.getDateTime());
+                sUpd = string.Format("update ass_list set stat = '领用',use_man = '{0}',duty_man = '{1}',dept = '{2}',mod_man = '{3}',mod_tm = '{4}'", sMan, sMan, sDept, LoginForm.sUserName, LoginForm.getDateTime());
                 if (sAddr.Length != 0)
                 {
                     sUpd += ",addr = '" + sAddr + "' ";
@@ -1179,7 +1180,7 @@ namespace AssMngSysCe
             }
             else if (sTyp == "退领")
             {
-                sUpd = string.Format("update ass_list set stat = '库存',mod_man = '{0}',mod_tm = '{1}'", LoginForm.sUserName, LoginForm.getDateTime());
+                sUpd = string.Format("update ass_list set stat = '库存',use_man = '',duty_man = '',dept = '',mod_man = '{0}',mod_tm = '{1}'", LoginForm.sUserName, LoginForm.getDateTime());
             }
             else if (sTyp == "租还" || sTyp == "退返" || sTyp == "丢失" || sTyp == "报废" || sTyp == "转出")
             {
@@ -1188,6 +1189,7 @@ namespace AssMngSysCe
             else//借用，归还，送修，修返，外出，返回
             {
                 sUpd = string.Format("update ass_list set stat_sub = '{0}',duty_man = '{1}',dept = '{2}',mod_tm = '{3}'", sTyp, sMan, sDept, LoginForm.getDateTime());
+                if (sTyp == "送修") sUpd += ",ynrepair = 'Y'";
             }
 
             string sSql = "";
@@ -1203,9 +1205,10 @@ namespace AssMngSysCe
             bool bOK = true;
             for (int i = 0; i < nCount; i++)
             {
-                string sAssId, sStat, sStatSub;
+                string sPid,sAssId, sStat, sStatSub;
                 if (sFixPid.Length == 0)
                 {
+                    sPid = listView1.Items[i].SubItems[(int)MngIndex.pid].Text;
                     sAssId = listView1.Items[i].SubItems[(int)MngIndex.assid].Text;
                     sStat = listView1.Items[i].SubItems[(int)MngIndex.stat].Text;
                     sStatSub = listView1.Items[i].SubItems[(int)MngIndex.statsub].Text;
@@ -1213,6 +1216,7 @@ namespace AssMngSysCe
                 else
                 {
                     string sYnWrite;
+                    sPid = sFixPid;
                     GetAssInfo(sFixPid, out sAssId, out sStat, out sStatSub, out sYnWrite);
                 }
 
@@ -1231,8 +1235,8 @@ namespace AssMngSysCe
                 listSql.Add(sSql);
                 listAssId.Add(sAssId);
                 //插入
-                sSql = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')",
-                sAssId, sTyp, sMan, LoginForm.getDate(), LoginForm.sUserName, LoginForm.getDateTime(), SettingForm.sCompany, sDept, sReason, sAddr);
+                sSql = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr,pid) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}')",
+                sAssId, sTyp, sMan, LoginForm.getDate(), LoginForm.sUserName, LoginForm.getDateTime(), SettingForm.sCompany, sDept, sReason, sAddr,sPid);
                 listSql.Add(sSql);
                 listAssId.Add(sAssId);
             }

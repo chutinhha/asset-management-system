@@ -51,6 +51,8 @@ namespace AssMngSys
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonPrint = new System.Windows.Forms.ToolStripButton();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.toolStripButtonExcel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
@@ -190,7 +192,9 @@ namespace AssMngSys
             this.toolStripButtonQry,
             this.toolStripButtonCopy,
             this.toolStripSeparator1,
-            this.toolStripButtonPrint});
+            this.toolStripButtonPrint,
+            this.toolStripSeparator2,
+            this.toolStripButtonExcel});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(881, 25);
@@ -258,6 +262,20 @@ namespace AssMngSys
             this.toolStripButtonPrint.ToolTipText = "打印选中项";
             this.toolStripButtonPrint.Click += new System.EventHandler(this.toolStripButtonPrint_Click);
             // 
+            // toolStripButtonExcel
+            // 
+            this.toolStripButtonExcel.Image = global::AssMngSys.Properties.Resources.excel;
+            this.toolStripButtonExcel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonExcel.Name = "toolStripButtonExcel";
+            this.toolStripButtonExcel.Size = new System.Drawing.Size(79, 22);
+            this.toolStripButtonExcel.Text = "导出Excel";
+            this.toolStripButtonExcel.Click += new System.EventHandler(this.toolStripButtonExcel_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // AssInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -308,5 +326,7 @@ namespace AssMngSys
         private System.Windows.Forms.ToolStripButton toolStripButtonCopy;
         private System.Windows.Forms.ToolStripButton toolStripButtonPrint;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolStripButtonExcel;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }

@@ -555,7 +555,7 @@ namespace AssMngSys
             string sUpd;
             if (sTyp == "领用")// )
             {
-                sUpd = string.Format("update ass_list set stat = '领用',duty_man = '{0}',dept = '{1}',mod_man = '{2}',mod_tm = '{3}'", sMan, sDept, MainForm.sUserName, MainForm.getDateTime());
+                sUpd = string.Format("update ass_list set stat = '领用',use_man = '{0}',duty_man = '{1}',dept = '{2}',mod_man = '{3}',mod_tm = '{4}'", sMan, sMan, sDept, Login.sUserName, MainForm.getDateTime());
                 if (sAddr.Length != 0)
                 {
                     sUpd += ",addr = '" + sAddr + "' ";
@@ -563,7 +563,7 @@ namespace AssMngSys
             }
             else if (sTyp == "退领")
             {
-                sUpd = string.Format("update ass_list set stat = '库存',mod_man = '{0}',mod_tm = '{1}'", MainForm.sUserName, MainForm.getDateTime());
+                sUpd = string.Format("update ass_list set stat = '库存',use_man = '',duty_man = '',dept = '',mod_man = '{0}',mod_tm = '{1}'", Login.sUserName, MainForm.getDateTime());
             }
             else if (sTyp == "租还" || sTyp == "退返" || sTyp == "丢失" || sTyp == "报废" || sTyp == "转出")
             {
@@ -572,6 +572,7 @@ namespace AssMngSys
             else//借用，归还，送修，修返，外出，返回
             {
                 sUpd = string.Format("update ass_list set stat_sub = '{0}',duty_man = '{1}',dept = '{2}',mod_tm = '{3}'", sTyp, sMan, sDept, MainForm.getDateTime());
+                if (sTyp == "送修") sUpd += ",ynrepair = 'Y'";
             }
 
             string sSql = "";
@@ -579,6 +580,7 @@ namespace AssMngSys
             bool bOK = true;
             for (int i = 0; i < dgv.Rows.Count; i++)
             {
+                string sPid = dgv.Rows[i].Cells["标签喷码"].Value.ToString();
                 string sAssId = dgv.Rows[i].Cells["资产编码"].Value.ToString();
                 string sStat = dgv.Rows[i].Cells["库存状态"].Value.ToString();
                 string sStatSub = dgv.Rows[i].Cells["使用状态"].Value.ToString();
@@ -598,8 +600,8 @@ namespace AssMngSys
                 listSql.Add(sSql);
                 listAssId.Add(sAssId);
                 //插入
-                sSql = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')",
-                sAssId, sTyp, sMan, MainForm.getDate(), MainForm.sUserName, MainForm.getDateTime(), MainForm.sCompany, sDept, sReason, sAddr);
+                sSql = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr,pid) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}')",
+                sAssId, sTyp, sMan, MainForm.getDate(), Login.sUserName, MainForm.getDateTime(), Login.sCompany, sDept, sReason, sAddr, sPid);
                 listSql.Add(sSql);
                 listAssId.Add(sAssId);
             }
@@ -616,7 +618,7 @@ namespace AssMngSys
                 string sAssId = listAssId[i];
                 sSql = listSql[i];
                 string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-                sTyp, "0", sSql.Replace("'", "''"), MainForm.sClientId, sAssId, MainForm.getDateTime());
+                sTyp, "0", sSql.Replace("'", "''"), Login.sClientId, sAssId, MainForm.getDateTime());
                 listSql.Add(sSqlLog);
             }
 

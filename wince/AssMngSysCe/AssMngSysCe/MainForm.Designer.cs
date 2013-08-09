@@ -44,16 +44,17 @@ namespace AssMngSysCe
             this.buttonHide = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.labelHit = new System.Windows.Forms.Label();
             this.buttonTransfer = new System.Windows.Forms.Button();
             this.buttonRepair = new System.Windows.Forms.Button();
             this.buttonBorrow = new System.Windows.Forms.Button();
             this.buttonDiscard = new System.Windows.Forms.Button();
             this.buttonRent = new System.Windows.Forms.Button();
+            this.buttonDetail = new System.Windows.Forms.Button();
             this.buttonSend = new System.Windows.Forms.Button();
             this.buttonLose = new System.Windows.Forms.Button();
             this.buttonReject = new System.Windows.Forms.Button();
             this.buttonOut = new System.Windows.Forms.Button();
+            this.labelHit = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
             this.labelMsg = new System.Windows.Forms.Label();
@@ -85,7 +86,6 @@ namespace AssMngSysCe
             this.label3 = new System.Windows.Forms.Label();
             this.timer2 = new System.Windows.Forms.Timer();
             this.service1 = new AssMngSysCe.AssWebSrv.Service();
-            this.buttonDetail = new System.Windows.Forms.Button();
             this.tabPage5.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -221,14 +221,6 @@ namespace AssMngSysCe
             this.listView1.TabIndex = 1;
             this.listView1.View = System.Windows.Forms.View.Details;
             // 
-            // labelHit
-            // 
-            this.labelHit.Location = new System.Drawing.Point(65, 128);
-            this.labelHit.Name = "labelHit";
-            this.labelHit.Size = new System.Drawing.Size(88, 21);
-            this.labelHit.Text = "0/0";
-            this.labelHit.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
             // buttonTransfer
             // 
             this.buttonTransfer.Location = new System.Drawing.Point(171, 179);
@@ -274,6 +266,15 @@ namespace AssMngSysCe
             this.buttonRent.Text = "租还";
             this.buttonRent.Click += new System.EventHandler(this.buttonRent_Click);
             // 
+            // buttonDetail
+            // 
+            this.buttonDetail.Location = new System.Drawing.Point(157, 124);
+            this.buttonDetail.Name = "buttonDetail";
+            this.buttonDetail.Size = new System.Drawing.Size(68, 26);
+            this.buttonDetail.TabIndex = 0;
+            this.buttonDetail.Text = "明细(F4)";
+            this.buttonDetail.Click += new System.EventHandler(this.buttonDetail_Click);
+            // 
             // buttonSend
             // 
             this.buttonSend.Location = new System.Drawing.Point(2, 124);
@@ -309,6 +310,14 @@ namespace AssMngSysCe
             this.buttonOut.TabIndex = 0;
             this.buttonOut.Text = "外出";
             this.buttonOut.Click += new System.EventHandler(this.buttonOut_Click);
+            // 
+            // labelHit
+            // 
+            this.labelHit.Location = new System.Drawing.Point(65, 128);
+            this.labelHit.Name = "labelHit";
+            this.labelHit.Size = new System.Drawing.Size(88, 21);
+            this.labelHit.Text = "0/0";
+            this.labelHit.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // tabPage1
             // 
@@ -586,15 +595,6 @@ namespace AssMngSysCe
             this.service1.Url = "http://10.1.1.52/AssWebSrv/Service.asmx";
             this.service1.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; MS Web Services Client Protocol 2.0.50727.3053" +
                 ")";
-            // 
-            // buttonDetail
-            // 
-            this.buttonDetail.Location = new System.Drawing.Point(157, 124);
-            this.buttonDetail.Name = "buttonDetail";
-            this.buttonDetail.Size = new System.Drawing.Size(68, 26);
-            this.buttonDetail.TabIndex = 0;
-            this.buttonDetail.Text = "明细(F4)";
-            this.buttonDetail.Click += new System.EventHandler(this.buttonDetail_Click);
             // 
             // MainForm
             // 

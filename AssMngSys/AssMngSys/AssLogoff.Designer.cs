@@ -33,8 +33,10 @@ namespace AssMngSys
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.tabPage8 = new System.Windows.Forms.TabPage();
@@ -58,11 +60,9 @@ namespace AssMngSys
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.labelCnt = new System.Windows.Forms.Label();
             this.textBoxPid = new System.Windows.Forms.TextBox();
-            this.textBoxAssId = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -76,8 +76,6 @@ namespace AssMngSys
             this.label19 = new System.Windows.Forms.Label();
             this.buttonClear = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -130,6 +128,15 @@ namespace AssMngSys
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(14, 20);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(83, 12);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "*租用资产退还";
+            // 
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.groupBox3);
@@ -148,6 +155,15 @@ namespace AssMngSys
             this.groupBox3.Size = new System.Drawing.Size(609, 50);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(14, 20);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(83, 12);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "*采购资产退货";
             // 
             // tabPage7
             // 
@@ -381,16 +397,6 @@ namespace AssMngSys
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
             this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(191, 553);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 12);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "资产编码：";
-            // 
             // label4
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -419,14 +425,6 @@ namespace AssMngSys
             this.textBoxPid.Size = new System.Drawing.Size(116, 21);
             this.textBoxPid.TabIndex = 5;
             this.textBoxPid.TextChanged += new System.EventHandler(this.textBoxPid_TextChanged);
-            // 
-            // textBoxAssId
-            // 
-            this.textBoxAssId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxAssId.Location = new System.Drawing.Point(262, 548);
-            this.textBoxAssId.Name = "textBoxAssId";
-            this.textBoxAssId.Size = new System.Drawing.Size(110, 21);
-            this.textBoxAssId.TabIndex = 7;
             // 
             // label3
             // 
@@ -563,24 +561,6 @@ namespace AssMngSys
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 20);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 12);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "*租用资产退还";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(14, 20);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(83, 12);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "*采购资产退货";
-            // 
             // AssLogoff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -593,8 +573,6 @@ namespace AssMngSys
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBoxAssId);
             this.Controls.Add(this.textBoxPid);
             this.Controls.Add(this.labelCnt);
             this.Controls.Add(this.label4);
@@ -647,11 +625,9 @@ namespace AssMngSys
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
         private System.Windows.Forms.TabPage tabPage7;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label labelCnt;
         private System.Windows.Forms.TextBox textBoxPid;
-        private System.Windows.Forms.TextBox textBoxAssId;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Label label5;

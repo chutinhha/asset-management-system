@@ -30,7 +30,6 @@ namespace AssMngSys
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QryAssList));
-            this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
@@ -38,14 +37,11 @@ namespace AssMngSys
             this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
             this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBoxAssId = new System.Windows.Forms.TextBox();
             this.textBoxPid = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.label5 = new System.Windows.Forms.Label();
-            this.buttonQry = new System.Windows.Forms.Button();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonQry = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
@@ -54,30 +50,25 @@ namespace AssMngSys
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 12);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "日期范围：";
-            // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(1, 45);
+            this.dataGridView1.Location = new System.Drawing.Point(1, 28);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(882, 459);
+            this.dataGridView1.Size = new System.Drawing.Size(882, 478);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             // 
             // bindingNavigator1
             // 
@@ -96,7 +87,7 @@ namespace AssMngSys
             this.bindingNavigatorMoveNextItem,
             this.bindingNavigatorMoveLastItem,
             this.bindingNavigatorSeparator2});
-            this.bindingNavigator1.Location = new System.Drawing.Point(678, 509);
+            this.bindingNavigator1.Location = new System.Drawing.Point(669, 509);
             this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
             this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
@@ -138,28 +129,10 @@ namespace AssMngSys
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
             this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(193, 516);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 12);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "资产编码：";
-            // 
-            // textBoxAssId
-            // 
-            this.textBoxAssId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxAssId.Location = new System.Drawing.Point(264, 511);
-            this.textBoxAssId.Name = "textBoxAssId";
-            this.textBoxAssId.Size = new System.Drawing.Size(110, 21);
-            this.textBoxAssId.TabIndex = 11;
-            // 
             // textBoxPid
             // 
             this.textBoxPid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxPid.Location = new System.Drawing.Point(69, 511);
+            this.textBoxPid.Location = new System.Drawing.Point(69, 512);
             this.textBoxPid.Name = "textBoxPid";
             this.textBoxPid.Size = new System.Drawing.Size(116, 21);
             this.textBoxPid.TabIndex = 9;
@@ -169,46 +142,36 @@ namespace AssMngSys
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(2, 516);
+            this.label4.Location = new System.Drawing.Point(2, 517);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 12);
             this.label4.TabIndex = 10;
             this.label4.Text = "标签喷码：";
             // 
-            // dateTimePicker1
+            // toolStrip1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(79, 14);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(118, 21);
-            this.dateTimePicker1.TabIndex = 13;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonQry,
+            this.toolStripSeparator1});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(895, 25);
+            this.toolStrip1.TabIndex = 18;
+            this.toolStrip1.Text = "toolStrip1";
             // 
-            // dateTimePicker2
+            // toolStripSeparator1
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(217, 14);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(118, 21);
-            this.dateTimePicker2.TabIndex = 13;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // label5
+            // toolStripButtonQry
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(203, 18);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(11, 12);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "-";
-            // 
-            // buttonQry
-            // 
-            this.buttonQry.Image = global::AssMngSys.Properties.Resources.find;
-            this.buttonQry.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonQry.Location = new System.Drawing.Point(352, 4);
-            this.buttonQry.Name = "buttonQry";
-            this.buttonQry.Size = new System.Drawing.Size(100, 35);
-            this.buttonQry.TabIndex = 14;
-            this.buttonQry.Text = "   查询(&Q)";
-            this.buttonQry.UseVisualStyleBackColor = true;
-            this.buttonQry.Click += new System.EventHandler(this.buttonQry_Click);
+            this.toolStripButtonQry.Image = global::AssMngSys.Properties.Resources.find;
+            this.toolStripButtonQry.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonQry.Name = "toolStripButtonQry";
+            this.toolStripButtonQry.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButtonQry.Text = "查询";
+            this.toolStripButtonQry.Click += new System.EventHandler(this.toolStripButtonQry_Click);
             // 
             // bindingNavigatorMoveFirstItem
             // 
@@ -251,17 +214,11 @@ namespace AssMngSys
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(895, 538);
-            this.Controls.Add(this.buttonQry);
-            this.Controls.Add(this.dateTimePicker2);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBoxAssId);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.textBoxPid);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "QryAssList";
             this.Text = "AssLogForm";
@@ -270,6 +227,8 @@ namespace AssMngSys
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
             this.bindingNavigator1.ResumeLayout(false);
             this.bindingNavigator1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -278,7 +237,6 @@ namespace AssMngSys
 
         #endregion
 
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.BindingNavigator bindingNavigator1;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
@@ -290,14 +248,11 @@ namespace AssMngSys
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBoxAssId;
         private System.Windows.Forms.TextBox textBoxPid;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button buttonQry;
         private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton toolStripButtonQry;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

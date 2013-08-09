@@ -28,6 +28,7 @@ namespace AssMngSys
         }
         private void RecvDataEvent(object sender, RecvEventArgs e)
         {
+            // textBoxPid.Text = e.SPid;//线程间操作无效: 从不是创建控件“textBoxPid”的线程访问它。
             ShowPid(textBoxPid, e.SPid);
             ShowPid(textBoxTid, e.STid);
         }
@@ -69,18 +70,17 @@ namespace AssMngSys
             {
                 if (sOptType == "复制")
                 {
-                    textBoxAssId.Text = "";
                     textBoxPid.Text = getNewPid();
-                    textBoxTid.Text = "";
+                   // textBoxTid.Text = "";
                 }
                 else
                 {
                     sPidCur = dataGridView1.SelectedRows[0].Cells["标签喷码"].Value.ToString();
-                    sAssIdCur = dataGridView1.SelectedRows[0].Cells["资产编码"].Value.ToString();
-                    textBoxAssId.Text = sAssIdCur;
                     textBoxPid.Text = sPidCur;
                    // textBoxTid.Text = dataGridView1.SelectedRows[0].Cells["标签ID"].Value.ToString();
                 }
+                sAssIdCur = dataGridView1.SelectedRows[0].Cells["资产编码"].Value.ToString();
+                textBoxAssId.Text = sAssIdCur;
                 textBoxFinId.Text = dataGridView1.SelectedRows[0].Cells["财务编码"].Value.ToString();
                 comboBoxTyp.Text = dataGridView1.SelectedRows[0].Cells["类型"].Value.ToString();
                 comboBoxAssNam.Text = dataGridView1.SelectedRows[0].Cells["资产名称"].Value.ToString();
@@ -103,7 +103,9 @@ namespace AssMngSys
                 comboBoxStatSub.Text = dataGridView1.SelectedRows[0].Cells["使用状态"].Value.ToString();
                 comboBoxDept.Text = dataGridView1.SelectedRows[0].Cells["所属部门"].Value.ToString();
                 comboBoxDutyMan.Text = dataGridView1.SelectedRows[0].Cells["保管人员"].Value.ToString();
+                comboBoxUseMan.Text = dataGridView1.SelectedRows[0].Cells["领用人员"].Value.ToString();
                 textBoxDevMode.Text = dataGridView1.SelectedRows[0].Cells["设备型号"].Value.ToString();
+                comboBoxYnRepair.Text = dataGridView1.SelectedRows[0].Cells["是否维修过"].Value.ToString();
             }
             else//新增
             {
@@ -228,11 +230,12 @@ namespace AssMngSys
                 MessageBox.Show("请选择资产名称!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            string sSqlIns = string.Format(@"insert into ass_list
+            List<string> listSql = new List<string>();
+            sSql = string.Format(@"insert into ass_list
                 (cre_tm,ass_id,fin_id,pid,tid,ass_nam,ass_desc,ass_pri,reg_date,typ,
-                supplier,sn,vender,input_date,unit,num,ppu,company,cre_man,supplier_info,input_typ,addr,dept,duty_man,stat,stat_sub,dev_mode) 
+                supplier,sn,vender,input_date,unit,num,ppu,company,cre_man,supplier_info,input_typ,addr,dept,duty_man,stat,stat_sub,dev_mode,use_man,ynrepair) 
                 values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}',
-                '{11}','{12}','{13}','{14}','{15}','{16}','{17}','{18}','{19}','{20}','{21}','{22}','{23}','{24}','{25}','{26}')",
+                '{11}','{12}','{13}','{14}','{15}','{16}','{17}','{18}','{19}','{20}','{21}','{22}','{23}','{24}','{25}','{26}','{27}','{28}')",
                 MainForm.getDateTime(),
                 textBoxAssId.Text,
                 textBoxFinId.Text,
@@ -251,8 +254,8 @@ namespace AssMngSys
                 comboBoxUnit.Text,
                 textBoxNum.Text,
                 textBoxPpu.Text,
-                MainForm.sCompany, // company
-                "SYS",//cre_man
+                Login.sCompany, // company
+                Login.sUserName,//cre_man
                 textBoxSupplierInfo.Text,
                 comboBoxInputTyp.Text,
                 comboBoxAddr.Text,
@@ -260,15 +263,26 @@ namespace AssMngSys
                 comboBoxDutyMan.Text,
                 comboBoxStat.Text,
                 comboBoxStatSub.Text,
-                textBoxDevMode.Text
+                textBoxDevMode.Text,
+                comboBoxUseMan.Text,
+                comboBoxYnRepair.Text
                 );
+            listSql.Add(sSql);
+            //插入日志
+            sSql = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr,pid) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}')",
+                       textBoxAssId.Text, "新增", Login.sUserName, MainForm.getDate(), Login.sUserName, MainForm.getDateTime(), Login.sCompany, "", "", "",textBoxPid.Text);
+            listSql.Add(sSql);
 
-            string sSqlInsLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-    "新增", "0", sSqlIns.Replace("'", "\\'"), MainForm.sClientId, textBoxAssId.Text, MainForm.getDateTime());
-
-            List<string> listSql = new List<string>();
-            listSql.Add(sSqlIns);
-            listSql.Add(sSqlInsLog);
+            //同步SQL
+            int nCnt = listSql.Count;
+            for (int i = 0; i < nCnt; i++)
+            {
+                string sAssId = textBoxAssId.Text;
+                sSql = listSql[i];
+                string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
+                "新增", "0", sSql.Replace("'", "''"), Login.sClientId, sAssId, MainForm.getDateTime());
+                listSql.Add(sSqlLog);
+            }
             bool bOK = false;
             bOK = MysqlHelper.ExecuteNoQueryTran(listSql);
             if (bOK)
@@ -285,6 +299,7 @@ namespace AssMngSys
         }
         private void ModifyData()
         {
+            string sSql = "";
             if (textBoxAssId.Text.Equals(""))
             {
                 MessageBox.Show("资产编码不能为空!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -292,7 +307,7 @@ namespace AssMngSys
             }
             if (textBoxAssId.Text != sAssIdCur)
             {
-                string sSql = "select 'X' from ass_list where ass_id = '" + textBoxAssId.Text + "' and ynenable = 'Y'";
+                sSql = "select 'X' from ass_list where ass_id = '" + textBoxAssId.Text + "' and ynenable = 'Y'";
                 MySqlDataReader reader = MysqlHelper.ExecuteReader(sSql);
                 if (reader.HasRows)
                 {
@@ -302,10 +317,9 @@ namespace AssMngSys
                 }
                 reader.Close();
             }
-
             if (textBoxPid.Text.Length != 0 && textBoxPid.Text != sPidCur)
             {
-                string sSql = "select ass_id from ass_list where pid = '" + textBoxPid.Text + "' and ynenable = 'Y'";
+                sSql = "select ass_id from ass_list where pid = '" + textBoxPid.Text + "' and ynenable = 'Y'";
                 MySqlDataReader reader = MysqlHelper.ExecuteReader(sSql);
                 if (reader.Read())
                 {
@@ -316,10 +330,10 @@ namespace AssMngSys
                 }
                 reader.Close();
             }
-
-            string sSqlUpd = string.Format(@"update ass_list set fin_id = '{0}',ass_id = '{1}', ass_nam = '{2}', ass_desc = '{3}', ass_pri = '{4}', mod_tm = '{5}',
+            List<string> listSql = new List<string>();
+            sSql = string.Format(@"update ass_list set fin_id = '{0}',ass_id = '{1}', ass_nam = '{2}', ass_desc = '{3}', ass_pri = '{4}', mod_tm = '{5}',
 typ = '{6}', supplier = '{7}', supplier_info = '{8}', sn = '{9}',vender = '{10}', input_date = '{11}', unit = '{12}', 
-num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',addr = '{18}',pid = '{19}',tid = '{20}',dept ='{21}',duty_man ='{22}',stat ='{23}',stat_sub ='{24}',dev_mode = '{25}' where id = '{26}'",
+num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',addr = '{18}',pid = '{19}',tid = '{20}',dept ='{21}',duty_man ='{22}',stat ='{23}',stat_sub ='{24}',dev_mode = '{25}',use_man = '{26}',ynrepair = '{27}' where id = '{28}'",
                     textBoxFinId.Text,
                     textBoxAssId.Text,
                     comboBoxAssNam.Text,
@@ -336,7 +350,7 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
                     textBoxNum.Text,
                     textBoxPpu.Text,
                     "修改备注",//memo
-                    MainForm.sUserName,//mod_man 
+                    Login.sUserName,//mod_man 
                     comboBoxInputTyp.Text,
                     comboBoxAddr.Text,
                     textBoxPid.Text,
@@ -346,14 +360,29 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
                     comboBoxStat.Text,
                     comboBoxStatSub.Text,
                     textBoxDevMode.Text,
+                    comboBoxUseMan.Text,
+                    comboBoxYnRepair.Text,
                     textBoxId.Text);
+            listSql.Add(sSql);
 
-            string sSqlInsLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
-    "修改", "0", sSqlUpd.Replace("'", "''"), MainForm.sClientId, textBoxAssId.Text, MainForm.getDateTime());
+            //插入日志
+            sSql = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr,pid) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}')",
+                       textBoxAssId.Text, "修改", Login.sUserName, MainForm.getDate(), Login.sUserName, MainForm.getDateTime(), Login.sCompany, "", "", "",textBoxPid.Text);
+            listSql.Add(sSql);
 
-            List<string> listSql = new List<string>();
-            listSql.Add(sSqlUpd);
-            listSql.Add(sSqlInsLog);
+
+            //同步SQL
+            int nCnt = listSql.Count;
+            for (int i = 0; i < nCnt; i++)
+            {
+                string sAssId = textBoxAssId.Text;
+                sSql = listSql[i];
+                string sSqlLog = string.Format("insert into sync_log(typ,stat,sql_content,client_id,ass_id,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}')",
+                "修改", "0", sSql.Replace("'", "''"), Login.sClientId, sAssId, MainForm.getDateTime());
+                listSql.Add(sSqlLog);
+            }
+
+
             bool bOK = false;
             bOK = MysqlHelper.ExecuteNoQueryTran(listSql);
             if (bOK)
@@ -382,6 +411,7 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
         {
             string str = comboBoxTyp.SelectedItem.ToString();
             comboBoxAssNam.Items.Clear();
+            comboBoxAssNam.Text = "";
             string sSql = "select distinct prd_nam from ass_cat where cat_nam = '" + str + "'order by convert(prd_nam using gb2312) asc";
             MySqlDataReader reader = MysqlHelper.ExecuteReader(sSql);
             while (reader.Read())
@@ -404,11 +434,16 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
 
         private void textBoxPpu_TextChanged(object sender, EventArgs e)
         {
-            textBoxAssPri.Text = string.Format("{0:0.00}",Convert.ToDouble(textBoxPpu.Text) * Convert.ToInt32(textBoxNum.Text));
+            if (textBoxPpu.Text.Length == 0)
+                textBoxPpu.Text = "0.00";
+
+           textBoxAssPri.Text = string.Format("{0:0.00}", Convert.ToDouble(textBoxPpu.Text) * Convert.ToInt32(textBoxNum.Text));
         }
 
         private void textBoxNum_TextChanged(object sender, EventArgs e)
         {
+            if (textBoxNum.Text.Length == 0)
+                textBoxNum.Text = "0";
             textBoxAssPri.Text = string.Format("{0:0.00}", Convert.ToDouble(textBoxPpu.Text) * Convert.ToInt32(textBoxNum.Text));
         }
 

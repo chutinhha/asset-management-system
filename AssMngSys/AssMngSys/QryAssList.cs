@@ -11,19 +11,25 @@ namespace AssMngSys
     public partial class QryAssList : Form
     {
         MainForm mf;
-        
-        string sSQLSelect = "select Id ID,ass_id 资产编码,fin_id 财务编码,pid 标签喷码,tid 标签ID,cat_no 类别编码,typ 类型,ass_nam 资产名称,stat 库存状态,stat_sub 使用状态,duty_man 保管人员,dept 部门,ass_desc 备注,ass_pri 资产金额,reg_date 登记日期,addr 所在地点,use_co 所在公司,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,input_date 购置日期,unit 单位,num 数量,ppu 单价,duty_man 责任人员,company 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间,input_typ 购置类型 from ass_list";
- 
+        QryAssDlg qryassdlg;
+        string sSQLSelect;
         public QryAssList(MainForm f)
         {
             InitializeComponent(); 
             f.recvEvent += new MainForm.RecvEventHandler(this.RecvDataEvent);
             mf = f;
+            qryassdlg = new QryAssDlg(mf);
+            sSQLSelect = AssInput.sSQLSelect;
         }
         
         private void AssLogForm_Load(object sender, EventArgs e)
         {
-            buttonQry_Click(null,null);
+            string sSql = sSQLSelect + " and 1=1 ";
+            DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
+            bindingSource1.DataSource = dt;
+            bindingNavigator1.BindingSource = bindingSource1;
+            dataGridView1.DataSource = bindingSource1;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
         }
         private void RecvDataEvent(object sender, RecvEventArgs e)
         {
@@ -43,22 +49,22 @@ namespace AssMngSys
                 textBox.Text = str;
             }
         }
-        private void buttonQry_Click(object sender, EventArgs e)
-        {
-            //string sStartDate = string.Format("{0}-{1:00}-{2:00}",dateTimePicker1.Value.Year,dateTimePicker1.Value.Month,dateTimePicker1.Value.Day);
-            //string sEndDate = string.Format("{0}-{1:00}-{2:00}",dateTimePicker2.Value.Year,dateTimePicker2.Value.Month,dateTimePicker2.Value.Day);
-            //string sSql = sSQLSelect + string.Format(" where reg_date between '{0}' and '{1}'", sStartDate, sEndDate);
+        //private void buttonQry_Click(object sender, EventArgs e)
+        //{
+        //    //string sStartDate = string.Format("{0}-{1:00}-{2:00}",dateTimePicker1.Value.Year,dateTimePicker1.Value.Month,dateTimePicker1.Value.Day);
+        //    //string sEndDate = string.Format("{0}-{1:00}-{2:00}",dateTimePicker2.Value.Year,dateTimePicker2.Value.Month,dateTimePicker2.Value.Day);
+        //    //string sSql = sSQLSelect + string.Format(" where reg_date between '{0}' and '{1}'", sStartDate, sEndDate);
 
-            string sStartDate = string.Format("{0}-{1:00}-{2:00} 00:00:00", dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, dateTimePicker1.Value.Day);
-            string sEndDate = string.Format("{0}-{1:00}-{2:00} 23:59:59", dateTimePicker2.Value.Year, dateTimePicker2.Value.Month, dateTimePicker2.Value.Day);
-            string sSql = sSQLSelect + string.Format(" where cre_tm between '{0}' and '{1}'", sStartDate, sEndDate);
+        //    string sStartDate = string.Format("{0}-{1:00}-{2:00} 00:00:00", dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, dateTimePicker1.Value.Day);
+        //    string sEndDate = string.Format("{0}-{1:00}-{2:00} 23:59:59", dateTimePicker2.Value.Year, dateTimePicker2.Value.Month, dateTimePicker2.Value.Day);
+        //    string sSql = sSQLSelect + string.Format(" where cre_tm between '{0}' and '{1}'", sStartDate, sEndDate);
 
-            DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
-            bindingSource1.DataSource = dt;
-            bindingNavigator1.BindingSource = bindingSource1;
-            dataGridView1.DataSource = bindingSource1;
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-        }
+        //    DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
+        //    bindingSource1.DataSource = dt;
+        //    bindingNavigator1.BindingSource = bindingSource1;
+        //    dataGridView1.DataSource = bindingSource1;
+        //    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+        //}
 
         private void textBoxPid_TextChanged(object sender, EventArgs e)
         {
@@ -70,6 +76,40 @@ namespace AssMngSys
                 bindingNavigator1.BindingSource = bindingSource1;
                 dataGridView1.DataSource = bindingSource1;
                 //textBoxPid.Text = "";
+            }
+        }
+
+        private void toolStripButtonQry_Click(object sender, EventArgs e)
+        {
+            if (qryassdlg.ShowDialog() == DialogResult.OK)
+            {
+                DataTable dt = MysqlHelper.ExecuteDataTable(sSQLSelect + qryassdlg.sSqlCondition);
+                bindingSource1.DataSource = dt;
+            }
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            DataGridViewTextBoxColumn dgv_Text = new DataGridViewTextBoxColumn();
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                //行号
+                int j = i + 1;
+                dataGridView1.Rows[i].HeaderCell.Value = j.ToString();
+                //颜色
+                string sStat = dataGridView1.Rows[i].Cells["库存状态"].Value.ToString();
+                if (sStat != "库存" && sStat != "领用")
+                {
+                    try
+                    {
+                        this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(0xFF0000);
+                    }
+                    catch (Exception ex)
+                    {
+                        // new FileOper().writelog(ex.Message);
+                        System.Diagnostics.Trace.WriteLine(ex.Message);
+                    }
+                }
             }
         }
 

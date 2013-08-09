@@ -18,7 +18,7 @@ namespace AssMngSys
             f.ShowDialog();
             if (f.nRet == 1)
             {
-                Application.Run(new MainForm(f));
+                Application.Run(new MainForm());
             }
         }
     }

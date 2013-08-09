@@ -102,16 +102,16 @@ namespace AssMngSys.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap db {
+        internal static System.Drawing.Bitmap delete {
             get {
-                object obj = ResourceManager.GetObject("db", resourceCulture);
+                object obj = ResourceManager.GetObject("delete", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap delete {
+        internal static System.Drawing.Bitmap excel {
             get {
-                object obj = ResourceManager.GetObject("delete", resourceCulture);
+                object obj = ResourceManager.GetObject("excel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -161,13 +161,6 @@ namespace AssMngSys.Properties {
         internal static System.Drawing.Bitmap key {
             get {
                 object obj = ResourceManager.GetObject("key", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap note_pad {
-            get {
-                object obj = ResourceManager.GetObject("note pad", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -249,13 +242,6 @@ namespace AssMngSys.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap trash {
-            get {
-                object obj = ResourceManager.GetObject("trash", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap user {
             get {
                 object obj = ResourceManager.GetObject("user", resourceCulture);
@@ -265,7 +251,7 @@ namespace AssMngSys.Properties {
         
         internal static System.Drawing.Bitmap user_group {
             get {
-                object obj = ResourceManager.GetObject("user group", resourceCulture);
+                object obj = ResourceManager.GetObject("user_group", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

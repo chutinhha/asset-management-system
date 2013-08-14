@@ -13,17 +13,22 @@ namespace AssMngSys
     {
         private BindingSource bs = new BindingSource();
 
-        public static string sSQLSelect = "select Id ID,ass_id 资产编码,fin_id 财务编码,pid 标签喷码,typ 资产类型,ass_nam 资产名称,stat 库存状态,stat_sub 使用状态,duty_man 保管人员,dept 部门,ass_desc 备注,ass_pri 资产金额,reg_date 登记日期,addr 所在地点,use_co 所在公司,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,input_date 购置日期,input_typ 购置类型,unit 单位,num 数量,ppu 单价,duty_man 责任人员,company 资产归属,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间 from ass_list";
+        public static string sSQLSelect = @"select Id ID,ass_id 资产编码,fin_id 财务编码,pid 标签喷码,typ 资产类型,ass_nam 资产名称,stat 库存状态,
+            stat_sub 使用状态,duty_man 保管人员,dept 部门,ass_desc 资产描述,ass_pri 资产金额,reg_date 登记日期,addr 所在地点,use_co 所在公司,
+                supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,input_date 购置日期,input_typ 购置类型,unit 单位,num 数量,
+                ppu 单价,duty_man 责任人员,use_co 资产归属,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间 
+                from ass_list where ynenable = 'Y' ";
  
         
         MainForm mf;
 
-        static List<string> aList = new List<string>();
+        List<string> aList = new List<string>();
         public AssSupply(MainForm f)
         {
             InitializeComponent();
             f.recvEvent += new MainForm.RecvEventHandler(this.RecvDataEvent);
             mf = f;
+            
         }
 
         private void AssSupply_Load(object sender, EventArgs e)
@@ -34,7 +39,7 @@ namespace AssMngSys
             //radioButtonStartRepair.Checked = true;
             //radioButtonOut.Checked = true;
             //获取资产信息表头
-            string sSql = sSQLSelect + " where '1' = '0'";
+            string sSql = sSQLSelect + " and '1' = '0'";
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
             bs.DataSource = dt;
             bindingNavigator1.BindingSource = bs;
@@ -58,6 +63,7 @@ namespace AssMngSys
             //获取地址列表
             sSql = "select distinct addr_no from addr order by convert(addr_no using gb2312) asc";
             reader = MysqlHelper.ExecuteReader(sSql);
+            comboBoxAddr.Items.Add("");
             while (reader.Read())
             {
                 comboBoxAddr.Items.Add(reader["addr_no"].ToString());
@@ -108,7 +114,7 @@ namespace AssMngSys
                     return;
                 }
             }
-            string sSql = sSQLSelect + " where pid in('0'";
+            string sSql = sSQLSelect + " and pid in('0'";
             foreach (object o in aList)
             {
                 sSql += ",\'" + o.ToString() + "\'";
@@ -134,14 +140,20 @@ namespace AssMngSys
                 GetAss(textBoxPid.Text, 1);
             }
         }
-
+        private void toolStripTextBoxPid_TextChanged(object sender, EventArgs e)
+        {
+            if (toolStripTextBoxPid.Text.Length == 12)
+            {
+                GetAss(toolStripTextBoxPid.Text, 1);
+            }
+        }
         private void buttonClear_Click(object sender, EventArgs e)
         {
             // dt.Rows.Clear();
             textBoxPid.Text = "";
             aList.Clear();
             listBox1.Items.Clear();
-            string sSql = sSQLSelect + " where '1' = '0'";
+            string sSql = sSQLSelect + " and '1' = '0'";
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
             bs.DataSource = dt;
             bindingNavigator1.BindingSource = bs;
@@ -152,8 +164,9 @@ namespace AssMngSys
         {
             if (dataGridView1.CurrentRow != null)
             {
-                GetAss(dataGridView1.CurrentRow.Cells[3].Value.ToString(), -1);
-                listBox1.Items.Clear();
+                GetAss(dataGridView1.CurrentRow.Cells["标签喷码"].Value.ToString(), -1);
+                // listBox1.Items.Clear();
+                dataGridView1_SelectionChanged(null, null);
             }
         }
         private void buttonOK_Click(object sender, EventArgs e)
@@ -443,7 +456,7 @@ namespace AssMngSys
         //    bOK = AssChange(sTyp, sDept, sMan, sAddr, sReason, out sErr, listAssId);
         //    return bOK;
         //}
-        static public bool CheckStat(string sNewOpt,string sStat, string sStatSub, out string sErr)
+        static public bool CheckStat(string sNewOpt,string sStat, string sStatSub, string sInputTyp, out string sErr)
         {
             sErr = "";
             //判断资产是否有效
@@ -518,15 +531,20 @@ namespace AssMngSys
             else if (sNewOpt.Equals("返回"))
             {
                 //外出状态下才可以 返回
-                if (sStatSub != "返回")
+                if (sStatSub != "外出")
                 {
-                    sErr = "必须是返回状态";
+                    sErr = "必须是外出状态";
                     return false;
                 }
             }
             else if (sNewOpt.Equals("租还"))
             {
                 //领用或库存状态下才可以 租还
+                if (sInputTyp != "租入")
+                {
+                    sErr = "必须是购置类型为租入的资产";
+                    return false;
+                }
             }
             else if (sNewOpt.Equals("退返"))
             {
@@ -584,11 +602,11 @@ namespace AssMngSys
                 string sAssId = dgv.Rows[i].Cells["资产编码"].Value.ToString();
                 string sStat = dgv.Rows[i].Cells["库存状态"].Value.ToString();
                 string sStatSub = dgv.Rows[i].Cells["使用状态"].Value.ToString();
-                
+                string sInputTyp = dgv.Rows[i].Cells["购置类型"].Value.ToString();                
                 if (sAssId.Length == 0) continue;
 
                 //验证逻辑
-                if (!AssSupply.CheckStat(sTyp, sStat, sStatSub, out sErr))
+                if (!AssSupply.CheckStat(sTyp, sStat, sStatSub,sInputTyp, out sErr))
                 {
                     sErr = sErr + ",序号：" + (i+1) + "\r\n资产编码：" + sAssId;
                     bOK = false;
@@ -837,6 +855,59 @@ namespace AssMngSys
                 comboBoxDept.Focus();
                 comboBoxDept.DroppedDown = true;
             }
+        }
+
+        private void buttonQry_Click(object sender, EventArgs e)
+        {
+            List<string> list = FindPid(mf);
+            if (list != null)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    textBoxPid.Text = list[i];
+                }
+            }
+        }
+        static public List<string> FindPid(MainForm mf)
+        {
+            
+            QryAssDlg qryassdlg = new QryAssDlg(mf);
+            if (qryassdlg.ShowDialog() == DialogResult.OK)
+            {
+                SelectAssList dlg = new SelectAssList();
+                dlg.sSQLSelect = sSQLSelect + qryassdlg.sSqlCondition;
+                dlg.ShowDialog();
+                return dlg.aPidList;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            DataGridViewTextBoxColumn dgv_Text = new DataGridViewTextBoxColumn();
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                //行号
+                int j = i + 1;
+                dataGridView1.Rows[i].HeaderCell.Value = j.ToString();
+                //颜色
+                string sStat = dataGridView1.Rows[i].Cells["库存状态"].Value.ToString();
+                if (sStat != "库存" && sStat != "领用")
+                {
+                    try
+                    {
+                        this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(0xFF0000);
+                    }
+                    catch (Exception ex)
+                    {
+                        // new FileOper().writelog(ex.Message);
+                        System.Diagnostics.Trace.WriteLine(ex.Message);
+                    }
+                }
+            }
+            labelCnt.Text = string.Format("{0}", dataGridView1.Rows.Count);
         }
     }
 }

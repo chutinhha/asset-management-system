@@ -11,7 +11,7 @@ namespace AssMngSys
     public partial class QryAssLog : Form
     {
         MainForm mf;
-        string sSQLSelect = "select Id 记录好,pid 标签喷码,ass_id 资产编码,opt_typ 操作类型,opt_man 确认人员,opt_date 操作日期,cre_man 操作人员,cre_tm 操作时间,company 所属公司,dept 所属部门,addr 地址,reason 事由 from ass_log ";
+        string sSQLSelect = "select Id 记录号,pid 标签喷码,ass_id 资产编码,opt_typ 操作类型,opt_man 确认人员,opt_date 操作日期,cre_man 操作人员,cre_tm 操作时间, dept 所属部门,addr 地址,reason 事由 from ass_log ";
         public QryAssLog(MainForm f)
         {
             InitializeComponent(); 
@@ -106,5 +106,29 @@ namespace AssMngSys
             dateTimePicker2.Enabled = checkBoxDate.Checked;
         }
 
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            DataGridViewTextBoxColumn dgv_Text = new DataGridViewTextBoxColumn();
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                //行号
+                int j = i + 1;
+                dataGridView1.Rows[i].HeaderCell.Value = j.ToString();
+                ////颜色
+                //string sStat = dataGridView1.Rows[i].Cells["库存状态"].Value.ToString();
+                //if (sStat != "库存" && sStat != "领用")
+                //{
+                //    try
+                //    {
+                //        this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(0xFF0000);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        // new FileOper().writelog(ex.Message);
+                //        System.Diagnostics.Trace.WriteLine(ex.Message);
+                //    }
+                //}
+            }
+        }
     }
 }

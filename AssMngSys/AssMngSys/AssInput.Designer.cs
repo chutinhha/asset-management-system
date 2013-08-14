@@ -50,9 +50,9 @@ namespace AssMngSys
             this.toolStripButtonCopy = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonPrint = new System.Windows.Forms.ToolStripButton();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.toolStripButtonExcel = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonExcel = new System.Windows.Forms.ToolStripButton();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
@@ -64,6 +64,7 @@ namespace AssMngSys
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
@@ -262,6 +263,11 @@ namespace AssMngSys
             this.toolStripButtonPrint.ToolTipText = "打印选中项";
             this.toolStripButtonPrint.Click += new System.EventHandler(this.toolStripButtonPrint_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripButtonExcel
             // 
             this.toolStripButtonExcel.Image = global::AssMngSys.Properties.Resources.excel;
@@ -270,11 +276,6 @@ namespace AssMngSys
             this.toolStripButtonExcel.Size = new System.Drawing.Size(79, 22);
             this.toolStripButtonExcel.Text = "导出Excel";
             this.toolStripButtonExcel.Click += new System.EventHandler(this.toolStripButtonExcel_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // AssInput
             // 

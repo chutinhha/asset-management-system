@@ -31,8 +31,10 @@ namespace AssMngSys
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewAssDlg));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label11 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonRefresh = new System.Windows.Forms.Button();
+            this.textBoxAssDesc = new System.Windows.Forms.TextBox();
             this.textBoxPid = new System.Windows.Forms.TextBox();
             this.textBoxId = new System.Windows.Forms.TextBox();
             this.textBoxTid = new System.Windows.Forms.TextBox();
@@ -43,6 +45,7 @@ namespace AssMngSys
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
@@ -71,24 +74,26 @@ namespace AssMngSys
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.comboBoxYnRepair = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.comboBoxUseCo = new System.Windows.Forms.ComboBox();
             this.comboBoxDept = new System.Windows.Forms.ComboBox();
             this.comboBoxStatSub = new System.Windows.Forms.ComboBox();
             this.comboBoxStat = new System.Windows.Forms.ComboBox();
+            this.label26 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.comboBoxUseMan = new System.Windows.Forms.ComboBox();
             this.comboBoxDutyMan = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.comboBoxAddr = new System.Windows.Forms.ComboBox();
+            this.label29 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label11 = new System.Windows.Forms.Label();
-            this.textBoxAssDesc = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.textBoxMemo = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.label26 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -112,8 +117,10 @@ namespace AssMngSys
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label11);
             this.tabPage1.Controls.Add(this.label19);
             this.tabPage1.Controls.Add(this.buttonRefresh);
+            this.tabPage1.Controls.Add(this.textBoxAssDesc);
             this.tabPage1.Controls.Add(this.textBoxPid);
             this.tabPage1.Controls.Add(this.textBoxId);
             this.tabPage1.Controls.Add(this.textBoxTid);
@@ -124,6 +131,7 @@ namespace AssMngSys
             this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.label15);
+            this.tabPage1.Controls.Add(this.label28);
             this.tabPage1.Controls.Add(this.label24);
             this.tabPage1.Controls.Add(this.label17);
             this.tabPage1.Controls.Add(this.label23);
@@ -157,6 +165,15 @@ namespace AssMngSys
             this.tabPage1.Text = "基本信息";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(15, 227);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(65, 12);
+            this.label11.TabIndex = 32;
+            this.label11.Text = "资产描述：";
+            // 
             // label19
             // 
             this.label19.AutoSize = true;
@@ -169,12 +186,20 @@ namespace AssMngSys
             // buttonRefresh
             // 
             this.buttonRefresh.Image = global::AssMngSys.Properties.Resources.reload;
-            this.buttonRefresh.Location = new System.Drawing.Point(242, 31);
+            this.buttonRefresh.Location = new System.Drawing.Point(242, 32);
             this.buttonRefresh.Name = "buttonRefresh";
             this.buttonRefresh.Size = new System.Drawing.Size(39, 33);
             this.buttonRefresh.TabIndex = 1;
             this.buttonRefresh.UseVisualStyleBackColor = true;
             this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
+            // 
+            // textBoxAssDesc
+            // 
+            this.textBoxAssDesc.Location = new System.Drawing.Point(86, 224);
+            this.textBoxAssDesc.Multiline = true;
+            this.textBoxAssDesc.Name = "textBoxAssDesc";
+            this.textBoxAssDesc.Size = new System.Drawing.Size(469, 21);
+            this.textBoxAssDesc.TabIndex = 31;
             // 
             // textBoxPid
             // 
@@ -215,7 +240,7 @@ namespace AssMngSys
             // 
             // textBoxInputDate
             // 
-            this.textBoxInputDate.Location = new System.Drawing.Point(324, 231);
+            this.textBoxInputDate.Location = new System.Drawing.Point(324, 257);
             this.textBoxInputDate.Name = "textBoxInputDate";
             this.textBoxInputDate.Size = new System.Drawing.Size(123, 21);
             this.textBoxInputDate.TabIndex = 15;
@@ -265,10 +290,19 @@ namespace AssMngSys
             this.label15.TabIndex = 29;
             this.label15.Text = "序列号SN：";
             // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(565, 231);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(131, 12);
+            this.label28.TabIndex = 28;
+            this.label28.Text = "*如需打印，请尽量简短";
+            // 
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(322, 255);
+            this.label24.Location = new System.Drawing.Point(322, 281);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(89, 12);
             this.label24.TabIndex = 28;
@@ -277,7 +311,7 @@ namespace AssMngSys
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(250, 236);
+            this.label17.Location = new System.Drawing.Point(250, 262);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(65, 12);
             this.label17.TabIndex = 28;
@@ -405,7 +439,7 @@ namespace AssMngSys
             // comboBoxInputTyp
             // 
             this.comboBoxInputTyp.FormattingEnabled = true;
-            this.comboBoxInputTyp.Location = new System.Drawing.Point(86, 230);
+            this.comboBoxInputTyp.Location = new System.Drawing.Point(86, 258);
             this.comboBoxInputTyp.Name = "comboBoxInputTyp";
             this.comboBoxInputTyp.Size = new System.Drawing.Size(150, 20);
             this.comboBoxInputTyp.TabIndex = 14;
@@ -413,7 +447,7 @@ namespace AssMngSys
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(16, 233);
+            this.label7.Location = new System.Drawing.Point(16, 261);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(65, 12);
             this.label7.TabIndex = 16;
@@ -484,6 +518,7 @@ namespace AssMngSys
             // 
             this.tabPage2.Controls.Add(this.comboBoxYnRepair);
             this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.comboBoxUseCo);
             this.tabPage2.Controls.Add(this.comboBoxDept);
             this.tabPage2.Controls.Add(this.comboBoxStatSub);
             this.tabPage2.Controls.Add(this.comboBoxStat);
@@ -494,6 +529,7 @@ namespace AssMngSys
             this.tabPage2.Controls.Add(this.label10);
             this.tabPage2.Controls.Add(this.label25);
             this.tabPage2.Controls.Add(this.comboBoxAddr);
+            this.tabPage2.Controls.Add(this.label29);
             this.tabPage2.Controls.Add(this.label9);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Location = new System.Drawing.Point(4, 21);
@@ -525,6 +561,15 @@ namespace AssMngSys
             this.label8.Size = new System.Drawing.Size(77, 12);
             this.label8.TabIndex = 44;
             this.label8.Text = "是否维修过：";
+            // 
+            // comboBoxUseCo
+            // 
+            this.comboBoxUseCo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxUseCo.FormattingEnabled = true;
+            this.comboBoxUseCo.Location = new System.Drawing.Point(84, 177);
+            this.comboBoxUseCo.Name = "comboBoxUseCo";
+            this.comboBoxUseCo.Size = new System.Drawing.Size(234, 20);
+            this.comboBoxUseCo.TabIndex = 7;
             // 
             // comboBoxDept
             // 
@@ -566,6 +611,15 @@ namespace AssMngSys
             this.comboBoxStat.Size = new System.Drawing.Size(174, 20);
             this.comboBoxStat.TabIndex = 1;
             this.comboBoxStat.Text = "库存";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(13, 105);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(65, 12);
+            this.label26.TabIndex = 17;
+            this.label26.Text = "所在地点：";
             // 
             // label14
             // 
@@ -621,6 +675,15 @@ namespace AssMngSys
             this.comboBoxAddr.Size = new System.Drawing.Size(174, 20);
             this.comboBoxAddr.TabIndex = 5;
             // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(16, 180);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(65, 12);
+            this.label29.TabIndex = 17;
+            this.label29.Text = "资产归属：";
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -641,8 +704,8 @@ namespace AssMngSys
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.label11);
-            this.tabPage3.Controls.Add(this.textBoxAssDesc);
+            this.tabPage3.Controls.Add(this.label27);
+            this.tabPage3.Controls.Add(this.textBoxMemo);
             this.tabPage3.Location = new System.Drawing.Point(4, 21);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(713, 334);
@@ -650,22 +713,22 @@ namespace AssMngSys
             this.tabPage3.Text = "备注";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // label11
+            // label27
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(62, 48);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(41, 12);
-            this.label11.TabIndex = 32;
-            this.label11.Text = "备注：";
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(35, 37);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(41, 12);
+            this.label27.TabIndex = 32;
+            this.label27.Text = "备注：";
             // 
-            // textBoxAssDesc
+            // textBoxMemo
             // 
-            this.textBoxAssDesc.Location = new System.Drawing.Point(109, 45);
-            this.textBoxAssDesc.Multiline = true;
-            this.textBoxAssDesc.Name = "textBoxAssDesc";
-            this.textBoxAssDesc.Size = new System.Drawing.Size(318, 21);
-            this.textBoxAssDesc.TabIndex = 31;
+            this.textBoxMemo.Location = new System.Drawing.Point(82, 34);
+            this.textBoxMemo.Multiline = true;
+            this.textBoxMemo.Name = "textBoxMemo";
+            this.textBoxMemo.Size = new System.Drawing.Size(558, 254);
+            this.textBoxMemo.TabIndex = 31;
             // 
             // pictureBox1
             // 
@@ -701,15 +764,6 @@ namespace AssMngSys
             this.buttonSave.Text = "    保存(&S)";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(13, 105);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(65, 12);
-            this.label26.TabIndex = 17;
-            this.label26.Text = "所在地点：";
             // 
             // NewAssDlg
             // 
@@ -802,5 +856,10 @@ namespace AssMngSys
         private System.Windows.Forms.ComboBox comboBoxYnRepair;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox textBoxMemo;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.ComboBox comboBoxUseCo;
+        private System.Windows.Forms.Label label29;
     }
 }

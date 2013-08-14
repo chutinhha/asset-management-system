@@ -49,16 +49,16 @@ namespace AssMngSys
                 sSql = string.Format
                     (@"insert into inv_list(id,pid,ass_id,ass_nam,stat,stat_sub,duty_man,vender,ass_desc,addr,dept,inv_no,cre_man,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}')",
                     sId,
-                    dataGridView1.Rows[i].Cells[0].Value.ToString(),
-                    dataGridView1.Rows[i].Cells[1].Value.ToString(),
-                    dataGridView1.Rows[i].Cells[2].Value.ToString(),
-                    dataGridView1.Rows[i].Cells[3].Value.ToString(),
-                    dataGridView1.Rows[i].Cells[4].Value.ToString(),
-                    dataGridView1.Rows[i].Cells[5].Value.ToString(),
-                    dataGridView1.Rows[i].Cells[6].Value.ToString(),
-                    dataGridView1.Rows[i].Cells[7].Value.ToString(),
-                    dataGridView1.Rows[i].Cells[8].Value.ToString(),
-                    dataGridView1.Rows[i].Cells[9].Value.ToString(),
+                    dataGridView1.Rows[i].Cells["标签喷码"].Value.ToString(),
+                    dataGridView1.Rows[i].Cells["资产编码"].Value.ToString(),
+                    dataGridView1.Rows[i].Cells["资产名称"].Value.ToString(),
+                    dataGridView1.Rows[i].Cells["库存状态"].Value.ToString(),
+                    dataGridView1.Rows[i].Cells["使用状态"].Value.ToString(),
+                    dataGridView1.Rows[i].Cells["保管人员"].Value.ToString(),
+                    dataGridView1.Rows[i].Cells["品牌"].Value.ToString(),
+                    dataGridView1.Rows[i].Cells["资产描述"].Value.ToString().Replace("'","''"),
+                    dataGridView1.Rows[i].Cells["所在地点"].Value.ToString(),
+                    dataGridView1.Rows[i].Cells["部门"].Value.ToString(),
                     toolStripTextBoxInvId.Text,
                     Login.sUserName,
                     MainForm.getDateTime()
@@ -90,12 +90,36 @@ namespace AssMngSys
             //QryAssDlg qryassdlg = new QryAssDlg(mf);
             if (qryassdlg.ShowDialog() == DialogResult.OK)
             {
-                string sSql = "select pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 库存状态, stat_sub 使用状态,duty_man 保管人员,vender 品牌, ass_desc 备注,addr 所在地点 ,dept 部门 from ass_list where ynenable = 'Y' and stat in('库存','领用') ";
+                string sSql = "select pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 库存状态, stat_sub 使用状态,duty_man 保管人员,vender 品牌, ass_desc 资产描述,addr 所在地点 ,dept 部门 from ass_list where ynenable = 'Y' and stat in('库存','领用') ";
                 DataTable dt = MysqlHelper.ExecuteDataTable(sSql + qryassdlg.sSqlCondition);
                 bindingSource1.DataSource = dt;
                 bindingNavigator1.BindingSource = bindingSource1;
                 dataGridView1.DataSource = bindingSource1;
                 dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            }
+        }
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            DataGridViewTextBoxColumn dgv_Text = new DataGridViewTextBoxColumn();
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                //行号
+                int j = i + 1;
+                dataGridView1.Rows[i].HeaderCell.Value = j.ToString();
+                //颜色
+                string sStat = dataGridView1.Rows[i].Cells["库存状态"].Value.ToString();
+                if (sStat != "库存" && sStat != "领用")
+                {
+                    try
+                    {
+                        this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(0xFF0000);
+                    }
+                    catch (Exception ex)
+                    {
+                        // new FileOper().writelog(ex.Message);
+                        System.Diagnostics.Trace.WriteLine(ex.Message);
+                    }
+                }
             }
         }
     }

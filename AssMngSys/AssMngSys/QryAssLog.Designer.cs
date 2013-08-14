@@ -71,6 +71,7 @@ namespace AssMngSys
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(882, 460);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             // 
             // bindingNavigator1
             // 
@@ -169,16 +170,16 @@ namespace AssMngSys
             // 
             // textBoxPid
             // 
-            this.textBoxPid.Location = new System.Drawing.Point(342, 12);
+            this.textBoxPid.Location = new System.Drawing.Point(335, 12);
             this.textBoxPid.Name = "textBoxPid";
-            this.textBoxPid.Size = new System.Drawing.Size(104, 21);
+            this.textBoxPid.Size = new System.Drawing.Size(101, 21);
             this.textBoxPid.TabIndex = 9;
             this.textBoxPid.TextChanged += new System.EventHandler(this.textBoxPid_TextChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(279, 17);
+            this.label4.Location = new System.Drawing.Point(271, 17);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 12);
             this.label4.TabIndex = 10;
@@ -186,14 +187,14 @@ namespace AssMngSys
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(51, 11);
+            this.dateTimePicker1.Location = new System.Drawing.Point(49, 11);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(106, 21);
             this.dateTimePicker1.TabIndex = 13;
             // 
             // dateTimePicker2
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(168, 12);
+            this.dateTimePicker2.Location = new System.Drawing.Point(164, 12);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(106, 21);
             this.dateTimePicker2.TabIndex = 13;
@@ -201,7 +202,7 @@ namespace AssMngSys
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(158, 17);
+            this.label5.Location = new System.Drawing.Point(155, 17);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(11, 12);
             this.label5.TabIndex = 1;
@@ -211,7 +212,7 @@ namespace AssMngSys
             // 
             this.buttonQry.Image = global::AssMngSys.Properties.Resources.find;
             this.buttonQry.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonQry.Location = new System.Drawing.Point(794, 4);
+            this.buttonQry.Location = new System.Drawing.Point(770, 5);
             this.buttonQry.Name = "buttonQry";
             this.buttonQry.Size = new System.Drawing.Size(89, 35);
             this.buttonQry.TabIndex = 15;
@@ -221,15 +222,15 @@ namespace AssMngSys
             // 
             // textBoxAssId
             // 
-            this.textBoxAssId.Location = new System.Drawing.Point(514, 13);
+            this.textBoxAssId.Location = new System.Drawing.Point(504, 13);
             this.textBoxAssId.Name = "textBoxAssId";
-            this.textBoxAssId.Size = new System.Drawing.Size(117, 21);
+            this.textBoxAssId.Size = new System.Drawing.Size(116, 21);
             this.textBoxAssId.TabIndex = 11;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(449, 18);
+            this.label3.Location = new System.Drawing.Point(440, 18);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 12);
             this.label3.TabIndex = 12;
@@ -238,7 +239,7 @@ namespace AssMngSys
             // checkBoxDate
             // 
             this.checkBoxDate.AutoSize = true;
-            this.checkBoxDate.Location = new System.Drawing.Point(2, 15);
+            this.checkBoxDate.Location = new System.Drawing.Point(2, 14);
             this.checkBoxDate.Name = "checkBoxDate";
             this.checkBoxDate.Size = new System.Drawing.Size(48, 16);
             this.checkBoxDate.TabIndex = 16;
@@ -249,7 +250,7 @@ namespace AssMngSys
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(636, 19);
+            this.label1.Location = new System.Drawing.Point(622, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 12;
@@ -258,9 +259,9 @@ namespace AssMngSys
             // comboBoxOptTyp
             // 
             this.comboBoxOptTyp.FormattingEnabled = true;
-            this.comboBoxOptTyp.Location = new System.Drawing.Point(698, 14);
+            this.comboBoxOptTyp.Location = new System.Drawing.Point(686, 14);
             this.comboBoxOptTyp.Name = "comboBoxOptTyp";
-            this.comboBoxOptTyp.Size = new System.Drawing.Size(89, 20);
+            this.comboBoxOptTyp.Size = new System.Drawing.Size(82, 20);
             this.comboBoxOptTyp.TabIndex = 17;
             // 
             // QryAssLog

@@ -27,6 +27,7 @@ namespace AssMngSysCe
             public const int statsub = 5;
             public const int cnt = 6;
             public const int assid = 7;
+            public const int inputtyp = 8;
 
         }
         static class ChkIndex
@@ -56,6 +57,7 @@ namespace AssMngSysCe
         bool bIsCheckHide = false;
 
         Thread thrInv;
+        int nHasStat = 0;
         public bool bInving = false;
         public delegate void InvokeDelegate();
         String sOnetagInfo;
@@ -90,7 +92,7 @@ namespace AssMngSysCe
             listView1.Columns.Add("使用状态", 38, HorizontalAlignment.Left);
             listView1.Columns.Add("计数", 0, HorizontalAlignment.Left);
             listView1.Columns.Add("资产编码", 60, HorizontalAlignment.Left);
-
+            listView1.Columns.Add("购置类型", 60, HorizontalAlignment.Left);
 
             listView2.FullRowSelect = true;
             listView2.Columns.Add("序", 16, HorizontalAlignment.Left);
@@ -291,6 +293,18 @@ namespace AssMngSysCe
             byte nTagCount = 0;
             byte[] uReadData = new byte[512];
             String[] tagInfo = new String[50];
+            //List<string> aTmpList = new List<string>(); //记录最近5个标签
+            //aTmpList.Add("abc");
+            //aTmpList.Add("cccc");
+            //aTmpList.Add("bbbbb");
+            //aTmpList.Add("aaaaaa");
+            //int nIndex = aTmpList.FindIndex(delegate(string p) { return p == "abc"; });
+            //MessageBox.Show(string.Format("{0}", nIndex));//0
+            //int nIndex = aTmpList.FindIndex(delegate(string p) { return p == "a"; });
+            //MessageBox.Show(string.Format("{0}", nIndex));//-1
+
+            Dictionary<string,long> dic = new Dictionary<string,long>();
+
             while (bChecking)
             {
                 if (1 == HTApi.WIrUHFInventoryOnce(ref nTagCount, ref uReadData[0]))
@@ -304,7 +318,7 @@ namespace AssMngSysCe
 
                     int nRealTagCount = 0;
                     //读出nTagCount个标签数据
-                    for (i = 0; i < nTagCount; i++)
+                    for (i = 0; i < nTagCount && bChecking; i++)
                     {
                         tagLen = uReadData[dataIndex++];
                         nRealTagCount++;
@@ -322,10 +336,25 @@ namespace AssMngSysCe
                         }
                     }
                     //把数据放到列表
-                    for (i = 0; i < nRealTagCount; i++)
+                    for (i = 0; i < nRealTagCount && bChecking; i++)
                     {
                         sOnetagInfo = tagInfo[i];
-                        listView2.BeginInvoke(new InvokeDelegate(showCheck));
+
+                        if(!dic.ContainsKey(sOnetagInfo))
+                        {
+                            dic.Add(sOnetagInfo,System.Environment.TickCount);
+                            listView2.BeginInvoke(new InvokeDelegate(showCheck));
+                        }
+                        else
+                        {
+                            //1000ms内部重复相应同一张标签
+                            if(System.Environment.TickCount - dic[sOnetagInfo] > 1000)
+                            {
+                               dic[sOnetagInfo] = System.Environment.TickCount;
+                               listView2.BeginInvoke(new InvokeDelegate(showCheck));
+                            } 
+                        }
+                        Thread.Sleep(1);
                     }
                 }
             }
@@ -374,7 +403,7 @@ namespace AssMngSysCe
             string sSql = "update inv_list set result = '" + sTpe + "' where id = " + sId;
             listSql.Add(sSql);
             //更新新资产清单
-            sSql = string.Format("update ass_list set inv_result = '{0}',inv_man = '{1}',inv_date = '{2}' where id = {3}", sTpe, LoginForm.sUserName, LoginForm.getDate(), sId);
+            sSql = string.Format("update ass_list set inv_result = '{0}',inv_man = '{1}',inv_date = '{2}' where ass_id = '{3}' and ynenable = 'Y' ", sTpe, LoginForm.sUserName, LoginForm.getDate(), sAssId);
             listSql.Add(sSql);
             //增加资产历史记录
             sSql = string.Format("insert into ass_log(ass_id,opt_typ,opt_man,opt_date,cre_man,cre_tm,company,dept,reason,addr) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}') ",
@@ -631,11 +660,12 @@ namespace AssMngSysCe
                 lvi.SubItems.Add("");
                 lvi.SubItems.Add("");
                 lvi.SubItems.Add("");
+                lvi.SubItems.Add("");
                 lvi.SubItems[(int)MngIndex.epc].Text = sOnetagInfo;
                 lvi.SubItems[(int)MngIndex.pid].Text = sPid;
-                string sAssId = "", sAssNam = "", sStat = "", sStatSub = "";
+                string sAssId = "", sAssNam = "", sStat = "", sStatSub = "", sInputTyp = "";
                 //SQLite方式
-                string sSql = "select ass_id,ass_nam,stat,stat_sub,ynwrite from ass_list where pid = \'" + sPid + "\'  and ynenable = 'Y'";
+                string sSql = "select ass_id,ass_nam,stat,stat_sub,ynwrite,input_typ from ass_list where pid = \'" + sPid + "\'  and ynenable = 'Y'";
                 SQLiteDataReader reader = SQLiteHelper.ExecuteReader(sSql, null);
                 if (reader.Read())
                 {
@@ -643,6 +673,7 @@ namespace AssMngSysCe
                     sStat = reader["stat"].ToString();
                     sStatSub = reader["stat_sub"].ToString();
                     sAssNam = reader["ass_nam"].ToString();
+                    sInputTyp = reader["input_typ"].ToString();
                 }
                 reader.Close();
 
@@ -656,7 +687,7 @@ namespace AssMngSysCe
                 listView1.Items[listView1.Items.Count - 1].Focused = true; ;;
                 listView1.EnsureVisible(listView1.Items.Count - 1);
 
-                int nHasStat = 0;
+                nHasStat = 0;
                 for (int k = 0; k < listView1.Items.Count; k++)
                 {
                     string sTagStat = listView1.Items[k].SubItems[(int)MngIndex.stat].Text;
@@ -681,25 +712,7 @@ namespace AssMngSysCe
                 // this.listView1.EndUpdate();  //结束数据处理，UI界面一次性绘
             }
         }
-        private void GetAssInfo(string sPid, out string sAssId, out string sStat, out string sStatSub, out string sYnWrite)
-        {
-            sAssId = "";
-            sStat = "";
-            sStatSub = "";
-            sYnWrite = "";
 
-            //SQLite方式
-            string sSql = "select ass_id,stat,stat_sub,ynwrite from ass_list where pid = \'" + sPid + "\'  and ynenable = 'Y'";
-            SQLiteDataReader reader = SQLiteHelper.ExecuteReader(sSql, null);
-            if (reader.Read())
-            {
-                sAssId = reader["ass_id"].ToString();
-                sStat = reader["stat"].ToString();
-                sStatSub = reader["stat_sub"].ToString();
-                sYnWrite = reader["ynwrite"].ToString();
-            }
-            reader.Close();
-        }
         //联网后发送数据到PC
         private void SendData()
         {
@@ -758,6 +771,7 @@ namespace AssMngSysCe
             }
             else if (tabControl1.SelectedIndex == (int)Page.inv) //循环读取
             {
+                nHasStat = 0;
                 listView1.Items.Clear();
                 labelHit.Text = "0/0";
             }
@@ -1001,7 +1015,7 @@ namespace AssMngSysCe
                 {
                     int nIndex = listView1.Items.IndexOf(listView1.FocusedItem);
                     listView1.Items.RemoveAt(nIndex);
-                    int nHasStat = 0;
+                    nHasStat = 0;
                     for (int k = 0; k < listView1.Items.Count; k++)
                     {
                         string sTagStat = listView1.Items[k].SubItems[(int)MngIndex.stat].Text;
@@ -1060,7 +1074,7 @@ namespace AssMngSysCe
             timer1.Enabled = false;
             label6.Visible = false;
         }
-        static public bool CheckStat(string sNewOpt, string sStat, string sStatSub, out string sErr)
+        static public bool CheckStat(string sNewOpt, string sStat, string sStatSub, string sInputTyp, out string sErr)
         {
             sErr = "";
             //判断资产是否有效
@@ -1135,15 +1149,20 @@ namespace AssMngSysCe
             else if (sNewOpt.Equals("返回"))
             {
                 //外出状态下才可以 返回
-                if (sStatSub != "返回")
+                if (sStatSub != "外出")
                 {
-                    sErr = "必须是返回状态";
+                    sErr = "必须是外出状态";
                     return false;
                 }
             }
             else if (sNewOpt.Equals("租还"))
             {
                 //领用或库存状态下才可以 租还
+                if (sInputTyp != "租入")
+                {
+                    sErr = "必须是购置类型为租入的资产";
+                    return false;
+                }
             }
             else if (sNewOpt.Equals("退返"))
             {
@@ -1205,25 +1224,35 @@ namespace AssMngSysCe
             bool bOK = true;
             for (int i = 0; i < nCount; i++)
             {
-                string sPid,sAssId, sStat, sStatSub;
+                string sPid = "",sAssId = "", sStat = "", sStatSub = "", sInputTyp = "";
                 if (sFixPid.Length == 0)
                 {
                     sPid = listView1.Items[i].SubItems[(int)MngIndex.pid].Text;
                     sAssId = listView1.Items[i].SubItems[(int)MngIndex.assid].Text;
                     sStat = listView1.Items[i].SubItems[(int)MngIndex.stat].Text;
                     sStatSub = listView1.Items[i].SubItems[(int)MngIndex.statsub].Text;
+                    sInputTyp = listView1.Items[i].SubItems[(int)MngIndex.inputtyp].Text;
                 }
                 else
                 {
-                    string sYnWrite;
+                   // string sYnWrite;
                     sPid = sFixPid;
-                    GetAssInfo(sFixPid, out sAssId, out sStat, out sStatSub, out sYnWrite);
+                    sSql = "select ass_id,stat,stat_sub,input_typ from ass_list where pid = \'" + sPid + "\'  and ynenable = 'Y'";
+                    SQLiteDataReader reader = SQLiteHelper.ExecuteReader(sSql, null);
+                    if (reader.Read())
+                    {
+                        sAssId = reader["ass_id"].ToString();
+                        sStat = reader["stat"].ToString();
+                        sStatSub = reader["stat_sub"].ToString();
+                        sInputTyp = reader["input_typ"].ToString();
+                    }
+                    reader.Close();
                 }
 
                 if (sAssId.Length == 0) continue;
 
                 //验证逻辑
-                if (!CheckStat(sTyp, sStat, sStatSub, out sErr))
+                if (!CheckStat(sTyp, sStat, sStatSub,sInputTyp, out sErr))
                 {
                     sErr = sErr + ",序号：" + (i + 1) + "\r\n资产编码：" + sAssId;
                     bOK = false;
@@ -1271,6 +1300,11 @@ namespace AssMngSysCe
 
         private void buttonApply_Click(object sender, EventArgs e)
         {
+            if (nHasStat == 0)
+            {
+                MessageBox.Show("无有效资料!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                return;
+            }
             GetReasonForm f = new GetReasonForm("领用");
             f.ShowDialog();
             if (f.ret != 0)
@@ -1303,6 +1337,11 @@ namespace AssMngSysCe
 
         private void buttonBorrow_Click(object sender, EventArgs e)
         {
+            if (nHasStat == 0)
+            {
+                MessageBox.Show("无有效资料!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                return;
+            }
             GetReasonForm f = new GetReasonForm("借用");
             f.ShowDialog();
             if (f.ret != 0)
@@ -1335,6 +1374,11 @@ namespace AssMngSysCe
 
         private void buttonRepair_Click(object sender, EventArgs e)
         {
+            if (nHasStat == 0)
+            {
+                MessageBox.Show("无有效资料!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                return;
+            }
             GetReasonForm f = new GetReasonForm("维修");
             f.ShowDialog();
             if (f.ret != 0)
@@ -1367,6 +1411,11 @@ namespace AssMngSysCe
 
         private void buttonRent_Click(object sender, EventArgs e)
         {
+            if (nHasStat == 0)
+            {
+                MessageBox.Show("无有效资料!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                return;
+            }
             GetReasonForm f = new GetReasonForm("租还");
             f.ShowDialog();
             if (f.ret != 0)
@@ -1399,6 +1448,11 @@ namespace AssMngSysCe
 
         private void buttonOut_Click(object sender, EventArgs e)
         {
+            if (nHasStat == 0)
+            {
+                MessageBox.Show("无有效资料!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                return;
+            }
             GetReasonForm f = new GetReasonForm("外出");
             f.ShowDialog();
             if (f.ret != 0)
@@ -1431,6 +1485,11 @@ namespace AssMngSysCe
 
         private void buttonReject_Click(object sender, EventArgs e)
         {
+            if (nHasStat == 0)
+            {
+                MessageBox.Show("无有效资料!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                return;
+            }
             GetReasonForm f = new GetReasonForm("退返");
             f.ShowDialog();
             if (f.ret != 0)
@@ -1463,6 +1522,11 @@ namespace AssMngSysCe
 
         private void buttonLose_Click(object sender, EventArgs e)
         {
+            if (nHasStat == 0)
+            {
+                MessageBox.Show("无有效资料!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                return;
+            }
             GetReasonForm f = new GetReasonForm("丢失");
             f.ShowDialog();
             if (f.ret != 0)
@@ -1495,6 +1559,11 @@ namespace AssMngSysCe
 
         private void buttonDiscard_Click(object sender, EventArgs e)
         {
+            if (nHasStat == 0)
+            {
+                MessageBox.Show("无有效资料!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                return;
+            }
             GetReasonForm f = new GetReasonForm("报废");
             f.ShowDialog();
             if (f.ret != 0)
@@ -1527,6 +1596,11 @@ namespace AssMngSysCe
 
         private void buttonTransfer_Click(object sender, EventArgs e)
         {
+            if (nHasStat == 0)
+            {
+                MessageBox.Show("无有效资料!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                return;
+            }
             GetReasonForm f = new GetReasonForm("转出");
             f.ShowDialog();
             if (f.ret != 0)
@@ -1975,6 +2049,9 @@ namespace AssMngSysCe
         }
         private void GetInvList()
         {
+            label1CheckHit.Visible = true;
+            label1CheckHit.Update();
+
             bool blist = true;
             nAll = 0;
             nExp = 0;
@@ -2049,6 +2126,7 @@ namespace AssMngSysCe
                 //listView2.EnsureVisible(listView1.Items.Count - 1);
             }
             reader.Close();
+            label1CheckHit.Visible = false;
             if (blist)
             {
                 label8.Text = "总数：" + nAll.ToString();
@@ -2125,10 +2203,21 @@ namespace AssMngSysCe
         private void textBoxPid_TextChanged(object sender, EventArgs e)
         {
             string sPid = textBoxPid.Text;
-            string sAssId, sStat, sStatSub, sYnWrite;
+            string sAssId = "", sStat = "", sStatSub = "", sYnWrite = "";
             if (sPid.Length == 12)
             {
-                GetAssInfo(sPid, out sAssId, out sStat, out sStatSub, out sYnWrite);
+                //SQLite方式
+                string sSql = "select ass_id,stat,stat_sub,ynwrite from ass_list where pid = \'" + sPid + "\'  and ynenable = 'Y'";
+                SQLiteDataReader reader = SQLiteHelper.ExecuteReader(sSql, null);
+                if (reader.Read())
+                {
+                    sAssId = reader["ass_id"].ToString();
+                    sStat = reader["stat"].ToString();
+                    sStatSub = reader["stat_sub"].ToString();
+                    sYnWrite = reader["ynwrite"].ToString();
+                }
+                reader.Close();
+
                 textBoxAssId.Text = sAssId;
                 textBoxYnWrite.Text = sYnWrite;
                 if (sAssId.Length != 0)

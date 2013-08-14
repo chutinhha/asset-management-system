@@ -60,22 +60,25 @@ namespace AssMngSys
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.label4 = new System.Windows.Forms.Label();
-            this.labelCnt = new System.Windows.Forms.Label();
             this.textBoxPid = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
-            this.buttonClear = new System.Windows.Forms.Button();
-            this.buttonOK = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripTextBoxPid = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripButtonQry = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonClear = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -88,21 +91,20 @@ namespace AssMngSys
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             this.groupBox10.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.ItemSize = new System.Drawing.Size(48, 17);
-            this.tabControl1.Location = new System.Drawing.Point(-2, 3);
+            this.tabControl1.Location = new System.Drawing.Point(2, 34);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(893, 81);
+            this.tabControl1.Size = new System.Drawing.Size(198, 158);
             this.tabControl1.TabIndex = 12;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -112,7 +114,7 @@ namespace AssMngSys
             this.tabPage2.Location = new System.Drawing.Point(4, 21);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(885, 56);
+            this.tabPage2.Size = new System.Drawing.Size(190, 133);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "借用";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -121,9 +123,9 @@ namespace AssMngSys
             // 
             this.groupBox4.Controls.Add(this.radioButtonBorrow);
             this.groupBox4.Controls.Add(this.radioButtonReturn);
-            this.groupBox4.Location = new System.Drawing.Point(7, 6);
+            this.groupBox4.Location = new System.Drawing.Point(2, 12);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(609, 50);
+            this.groupBox4.Size = new System.Drawing.Size(184, 111);
             this.groupBox4.TabIndex = 17;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "请选择";
@@ -131,7 +133,7 @@ namespace AssMngSys
             // radioButtonBorrow
             // 
             this.radioButtonBorrow.AutoSize = true;
-            this.radioButtonBorrow.Location = new System.Drawing.Point(23, 21);
+            this.radioButtonBorrow.Location = new System.Drawing.Point(58, 32);
             this.radioButtonBorrow.Name = "radioButtonBorrow";
             this.radioButtonBorrow.Size = new System.Drawing.Size(47, 16);
             this.radioButtonBorrow.TabIndex = 14;
@@ -143,7 +145,7 @@ namespace AssMngSys
             // radioButtonReturn
             // 
             this.radioButtonReturn.AutoSize = true;
-            this.radioButtonReturn.Location = new System.Drawing.Point(88, 21);
+            this.radioButtonReturn.Location = new System.Drawing.Point(58, 67);
             this.radioButtonReturn.Name = "radioButtonReturn";
             this.radioButtonReturn.Size = new System.Drawing.Size(47, 16);
             this.radioButtonReturn.TabIndex = 14;
@@ -156,7 +158,7 @@ namespace AssMngSys
             this.tabPage3.Controls.Add(this.groupBox7);
             this.tabPage3.Location = new System.Drawing.Point(4, 21);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(885, 56);
+            this.tabPage3.Size = new System.Drawing.Size(190, 133);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "维修";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -165,9 +167,9 @@ namespace AssMngSys
             // 
             this.groupBox7.Controls.Add(this.radioButtonStartRepair);
             this.groupBox7.Controls.Add(this.radioButtonEndRepair);
-            this.groupBox7.Location = new System.Drawing.Point(9, 6);
+            this.groupBox7.Location = new System.Drawing.Point(1, 11);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(177, 50);
+            this.groupBox7.Size = new System.Drawing.Size(185, 111);
             this.groupBox7.TabIndex = 19;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "请选择";
@@ -175,7 +177,7 @@ namespace AssMngSys
             // radioButtonStartRepair
             // 
             this.radioButtonStartRepair.AutoSize = true;
-            this.radioButtonStartRepair.Location = new System.Drawing.Point(25, 20);
+            this.radioButtonStartRepair.Location = new System.Drawing.Point(58, 32);
             this.radioButtonStartRepair.Name = "radioButtonStartRepair";
             this.radioButtonStartRepair.Size = new System.Drawing.Size(47, 16);
             this.radioButtonStartRepair.TabIndex = 14;
@@ -187,7 +189,7 @@ namespace AssMngSys
             // radioButtonEndRepair
             // 
             this.radioButtonEndRepair.AutoSize = true;
-            this.radioButtonEndRepair.Location = new System.Drawing.Point(86, 20);
+            this.radioButtonEndRepair.Location = new System.Drawing.Point(58, 67);
             this.radioButtonEndRepair.Name = "radioButtonEndRepair";
             this.radioButtonEndRepair.Size = new System.Drawing.Size(47, 16);
             this.radioButtonEndRepair.TabIndex = 14;
@@ -200,7 +202,7 @@ namespace AssMngSys
             this.tabPage4.Controls.Add(this.groupBox1);
             this.tabPage4.Location = new System.Drawing.Point(4, 21);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(885, 56);
+            this.tabPage4.Size = new System.Drawing.Size(190, 133);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "外出";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -209,9 +211,9 @@ namespace AssMngSys
             // 
             this.groupBox1.Controls.Add(this.radioButtonOut);
             this.groupBox1.Controls.Add(this.radioButtonBack);
-            this.groupBox1.Location = new System.Drawing.Point(9, 6);
+            this.groupBox1.Location = new System.Drawing.Point(2, 11);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(609, 50);
+            this.groupBox1.Size = new System.Drawing.Size(185, 111);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "请选择";
@@ -219,7 +221,7 @@ namespace AssMngSys
             // radioButtonOut
             // 
             this.radioButtonOut.AutoSize = true;
-            this.radioButtonOut.Location = new System.Drawing.Point(23, 19);
+            this.radioButtonOut.Location = new System.Drawing.Point(57, 33);
             this.radioButtonOut.Name = "radioButtonOut";
             this.radioButtonOut.Size = new System.Drawing.Size(47, 16);
             this.radioButtonOut.TabIndex = 14;
@@ -231,7 +233,7 @@ namespace AssMngSys
             // radioButtonBack
             // 
             this.radioButtonBack.AutoSize = true;
-            this.radioButtonBack.Location = new System.Drawing.Point(88, 19);
+            this.radioButtonBack.Location = new System.Drawing.Point(57, 68);
             this.radioButtonBack.Name = "radioButtonBack";
             this.radioButtonBack.Size = new System.Drawing.Size(47, 16);
             this.radioButtonBack.TabIndex = 14;
@@ -246,7 +248,7 @@ namespace AssMngSys
             this.groupBox6.Controls.Add(this.comboBoxMan);
             this.groupBox6.Controls.Add(this.textBoxReason);
             this.groupBox6.Controls.Add(this.labelReason);
-            this.groupBox6.Location = new System.Drawing.Point(9, 81);
+            this.groupBox6.Location = new System.Drawing.Point(199, 67);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(609, 111);
             this.groupBox6.TabIndex = 19;
@@ -293,7 +295,7 @@ namespace AssMngSys
             // 
             this.textBoxReason.Location = new System.Drawing.Point(88, 66);
             this.textBoxReason.Name = "textBoxReason";
-            this.textBoxReason.Size = new System.Drawing.Size(282, 21);
+            this.textBoxReason.Size = new System.Drawing.Size(487, 21);
             this.textBoxReason.TabIndex = 12;
             // 
             // labelReason
@@ -312,14 +314,15 @@ namespace AssMngSys
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(2, 258);
+            this.dataGridView1.Location = new System.Drawing.Point(2, 184);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(589, 287);
+            this.dataGridView1.Size = new System.Drawing.Size(596, 361);
             this.dataGridView1.TabIndex = 14;
             this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
+            this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // bindingNavigator1
@@ -339,7 +342,7 @@ namespace AssMngSys
             this.bindingNavigatorMoveNextItem,
             this.bindingNavigatorMoveLastItem,
             this.bindingNavigatorSeparator2});
-            this.bindingNavigator1.Location = new System.Drawing.Point(375, 548);
+            this.bindingNavigator1.Location = new System.Drawing.Point(383, 545);
             this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
             this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
@@ -417,44 +420,15 @@ namespace AssMngSys
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
             this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(532, 241);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 12);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "计数：";
-            // 
-            // labelCnt
-            // 
-            this.labelCnt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelCnt.AutoSize = true;
-            this.labelCnt.Location = new System.Drawing.Point(572, 241);
-            this.labelCnt.Name = "labelCnt";
-            this.labelCnt.Size = new System.Drawing.Size(11, 12);
-            this.labelCnt.TabIndex = 6;
-            this.labelCnt.Text = "0";
-            // 
             // textBoxPid
             // 
             this.textBoxPid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxPid.Location = new System.Drawing.Point(67, 548);
+            this.textBoxPid.Location = new System.Drawing.Point(262, 549);
             this.textBoxPid.Name = "textBoxPid";
             this.textBoxPid.Size = new System.Drawing.Size(116, 21);
             this.textBoxPid.TabIndex = 5;
+            this.textBoxPid.Visible = false;
             this.textBoxPid.TextChanged += new System.EventHandler(this.textBoxPid_TextChanged);
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(0, 553);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 12);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "标签喷码：";
             // 
             // listBox1
             // 
@@ -462,43 +436,10 @@ namespace AssMngSys
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(599, 275);
+            this.listBox1.Location = new System.Drawing.Point(604, 206);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(299, 280);
+            this.listBox1.Size = new System.Drawing.Size(294, 364);
             this.listBox1.TabIndex = 17;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label5.Location = new System.Drawing.Point(599, 258);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(127, 14);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "时间                ";
-            // 
-            // label10
-            // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label10.AutoSize = true;
-            this.label10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label10.Location = new System.Drawing.Point(727, 258);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(97, 14);
-            this.label10.TabIndex = 6;
-            this.label10.Text = "操作信息       ";
-            // 
-            // label11
-            // 
-            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label11.AutoSize = true;
-            this.label11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label11.Location = new System.Drawing.Point(826, 258);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(67, 14);
-            this.label11.TabIndex = 6;
-            this.label11.Text = "作业人员  ";
             // 
             // groupBox10
             // 
@@ -554,49 +495,123 @@ namespace AssMngSys
             this.label19.TabIndex = 12;
             this.label19.Text = "租还人员：";
             // 
-            // buttonClear
+            // label8
             // 
-            this.buttonClear.Image = global::AssMngSys.Properties.Resources.stop;
-            this.buttonClear.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.buttonClear.Location = new System.Drawing.Point(137, 216);
-            this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(122, 36);
-            this.buttonClear.TabIndex = 21;
-            this.buttonClear.Text = "    清空(&C)";
-            this.buttonClear.UseVisualStyleBackColor = true;
-            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label8.Location = new System.Drawing.Point(831, 184);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(67, 21);
+            this.label8.TabIndex = 29;
+            this.label8.Text = "作业人员";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // buttonOK
+            // label7
             // 
-            this.buttonOK.Image = global::AssMngSys.Properties.Resources.save;
-            this.buttonOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonOK.Location = new System.Drawing.Point(9, 216);
-            this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(122, 36);
-            this.buttonOK.TabIndex = 20;
-            this.buttonOK.Text = "    确认(&S)";
-            this.buttonOK.UseVisualStyleBackColor = true;
-            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label7.Location = new System.Drawing.Point(732, 184);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(98, 21);
+            this.label7.TabIndex = 28;
+            this.label7.Text = "操作信息";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label1.Location = new System.Drawing.Point(604, 184);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(127, 21);
+            this.label1.TabIndex = 27;
+            this.label1.Text = "时间";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel1,
+            this.toolStripTextBoxPid,
+            this.toolStripButtonQry,
+            this.toolStripSeparator2,
+            this.toolStripButtonClear,
+            this.toolStripSeparator1,
+            this.toolStripButtonSave});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(903, 25);
+            this.toolStrip1.TabIndex = 31;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.toolStripLabel1.LinkColor = System.Drawing.SystemColors.ControlText;
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(101, 22);
+            this.toolStripLabel1.Text = "请输入标签喷码：";
+            // 
+            // toolStripTextBoxPid
+            // 
+            this.toolStripTextBoxPid.Name = "toolStripTextBoxPid";
+            this.toolStripTextBoxPid.Size = new System.Drawing.Size(100, 25);
+            this.toolStripTextBoxPid.TextChanged += new System.EventHandler(this.toolStripTextBoxPid_TextChanged);
+            // 
+            // toolStripButtonQry
+            // 
+            this.toolStripButtonQry.Image = global::AssMngSys.Properties.Resources.find;
+            this.toolStripButtonQry.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonQry.Name = "toolStripButtonQry";
+            this.toolStripButtonQry.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButtonQry.Text = "查询";
+            this.toolStripButtonQry.Click += new System.EventHandler(this.buttonQry_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButtonClear
+            // 
+            this.toolStripButtonClear.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.toolStripButtonClear.Image = global::AssMngSys.Properties.Resources.remove;
+            this.toolStripButtonClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonClear.Name = "toolStripButtonClear";
+            this.toolStripButtonClear.Size = new System.Drawing.Size(73, 22);
+            this.toolStripButtonClear.Text = "清空列表";
+            this.toolStripButtonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButtonSave
+            // 
+            this.toolStripButtonSave.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.toolStripButtonSave.Image = global::AssMngSys.Properties.Resources.save;
+            this.toolStripButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSave.Name = "toolStripButtonSave";
+            this.toolStripButtonSave.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButtonSave.Text = "确认";
+            this.toolStripButtonSave.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // AssUse
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(903, 572);
-            this.Controls.Add(this.buttonClear);
-            this.Controls.Add(this.buttonOK);
+            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.textBoxPid);
-            this.Controls.Add(this.labelCnt);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "AssUse";
             this.Text = "AssSupply";
@@ -620,6 +635,8 @@ namespace AssMngSys
             this.bindingNavigator1.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -645,14 +662,8 @@ namespace AssMngSys
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radioButtonOut;
         private System.Windows.Forms.RadioButton radioButtonBack;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label labelCnt;
         private System.Windows.Forms.TextBox textBoxPid;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.RadioButton radioButtonBorrow;
         private System.Windows.Forms.RadioButton radioButtonReturn;
@@ -671,7 +682,16 @@ namespace AssMngSys
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Button buttonClear;
-        private System.Windows.Forms.Button buttonOK;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBoxPid;
+        private System.Windows.Forms.ToolStripButton toolStripButtonQry;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolStripButtonClear;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSave;
     }
 }

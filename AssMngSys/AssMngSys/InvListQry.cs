@@ -99,7 +99,7 @@ namespace AssMngSys
 
         private void toolStripButtonQry_Click(object sender, EventArgs e)
         {
-            string sSql = string.Format("select inv_no 清单号,pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 库存状态,stat_sub 使用状态,result 盘点结果,memo 备注,duty_man 保管人员,vender 品牌, ass_desc 备注,addr 所在地点 ,dept 领用部门 from inv_list where 1=1 ");
+            string sSql = string.Format("select inv_no 清单号,pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 库存状态,stat_sub 使用状态,result 盘点结果,memo 备注,duty_man 保管人员,vender 品牌, ass_desc 资产描述,addr 所在地点 ,dept 领用部门 from inv_list where 1=1 ");
             sSql += string.Format(" and inv_no = '{0}'", toolStripComboBoxInvNo.Text);
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
             bindingSource1.DataSource = dt;
@@ -125,6 +125,30 @@ namespace AssMngSys
         private void toolStripButtonExcel_Click(object sender, EventArgs e)
         {
             AssInput.ExportDataGridViewToExcel(dataGridView1);
+        }
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            DataGridViewTextBoxColumn dgv_Text = new DataGridViewTextBoxColumn();
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                //行号
+                int j = i + 1;
+                dataGridView1.Rows[i].HeaderCell.Value = j.ToString();
+                //颜色
+                string sStat = dataGridView1.Rows[i].Cells["库存状态"].Value.ToString();
+                if (sStat != "库存" && sStat != "领用")
+                {
+                    try
+                    {
+                        this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(0xFF0000);
+                    }
+                    catch (Exception ex)
+                    {
+                        // new FileOper().writelog(ex.Message);
+                        System.Diagnostics.Trace.WriteLine(ex.Message);
+                    }
+                }
+            }
         }
     }
 }

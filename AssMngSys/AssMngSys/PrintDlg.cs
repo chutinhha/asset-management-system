@@ -62,7 +62,7 @@ namespace AssMngSys
             sVal3 = dataGridView1.Rows[nIndex].Cells["资产名称"].Value.ToString();
             sVal4 = dataGridView1.Rows[nIndex].Cells["设备型号"].Value.ToString();
             sVal5 = dataGridView1.Rows[nIndex].Cells["保管人员"].Value.ToString();
-            sVal6 = dataGridView1.Rows[nIndex].Cells["备注"].Value.ToString();
+            sVal6 = dataGridView1.Rows[nIndex].Cells["资产描述"].Value.ToString();
             sVal7 = dataGridView1.Rows[nIndex].Cells["所属部门"].Value.ToString();
 
             int nW1 = 72;
@@ -145,7 +145,7 @@ namespace AssMngSys
 
             //备注
             drawRect = new RectangleF(nW1 + nW2, 2 * nH, nW1, nH);
-            grp.DrawString("备    注", SystemFonts.CaptionFont, Brushes.Black, drawRect, drawFormat);
+            grp.DrawString("资产描述", SystemFonts.CaptionFont, Brushes.Black, drawRect, drawFormat);
             drawRect = new RectangleF(nW1 + nW2 + nW1, 2 * nH, nW2, nH);
             grp.DrawString(sVal6, SystemFonts.CaptionFont, Brushes.Black, drawRect, drawFormat);
 

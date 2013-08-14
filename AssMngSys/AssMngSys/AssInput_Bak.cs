@@ -84,7 +84,7 @@ namespace AssMngSys
             radioButtonModify.Checked = false;
             radioButtonQuery.Checked = false;
 
-            sSQLSelect = "select Id ID,ass_id 资产编码,fin_id 财务编码,pid 标签喷码,tid 标签ID,cat_no 类别编码,typ 类型,ass_nam 资产名称,ass_desc 备注,ass_pri 资产金额,reg_date 登记日期,dept 部门,duty_man 责任人员,addr 所在地点,use_co 所在公司,f_getStat(stat,stat_sub) 状态,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,input_date 购置日期,unit 单位,num 数量,ppu 单价,duty_man 责任人,company 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间,input_typ 购置类型 from ass_list";
+            sSQLSelect = "select Id ID,ass_id 资产编码,fin_id 财务编码,pid 标签喷码,tid 标签ID,cat_no 类别编码,typ 类型,ass_nam 资产名称,ass_desc 资产描述,ass_pri 资产金额,reg_date 登记日期,dept 部门,duty_man 责任人员,addr 所在地点,use_co 所在公司,f_getStat(stat,stat_sub) 状态,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,input_date 购置日期,unit 单位,num 数量,ppu 单价,duty_man 责任人,use_co 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间,input_typ 购置类型 from ass_list";
 
             string sSql = sSQLSelect;
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
@@ -378,7 +378,7 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
                     comboBoxUnit.Text,
                     textBoxNum.Text,
                     textBoxPpu.Text,
-                    "修改备注",//memo
+                    "textBoxMemo.Text",//memo
                     Login.sUserName,//mod_man 
                     comboBoxInputTyp.Text,
                     comboBoxAddr.Text,

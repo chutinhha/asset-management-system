@@ -17,7 +17,7 @@ namespace AssMngSys
         
         MainForm mf;
 
-        static List<string> aList = new List<string>();
+        List<string> aList = new List<string>();
         public AssUse(MainForm f)
         {
             InitializeComponent();
@@ -35,7 +35,7 @@ namespace AssMngSys
             radioButtonStartRepair.Checked = true;
             radioButtonOut.Checked = true;
             //获取资产信息表头
-            string sSql = sSQLSelect + " where '1' = '0'";
+            string sSql = sSQLSelect + " and '1' = '0'";
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
             bs.DataSource = dt;
             bindingNavigator1.BindingSource = bs;
@@ -106,7 +106,7 @@ namespace AssMngSys
                     return;
                 }
             }
-            string sSql = sSQLSelect + " where pid in('0'";
+            string sSql = sSQLSelect + " and pid in('0'";
             foreach (object o in aList)
             {
                 sSql += ",\'" + o.ToString() + "\'";
@@ -133,13 +133,22 @@ namespace AssMngSys
             }
         }
 
+        private void toolStripTextBoxPid_TextChanged(object sender, EventArgs e)
+        {
+            if (toolStripTextBoxPid.Text.Length == 12)
+            {
+                GetAss(toolStripTextBoxPid.Text, 1);
+            }
+        }
+
+
         private void buttonClear_Click(object sender, EventArgs e)
         {
             // dt.Rows.Clear();
             textBoxPid.Text = "";
             aList.Clear();
             listBox1.Items.Clear();
-            string sSql = sSQLSelect + " where '1' = '0'";
+            string sSql = sSQLSelect + " and '1' = '0'";
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
             bs.DataSource = dt;
             bindingNavigator1.BindingSource = bs;
@@ -169,8 +178,9 @@ namespace AssMngSys
         {
             if (dataGridView1.CurrentRow != null)
             {
-                GetAss(dataGridView1.CurrentRow.Cells[3].Value.ToString(), -1);
-                listBox1.Items.Clear();
+                GetAss(dataGridView1.CurrentRow.Cells["标签喷码"].Value.ToString(), -1);
+                // listBox1.Items.Clear();
+                dataGridView1_SelectionChanged(null, null);
             }
         }
         private void buttonOK_Click(object sender, EventArgs e)
@@ -657,6 +667,42 @@ namespace AssMngSys
             {
                 comboBoxDept.Focus();
                 comboBoxDept.DroppedDown = true;
+            }
+        }
+
+        private void buttonQry_Click(object sender, EventArgs e)
+        {
+            List<string> list = AssSupply.FindPid(mf);
+            if (list != null)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    textBoxPid.Text = list[i];
+                }
+            }
+        }
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            DataGridViewTextBoxColumn dgv_Text = new DataGridViewTextBoxColumn();
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                //行号
+                int j = i + 1;
+                dataGridView1.Rows[i].HeaderCell.Value = j.ToString();
+                //颜色
+                string sStat = dataGridView1.Rows[i].Cells["库存状态"].Value.ToString();
+                if (sStat != "库存" && sStat != "领用")
+                {
+                    try
+                    {
+                        this.dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(0xFF0000);
+                    }
+                    catch (Exception ex)
+                    {
+                        // new FileOper().writelog(ex.Message);
+                        System.Diagnostics.Trace.WriteLine(ex.Message);
+                    }
+                }
             }
         }
     }

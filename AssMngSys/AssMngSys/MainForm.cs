@@ -517,6 +517,14 @@ namespace AssMngSys
 
         private void ttoolStripButtonAssInput_Click(object sender, EventArgs e)
         {
+            List<string> aTmpList = new List<string>(); //记录最近5个标签
+            //aTmpList.Add("abc");
+            //aTmpList.Add("cccc");
+            //aTmpList.Add("bbbbb");
+            //aTmpList.Add("aaaaaa");
+            //int nIndex = aTmpList.FindIndex(delegate(string p) { return p == "abc"; });
+            //MessageBox.Show(string.Format("{0}",nIndex));
+
             treeView1.SelectedNode = treeView1.Nodes[0].Nodes[0];
             treeView1_DoubleClick(null, null);
         }

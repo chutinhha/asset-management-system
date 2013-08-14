@@ -86,6 +86,7 @@ namespace AssMngSysCe
             this.label3 = new System.Windows.Forms.Label();
             this.timer2 = new System.Windows.Forms.Timer();
             this.service1 = new AssMngSysCe.AssWebSrv.Service();
+            this.label1CheckHit = new System.Windows.Forms.Label();
             this.tabPage5.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -480,6 +481,7 @@ namespace AssMngSysCe
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.label1CheckHit);
             this.tabPage4.Controls.Add(this.buttonHideCheck);
             this.tabPage4.Controls.Add(this.listView2);
             this.tabPage4.Controls.Add(this.label8);
@@ -596,6 +598,14 @@ namespace AssMngSysCe
             this.service1.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; MS Web Services Client Protocol 2.0.50727.3053" +
                 ")";
             // 
+            // label1CheckHit
+            // 
+            this.label1CheckHit.Location = new System.Drawing.Point(24, 59);
+            this.label1CheckHit.Name = "label1CheckHit";
+            this.label1CheckHit.Size = new System.Drawing.Size(152, 20);
+            this.label1CheckHit.Text = "正在加载，请稍后 ...";
+            this.label1CheckHit.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -681,5 +691,6 @@ namespace AssMngSysCe
         private System.Windows.Forms.Label label1WriteMsg;
         private AssMngSysCe.AssWebSrv.Service service1;
         private System.Windows.Forms.Button buttonDetail;
+        private System.Windows.Forms.Label label1CheckHit;
     }
 }

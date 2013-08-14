@@ -22,7 +22,10 @@ namespace AssMngSys
         private BindingSource bs = new BindingSource();
 
 
-        public static string  sSQLSelect = "select Id ID,pid 标签喷码,ass_id 资产编码,fin_id 财务编码,typ 类型,ass_nam 资产名称,stat 库存状态,use_man 领用人员,stat_sub 使用状态,duty_man 保管人员,dev_mode 设备型号,ass_desc 备注,ass_pri 资产金额,input_typ 购置类型,input_date 购置日期,dept 所属部门,addr 所在地点,ynrepair 是否维修过,supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,num 数量,unit 单位,ppu 单价,company 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,mod_man 修改人员,mod_tm 修改时间 from ass_list where ynenable = 'Y' ";
+        public static string sSQLSelect = @"select Id ID,pid 标签喷码,ass_id 资产编码,fin_id 财务编码,typ 类型,ass_nam 资产名称,stat 库存状态,use_man 领用人员,stat_sub 使用状态,
+                duty_man 保管人员,dev_mode 设备型号,ass_pri 资产金额,ass_desc 资产描述,inv_date 最后盘点时间,inv_man 盘点人员,inv_result 盘点结果,input_typ 购置类型,input_date 购置日期,dept 所属部门,addr 所在地点,ynrepair 是否维修过,
+                supplier 供应商,supplier_info 供应商信息,sn 序列号,vender 厂商品牌,num 数量,unit 单位,ppu 单价,use_co 资产归属,memo 备注,cre_man 创建人员,cre_tm 创建时间,
+                mod_man 修改人员,mod_tm 修改时间 from ass_list where ynenable = 'Y' ";
         QryAssDlg qryassdlg;
 
         MainForm mf;
@@ -234,7 +237,11 @@ namespace AssMngSys
 
             DateTime now = DateTime.Now;
             saveFileDialog.FileName = now.Year.ToString().PadLeft(2) + now.Month.ToString().PadLeft(2, '0') + now.Day.ToString().PadLeft(2, '0') + "-" + now.Hour.ToString().PadLeft(2, '0') + now.Minute.ToString().PadLeft(2, '0') + now.Second.ToString().PadLeft(2, '0');
-            saveFileDialog.ShowDialog();
+
+            if (saveFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
 
             Stream myStream;
             myStream = saveFileDialog.OpenFile();
@@ -262,7 +269,7 @@ namespace AssMngSys
                         {
                             tempStr += "\t";
                         }
-                        tempStr += dataGridView1.Rows[j].Cells[k].Value.ToString();
+                        tempStr += dataGridView1.Rows[j].Cells[k].Value.ToString().Replace("\n"," ");
                     }
                     sw.WriteLine(tempStr);
                 }

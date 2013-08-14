@@ -64,6 +64,10 @@ namespace AssMngSys
             comboBoxInputTyp.Items.Add("转入");
             comboBoxInputTyp.Items.Add("其他");
 
+            comboBoxUseCo.Items.Add("深圳总公司");
+            comboBoxUseCo.Items.Add("广州分公司");
+            comboBoxUseCo.Items.Add("");
+
             this.Text = string.Format("资产{0}", sOptType);
 
             if (sOptType == "修改" || sOptType == "复制")
@@ -95,7 +99,7 @@ namespace AssMngSys
                 textBoxInputDate.Text = dataGridView1.SelectedRows[0].Cells["购置日期"].Value.ToString();
                 comboBoxUnit.Text = dataGridView1.SelectedRows[0].Cells["单位"].Value.ToString();
                 textBoxSn.Text = dataGridView1.SelectedRows[0].Cells["序列号"].Value.ToString();
-                textBoxAssDesc.Text = dataGridView1.SelectedRows[0].Cells["备注"].Value.ToString();
+                textBoxAssDesc.Text = dataGridView1.SelectedRows[0].Cells["资产描述"].Value.ToString();
                 textBoxId.Text = dataGridView1.SelectedRows[0].Cells["ID"].Value.ToString();
                 comboBoxInputTyp.Text = dataGridView1.SelectedRows[0].Cells["购置类型"].Value.ToString();
                 comboBoxAddr.Text = dataGridView1.SelectedRows[0].Cells["所在地点"].Value.ToString();
@@ -106,6 +110,9 @@ namespace AssMngSys
                 comboBoxUseMan.Text = dataGridView1.SelectedRows[0].Cells["领用人员"].Value.ToString();
                 textBoxDevMode.Text = dataGridView1.SelectedRows[0].Cells["设备型号"].Value.ToString();
                 comboBoxYnRepair.Text = dataGridView1.SelectedRows[0].Cells["是否维修过"].Value.ToString();
+
+                textBoxMemo.Text = dataGridView1.SelectedRows[0].Cells["备注"].Value.ToString();
+                comboBoxUseCo.Text = dataGridView1.SelectedRows[0].Cells["资产归属"].Value.ToString();
             }
             else//新增
             {
@@ -233,9 +240,9 @@ namespace AssMngSys
             List<string> listSql = new List<string>();
             sSql = string.Format(@"insert into ass_list
                 (cre_tm,ass_id,fin_id,pid,tid,ass_nam,ass_desc,ass_pri,reg_date,typ,
-                supplier,sn,vender,input_date,unit,num,ppu,company,cre_man,supplier_info,input_typ,addr,dept,duty_man,stat,stat_sub,dev_mode,use_man,ynrepair) 
+                supplier,sn,vender,input_date,unit,num,ppu,company,cre_man,supplier_info,input_typ,addr,dept,duty_man,stat,stat_sub,dev_mode,use_man,ynrepair,memo,use_co) 
                 values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}',
-                '{11}','{12}','{13}','{14}','{15}','{16}','{17}','{18}','{19}','{20}','{21}','{22}','{23}','{24}','{25}','{26}','{27}','{28}')",
+                '{11}','{12}','{13}','{14}','{15}','{16}','{17}','{18}','{19}','{20}','{21}','{22}','{23}','{24}','{25}','{26}','{27}','{28}','{29}','{30}')",
                 MainForm.getDateTime(),
                 textBoxAssId.Text,
                 textBoxFinId.Text,
@@ -265,7 +272,9 @@ namespace AssMngSys
                 comboBoxStatSub.Text,
                 textBoxDevMode.Text,
                 comboBoxUseMan.Text,
-                comboBoxYnRepair.Text
+                comboBoxYnRepair.Text,
+                textBoxMemo.Text,
+                comboBoxUseCo.Text
                 );
             listSql.Add(sSql);
             //插入日志
@@ -333,7 +342,7 @@ namespace AssMngSys
             List<string> listSql = new List<string>();
             sSql = string.Format(@"update ass_list set fin_id = '{0}',ass_id = '{1}', ass_nam = '{2}', ass_desc = '{3}', ass_pri = '{4}', mod_tm = '{5}',
 typ = '{6}', supplier = '{7}', supplier_info = '{8}', sn = '{9}',vender = '{10}', input_date = '{11}', unit = '{12}', 
-num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',addr = '{18}',pid = '{19}',tid = '{20}',dept ='{21}',duty_man ='{22}',stat ='{23}',stat_sub ='{24}',dev_mode = '{25}',use_man = '{26}',ynrepair = '{27}' where id = '{28}'",
+num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',addr = '{18}',pid = '{19}',tid = '{20}',dept ='{21}',duty_man ='{22}',stat ='{23}',stat_sub ='{24}',dev_mode = '{25}',use_man = '{26}',ynrepair = '{27}',use_co = '{28}' where id = '{29}'",
                     textBoxFinId.Text,
                     textBoxAssId.Text,
                     comboBoxAssNam.Text,
@@ -349,7 +358,7 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
                     comboBoxUnit.Text,
                     textBoxNum.Text,
                     textBoxPpu.Text,
-                    "修改备注",//memo
+                    textBoxMemo.Text,//memo
                     Login.sUserName,//mod_man 
                     comboBoxInputTyp.Text,
                     comboBoxAddr.Text,
@@ -362,6 +371,7 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
                     textBoxDevMode.Text,
                     comboBoxUseMan.Text,
                     comboBoxYnRepair.Text,
+                    comboBoxUseCo.Text,
                     textBoxId.Text);
             listSql.Add(sSql);
 
@@ -455,6 +465,5 @@ num = '{13}', ppu = '{14}',memo = '{15}', mod_man = '{16}',input_typ = '{17}',ad
                 e.Handled = true;
             } 
         }
-
     }
 }

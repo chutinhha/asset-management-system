@@ -107,7 +107,7 @@ namespace AssMngSys
             this.tabControl1.Location = new System.Drawing.Point(2, 32);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(303, 54);
+            this.tabControl1.Size = new System.Drawing.Size(326, 54);
             this.tabControl1.TabIndex = 12;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -116,7 +116,7 @@ namespace AssMngSys
             this.tabPage5.Controls.Add(this.label2);
             this.tabPage5.Location = new System.Drawing.Point(4, 21);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(295, 29);
+            this.tabPage5.Size = new System.Drawing.Size(318, 29);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "×â»¹";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -284,7 +284,7 @@ namespace AssMngSys
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(593, 353);
+            this.dataGridView1.Size = new System.Drawing.Size(514, 321);
             this.dataGridView1.TabIndex = 14;
             this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
             this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
@@ -307,7 +307,7 @@ namespace AssMngSys
             this.bindingNavigatorMoveNextItem,
             this.bindingNavigatorMoveLastItem,
             this.bindingNavigatorSeparator2});
-            this.bindingNavigator1.Location = new System.Drawing.Point(380, 547);
+            this.bindingNavigator1.Location = new System.Drawing.Point(301, 515);
             this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
             this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
@@ -388,7 +388,7 @@ namespace AssMngSys
             // textBoxPid
             // 
             this.textBoxPid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxPid.Location = new System.Drawing.Point(262, 550);
+            this.textBoxPid.Location = new System.Drawing.Point(262, 518);
             this.textBoxPid.Name = "textBoxPid";
             this.textBoxPid.Size = new System.Drawing.Size(116, 21);
             this.textBoxPid.TabIndex = 5;
@@ -401,9 +401,9 @@ namespace AssMngSys
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(601, 213);
+            this.listBox1.Location = new System.Drawing.Point(522, 213);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(294, 364);
+            this.listBox1.Size = new System.Drawing.Size(294, 328);
             this.listBox1.TabIndex = 17;
             // 
             // groupBox10
@@ -464,7 +464,7 @@ namespace AssMngSys
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label1.Location = new System.Drawing.Point(601, 191);
+            this.label1.Location = new System.Drawing.Point(522, 191);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(127, 21);
             this.label1.TabIndex = 23;
@@ -475,7 +475,7 @@ namespace AssMngSys
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label7.Location = new System.Drawing.Point(729, 191);
+            this.label7.Location = new System.Drawing.Point(650, 191);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(98, 21);
             this.label7.TabIndex = 23;
@@ -486,7 +486,7 @@ namespace AssMngSys
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label8.Location = new System.Drawing.Point(828, 191);
+            this.label8.Location = new System.Drawing.Point(749, 191);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(67, 21);
             this.label8.TabIndex = 23;
@@ -505,7 +505,7 @@ namespace AssMngSys
             this.toolStripButtonSave});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(903, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(824, 25);
             this.toolStrip1.TabIndex = 29;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -566,7 +566,7 @@ namespace AssMngSys
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(903, 572);
+            this.ClientSize = new System.Drawing.Size(824, 540);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.label8);

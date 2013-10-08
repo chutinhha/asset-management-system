@@ -76,7 +76,7 @@ namespace AssMngSys
             this.toolStripButton3,
             this.toolStripButton4,
             this.toolStripSeparator3});
-            this.bindingNavigator1.Location = new System.Drawing.Point(613, 470);
+            this.bindingNavigator1.Location = new System.Drawing.Point(550, 506);
             this.bindingNavigator1.MoveFirstItem = this.toolStripButton1;
             this.bindingNavigator1.MoveLastItem = this.toolStripButton4;
             this.bindingNavigator1.MoveNextItem = this.toolStripButton3;
@@ -160,7 +160,7 @@ namespace AssMngSys
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(878, 439);
+            this.dataGridView1.Size = new System.Drawing.Size(815, 475);
             this.dataGridView1.TabIndex = 25;
             this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             // 
@@ -177,7 +177,7 @@ namespace AssMngSys
             this.toolStripButtonExcel});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(887, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(824, 25);
             this.toolStrip1.TabIndex = 29;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -243,7 +243,7 @@ namespace AssMngSys
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(887, 504);
+            this.ClientSize = new System.Drawing.Size(824, 540);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.dataGridView1);

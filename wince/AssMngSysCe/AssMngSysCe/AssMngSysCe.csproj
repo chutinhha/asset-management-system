@@ -66,6 +66,7 @@
     <Compile Include="AssDetailForm.Designer.cs">
       <DependentUpon>AssDetailForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EncryptDES.cs" />
     <Compile Include="FindForm.cs">
       <SubType>Form</SubType>
     </Compile>

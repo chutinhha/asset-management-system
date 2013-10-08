@@ -23,6 +23,14 @@ namespace AssMngSys
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
+
+            //string str = EncryptDES.EncryptHex("0123456789012345");//8¸ö×Ö½Ú
+            //System.Diagnostics.Debug.WriteLine(str);
+            //string str2 = EncryptDES.DecryptHex(str);
+            //System.Diagnostics.Debug.WriteLine(str2);
+            //return;
+
+
             //MessageBox.Show(int32.MaxValue.ToString());
             if (textBoxUser.Text.Length == 0 || textBoxPass.Text.Length == 0)
             {

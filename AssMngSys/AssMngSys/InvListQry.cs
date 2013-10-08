@@ -99,7 +99,7 @@ namespace AssMngSys
 
         private void toolStripButtonQry_Click(object sender, EventArgs e)
         {
-            string sSql = string.Format("select inv_no 清单号,pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 库存状态,stat_sub 使用状态,result 盘点结果,memo 备注,duty_man 保管人员,vender 品牌, ass_desc 资产描述,addr 所在地点 ,dept 领用部门 from inv_list where 1=1 ");
+            string sSql = string.Format("select inv_no 清单号,pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 库存状态,use_man 领用人员,stat_sub 使用状态,duty_man 保管人员,result 盘点结果,memo 备注,vender 品牌, ass_desc 资产描述,addr 所在地点 ,dept 领用部门 from inv_list where 1=1 ");
             sSql += string.Format(" and inv_no = '{0}'", toolStripComboBoxInvNo.Text);
             DataTable dt = MysqlHelper.ExecuteDataTable(sSql);
             bindingSource1.DataSource = dt;

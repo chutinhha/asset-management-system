@@ -61,7 +61,6 @@ namespace AssMngSys
             this.textBoxPass.PasswordChar = '*';
             this.textBoxPass.Size = new System.Drawing.Size(146, 21);
             this.textBoxPass.TabIndex = 1;
-            this.textBoxPass.Text = "030022";
             // 
             // buttonCancel
             // 
@@ -112,7 +111,6 @@ namespace AssMngSys
             this.textBoxUser.Name = "textBoxUser";
             this.textBoxUser.Size = new System.Drawing.Size(146, 21);
             this.textBoxUser.TabIndex = 0;
-            this.textBoxUser.Text = "030022";
             // 
             // Login
             // 

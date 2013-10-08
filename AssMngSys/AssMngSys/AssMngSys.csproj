@@ -11,6 +11,7 @@
     <AssemblyName>AssMngSys</AssemblyName>
     <SignAssembly>false</SignAssembly>
     <SignManifests>false</SignManifests>
+    <ApplicationIcon>asset.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -61,6 +62,7 @@
     <Compile Include="AddrList.Designer.cs">
       <DependentUpon>AddrList.cs</DependentUpon>
     </Compile>
+    <Compile Include="EncryptDES.cs" />
     <Compile Include="NewAddrDlg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -349,6 +351,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\excel2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="asset.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

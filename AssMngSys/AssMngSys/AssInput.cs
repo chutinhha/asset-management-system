@@ -92,7 +92,7 @@ namespace AssMngSys
                     }
                     catch (Exception ex)
                     {
-                        // new FileOper().writelog(ex.Message);
+                        //new FileOper().writelog(ex.Message);
                         System.Diagnostics.Trace.WriteLine(ex.Message);
                     }
                 }
@@ -189,7 +189,6 @@ namespace AssMngSys
                     {
                         MessageBox.Show("…æ≥˝ ß∞‹£°\r\n" + MysqlHelper.sLastErr, "Ã· æ", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     }
-
                 }
             }
             else

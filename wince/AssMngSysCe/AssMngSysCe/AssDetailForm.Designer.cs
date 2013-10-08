@@ -45,9 +45,9 @@ namespace AssMngSysCe
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(160, 231);
+            this.buttonCancel.Location = new System.Drawing.Point(160, 236);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(76, 35);
+            this.buttonCancel.Size = new System.Drawing.Size(76, 30);
             this.buttonCancel.TabIndex = 14;
             this.buttonCancel.Text = "·µ»Ø(F3)";
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -61,9 +61,9 @@ namespace AssMngSysCe
             // 
             // buttonHistory
             // 
-            this.buttonHistory.Location = new System.Drawing.Point(82, 231);
+            this.buttonHistory.Location = new System.Drawing.Point(82, 236);
             this.buttonHistory.Name = "buttonHistory";
-            this.buttonHistory.Size = new System.Drawing.Size(76, 35);
+            this.buttonHistory.Size = new System.Drawing.Size(76, 29);
             this.buttonHistory.TabIndex = 14;
             this.buttonHistory.Text = "ÀúÊ·(Ent)";
             this.buttonHistory.Click += new System.EventHandler(this.buttonHistory_Click);

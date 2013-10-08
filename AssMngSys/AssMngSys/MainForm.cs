@@ -517,7 +517,7 @@ namespace AssMngSys
 
         private void ttoolStripButtonAssInput_Click(object sender, EventArgs e)
         {
-            List<string> aTmpList = new List<string>(); //记录最近5个标签
+            //List<string> aTmpList = new List<string>(); //记录最近5个标签
             //aTmpList.Add("abc");
             //aTmpList.Add("cccc");
             //aTmpList.Add("bbbbb");

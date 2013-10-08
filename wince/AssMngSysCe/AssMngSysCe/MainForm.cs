@@ -37,11 +37,12 @@ namespace AssMngSysCe
             public const int assid = 2;
             public const int assnam = 3;
             public const int stat = 4;
-            public const int dutyman = 5;
-            public const int dept = 6;
-            public const int addr = 7;
-            public const int result = 8;
-            public const int id = 9;
+            public const int useyman = 5;
+            public const int dutyman = 6;
+            public const int dept = 7;
+            public const int addr = 8;
+            public const int result = 9;
+            public const int id = 10;
         }
         static public bool bHasSrv = false;
         public bool bIsFirstIni = false;
@@ -100,6 +101,7 @@ namespace AssMngSysCe
             listView2.Columns.Add("资产编码", 60, HorizontalAlignment.Left);
             listView2.Columns.Add("资产名称", 60, HorizontalAlignment.Left);
             listView2.Columns.Add("库存状态", 40, HorizontalAlignment.Left);
+            listView2.Columns.Add("领用人员", 40, HorizontalAlignment.Left);
             listView2.Columns.Add("保管人员", 40, HorizontalAlignment.Left);
             listView2.Columns.Add("所属部门", 60, HorizontalAlignment.Left);
             listView2.Columns.Add("所在地点", 60, HorizontalAlignment.Left);
@@ -165,6 +167,10 @@ namespace AssMngSysCe
             }
             else if (tabControl1.SelectedIndex == (int)Page.wrtag)//发卡
             {
+                if (buttonReadBarcode.Text == "停止(F2)")
+                {
+                    buttonReadBarcode_Click(null,null);
+                }
                 Scanner.openUHF();
                 WriteTag();
             }
@@ -189,7 +195,7 @@ namespace AssMngSysCe
             //        return;
             //    }
             //}
-            string sWriteData = "000000000000" + textBoxPid.Text;
+            string sWriteData = "0000000000001" + textBoxPid.Text;
             byte[] writedata = new byte[100];
             StringToHexByte(sWriteData.Trim(), writedata);//转换为16进制
 
@@ -385,6 +391,7 @@ namespace AssMngSysCe
                     checkAss(nfind, "自动盘点", out sErr);
                     buttonSyncDiff_Click(null, null);
                 }
+                listView2.Items[nfind].Focused = true;
                 listView2.Items[nfind].Selected = true;
             }
             else
@@ -783,15 +790,69 @@ namespace AssMngSysCe
             {
                 CheckOpt();
             }
-            else if (tabControl1.SelectedIndex == (int)Page.wrtag)//盘点
+            else if (tabControl1.SelectedIndex == (int)Page.wrtag)//发卡
             {
-                textBoxPid.Text = "";
+                readTest();
+            }
+        }
+        private void readTest()
+        {
+            textBoxPid.Text = "";
+            label1WriteMsg.Text = "";
+            label1WriteMsg.Update();
+            //byte _offset = Convert.ToByte(textBoxOff.Text.Trim());
+            //byte _length = Convert.ToByte(textBoxlen.Text.Trim());
+            byte[] nTagCount = new byte[1];
+            byte[] uReadData = new byte[512];
+            string strEpc = "";
+            //读取EPC
+            byte uBank = 1;
+            byte _offset = 2;
+            byte _length = 6;
+            bool bOK = true;
+
+            Array.Clear(nTagCount, 0, 1);
+            Array.Clear(uReadData, 0, 512);
+            if (1 == HTApi.WIrUHFReadData(uBank, _offset, _length, ref nTagCount[0], ref uReadData[0]))
+            {
+                //显示一张标签
+                int _recLength = uReadData[0];
+                ;
+                int i = 0;
+
+                for (i = 0; i < _recLength; i++)
+                {
+                    String strTmp = string.Format("{0:X2}", uReadData[i + 1]);
+                    strEpc += strTmp;
+                }
+            }
+            else
+            {
+                bOK = false;
+            }
+
+            if (strEpc.Length == 24)
+            {
+                strEpc = strEpc.Substring(12, 12);
+            }
+
+            textBoxPid.Text = strEpc;
+
+            if (bOK)
+            {
+                PlaySound("\\Windows\\critical.wav", IntPtr.Zero, 0x0001);
+                label1WriteMsg.Text = "读卡OK!";
+            }
+            else
+            {
+                label1WriteMsg.Text = "请再试一次...";
             }
         }
 
         private void CheckOpt()
         {
             CheckOptForm checkoptform = new CheckOptForm();
+            if (listView2.FocusedItem == null) return;
             int nIndex = listView2.Items.IndexOf(listView2.FocusedItem);
             if (checkoptform.ShowDialog() == DialogResult.OK)
             {
@@ -850,6 +911,17 @@ namespace AssMngSysCe
         {
             if (buttonSyncIni.Enabled && buttonSyncDiff.Enabled)
             {
+                if (bChecking == true)
+                {
+                    CheckFun();   
+                }
+                if (bInving == true)
+                {
+                    InvFun();
+                }
+                timer1.Enabled = false;
+                timer2.Enabled = false;
+                timer3.Enabled = false;
                 this.Close();
             }
             else
@@ -904,10 +976,10 @@ namespace AssMngSysCe
                 buttonRead.Text = "开始(F1)";
                 buttonClear.Text = "操作(Ent)";
             }
-            else if (tabControl1.SelectedIndex == (int)Page.wrtag)//盘点
+            else if (tabControl1.SelectedIndex == (int)Page.wrtag)//发卡
             {
                 buttonRead.Text = "发卡(F1)";
-                buttonClear.Text = "清除(Ent)";
+                buttonClear.Text = "读测(Ent)";
             }
         }
 
@@ -993,17 +1065,31 @@ namespace AssMngSysCe
 
         private void Read2PcForm_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.F3)
-            {
-                buttonCancel_Click(null, null);
-            }
-            else if (e.KeyCode == Keys.Insert || e.KeyCode == Keys.F1)//e.KeyCode.ToString().Equals("Insert")
+            if (e.KeyCode == Keys.F1 || e.KeyCode == Keys.Insert)//e.KeyCode.ToString().Equals("Insert")
             {
                 buttonRead_Click(null, null);
             }
+            else if (e.KeyCode == Keys.F2)
+            {
+                if (tabControl1.SelectedIndex == (int)Page.wrtag)
+                {
+                    buttonReadBarcode_Click(null, null);
+                }
+            }
+            else if (e.KeyCode == Keys.F3)
+            {
+                buttonCancel_Click(null, null);
+            }
             else if (e.KeyCode == Keys.F4)
             {
-                buttonDetail_Click(null, null);
+                if (tabControl1.SelectedIndex == (int)Page.wrtag)
+                {
+                    buttonSelectAss_Click(null, null);
+                }
+                else
+                {
+                    buttonDetail_Click(null, null);
+                }
             }
             else if (e.KeyCode == Keys.Enter)
             {
@@ -2026,11 +2112,11 @@ namespace AssMngSysCe
             comboBoxDept.Items.Add("");
 
             comboBoxMan.Items.Clear();
-            sSql = "select distinct duty_man from inv_list where inv_no = \'" + comboBoxInvListNo.Text + "\' order by duty_man";
+            sSql = "select distinct use_man from inv_list where inv_no = \'" + comboBoxInvListNo.Text + "\' order by use_man";
             reader = SQLiteHelper.ExecuteReader(sSql);
             while (reader.Read())
             {
-                comboBoxMan.Items.Add(reader["duty_man"].ToString());
+                comboBoxMan.Items.Add(reader["use_man"].ToString());
             }
             reader.Close();
             comboBoxMan.Items.Add("");
@@ -2046,8 +2132,20 @@ namespace AssMngSysCe
             comboBoxAddr.Items.Add("");
 
             GetInvList();
+            
         }
+
         private void GetInvList()
+        {
+            timer3.Enabled = true;
+        }
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+             GetInvListTm();
+            timer3.Enabled = false;
+        }
+
+        private void GetInvListTm()
         {
             label1CheckHit.Visible = true;
             label1CheckHit.Update();
@@ -2057,6 +2155,7 @@ namespace AssMngSysCe
             nExp = 0;
             nCheck = 0;
             listView2.Items.Clear();
+            listView2.Update();
             string sSql = "select * from inv_list where inv_no = \'" + comboBoxInvListNo.Text + "\'";
             if (comboBoxDept.Text.Length != 0)
             {
@@ -2065,7 +2164,7 @@ namespace AssMngSysCe
             }
             if (comboBoxMan.Text.Length != 0)
             {
-                sSql += " and duty_man = \'" + comboBoxMan.Text + "\'";
+                sSql += " and use_man = \'" + comboBoxMan.Text + "\'";
                 blist = false;
             }
             if (comboBoxAddr.Text.Length != 0)
@@ -2117,6 +2216,7 @@ namespace AssMngSysCe
                 lvi.SubItems.Add(reader["ass_id"].ToString());
                 lvi.SubItems.Add(reader["ass_nam"].ToString());
                 lvi.SubItems.Add(reader["stat"].ToString());
+                lvi.SubItems.Add(reader["use_man"].ToString());
                 lvi.SubItems.Add(reader["duty_man"].ToString());
                 lvi.SubItems.Add(reader["dept"].ToString());
                 lvi.SubItems.Add(reader["addr"].ToString());
@@ -2124,12 +2224,15 @@ namespace AssMngSysCe
                 lvi.SubItems.Add(reader["id"].ToString());
                 this.listView2.Items.Add(lvi);
                 //listView2.EnsureVisible(listView1.Items.Count - 1);
+               // label1CheckHit.Text = string.Format("正在加载 {0}%", nAll * 100 / reader.RecordsAffected);
+               // label1CheckHit.Update();
+                sumCheckText();
             }
             reader.Close();
             label1CheckHit.Visible = false;
             if (blist)
             {
-                label8.Text = "总数：" + nAll.ToString();
+                label8.Text = "共" + nAll.ToString();
             }
             //label4.Text = string.Format("总计 {0};已盘 {1};异常 {2};未盘点 {3}.", nAll, nCheck, nExp, nAll - nCheck);
             sumCheckText();
@@ -2163,18 +2266,20 @@ namespace AssMngSysCe
 
         private void buttonReadBarcode_Click(object sender, EventArgs e)
         {
-            if (buttonReadBarcode.Text == "读条码")
+            if (buttonReadBarcode.Text == "读条码(F2)")
             {
                 scanCall = new HTApi.PWSCAN_CALLBACK(ScanCallBack);
                 HTApi.WScanSetCallBack(scanCall);
                 Scanner.open1D();
                 HTApi.W1DScanStart(true);//true 单次扫描 false 多次扫描
-                buttonReadBarcode.Text = "停止";
+                buttonReadBarcode.Text = "停止(F2)";
+                label1WriteMsg.Text = "*请扫描条码 ...";
             }
             else
             {
-                buttonReadBarcode.Text = "读条码";
+                buttonReadBarcode.Text = "读条码(F2)";
                 HTApi.W1DScanStop();
+                label1WriteMsg.Text = "*已停止！";
                // Scanner.close1D();
             }
         }
@@ -2189,15 +2294,22 @@ namespace AssMngSysCe
         public void ShowBarcode()
         {
             textBoxPid.Text = sBarcode;
-            buttonReadBarcode.Text = "读条码";
+            buttonReadBarcode.Text = "读条码(F2)";
+            label1WriteMsg.Text = "*读取OK！";
         }
 
         private void buttonSelectAss_Click(object sender, EventArgs e)
         {
+            buttonSelectAss.Enabled = false;
+            buttonSelectAss.Update();
+            label1WriteMsg.Text = "*正在加载，请稍后 ...";
+            label1WriteMsg.Update();
             SelectAssForm dlg = new SelectAssForm();
             dlg.ShowDialog();
+            label1WriteMsg.Text = "";
             textBoxPid.Text = dlg.sPid;
             textBoxYnWrite.Text = dlg.sYnWrite;
+            buttonSelectAss.Enabled = true;
         }
 
         private void textBoxPid_TextChanged(object sender, EventArgs e)
@@ -2266,5 +2378,6 @@ namespace AssMngSysCe
                 }
             }
         }
+
     }
 }

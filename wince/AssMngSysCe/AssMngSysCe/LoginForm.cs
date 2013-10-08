@@ -33,7 +33,7 @@ namespace AssMngSysCe
             InitializeComponent();
         }
 
-        private void LoginForm_Load(object sender, EventArgs e)
+        private void LoginForm_Load(object sender, EventArgs e) 
         {
             ////打开电源
             //HTApi.WIrUHFOpenPower();
@@ -100,10 +100,15 @@ namespace AssMngSysCe
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-
+            buttonLogin.Enabled = false;
+            buttonLogin.Update();
+            labelHit.Visible = true;
+            labelHit.Update();
             if (textBoxUser.Text.Length == 0 || textBoxPass.Text.Length == 0)
             {
                 MessageBox.Show("账号或密码不能为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Hand, MessageBoxDefaultButton.Button1);
+                buttonLogin.Enabled = true;
+                labelHit.Visible = false;
                 return;
             }
             //SQLite方式
@@ -182,7 +187,8 @@ namespace AssMngSysCe
                 label2.Visible = true;
                 checkBoxStorePass.Visible = true;
             }
-
+            buttonLogin.Enabled = true;
+            labelHit.Visible = false;
         }
 
         private void menuItemPowerRate_Click(object sender, EventArgs e)
@@ -258,14 +264,17 @@ namespace AssMngSysCe
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            if (!bLogin)
+            if (bLogin)
             {
-                return;
-            }
-            else
-            {
+
+                buttonStart.Enabled = false;
+                buttonStart.Update();
+                labelHit.Visible = true;
+                labelHit.Update();
                 MainForm dlg = new MainForm(this);
                 dlg.ShowDialog();
+                buttonStart.Enabled = true;
+                labelHit.Visible = false;
             }
         }   
     }

@@ -69,7 +69,7 @@ namespace AssMngSys
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(882, 460);
+            this.dataGridView1.Size = new System.Drawing.Size(811, 462);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             // 
@@ -90,7 +90,7 @@ namespace AssMngSys
             this.bindingNavigatorMoveNextItem,
             this.bindingNavigatorMoveLastItem,
             this.bindingNavigatorSeparator2});
-            this.bindingNavigator1.Location = new System.Drawing.Point(668, 511);
+            this.bindingNavigator1.Location = new System.Drawing.Point(597, 513);
             this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
             this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
@@ -268,7 +268,7 @@ namespace AssMngSys
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(895, 538);
+            this.ClientSize = new System.Drawing.Size(824, 540);
             this.Controls.Add(this.comboBoxOptTyp);
             this.Controls.Add(this.checkBoxDate);
             this.Controls.Add(this.buttonQry);

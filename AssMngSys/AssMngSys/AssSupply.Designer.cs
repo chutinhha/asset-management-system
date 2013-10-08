@@ -230,7 +230,7 @@ namespace AssMngSys
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(595, 381);
+            this.dataGridView1.Size = new System.Drawing.Size(516, 349);
             this.dataGridView1.TabIndex = 14;
             this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
             this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
@@ -253,7 +253,7 @@ namespace AssMngSys
             this.bindingNavigatorMoveNextItem,
             this.bindingNavigatorMoveLastItem,
             this.bindingNavigatorSeparator2});
-            this.bindingNavigator1.Location = new System.Drawing.Point(382, 546);
+            this.bindingNavigator1.Location = new System.Drawing.Point(303, 514);
             this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
             this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
@@ -335,7 +335,7 @@ namespace AssMngSys
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 552);
+            this.label4.Location = new System.Drawing.Point(3, 520);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(41, 12);
             this.label4.TabIndex = 6;
@@ -345,7 +345,7 @@ namespace AssMngSys
             // 
             this.labelCnt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelCnt.AutoSize = true;
-            this.labelCnt.Location = new System.Drawing.Point(44, 552);
+            this.labelCnt.Location = new System.Drawing.Point(44, 520);
             this.labelCnt.Name = "labelCnt";
             this.labelCnt.Size = new System.Drawing.Size(11, 12);
             this.labelCnt.TabIndex = 6;
@@ -355,7 +355,7 @@ namespace AssMngSys
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(781, 122);
+            this.label3.Location = new System.Drawing.Point(781, 90);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 12);
             this.label3.TabIndex = 6;
@@ -368,9 +368,9 @@ namespace AssMngSys
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(607, 186);
+            this.listBox1.Location = new System.Drawing.Point(528, 186);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(294, 388);
+            this.listBox1.Size = new System.Drawing.Size(294, 352);
             this.listBox1.TabIndex = 17;
             // 
             // groupBox10
@@ -444,7 +444,7 @@ namespace AssMngSys
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label8.Location = new System.Drawing.Point(834, 164);
+            this.label8.Location = new System.Drawing.Point(755, 164);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(67, 21);
             this.label8.TabIndex = 26;
@@ -455,7 +455,7 @@ namespace AssMngSys
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label7.Location = new System.Drawing.Point(735, 164);
+            this.label7.Location = new System.Drawing.Point(656, 164);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(98, 21);
             this.label7.TabIndex = 25;
@@ -466,7 +466,7 @@ namespace AssMngSys
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label1.Location = new System.Drawing.Point(607, 164);
+            this.label1.Location = new System.Drawing.Point(528, 164);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(127, 21);
             this.label1.TabIndex = 24;
@@ -478,7 +478,7 @@ namespace AssMngSys
             this.tabPage1.Location = new System.Drawing.Point(4, 21);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(100, 11);
+            this.tabPage1.Size = new System.Drawing.Size(21, 11);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "¡Ï”√";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -493,7 +493,7 @@ namespace AssMngSys
             this.tabControl1.Location = new System.Drawing.Point(783, 60);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(108, 36);
+            this.tabControl1.Size = new System.Drawing.Size(29, 36);
             this.tabControl1.TabIndex = 12;
             this.tabControl1.Visible = false;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
@@ -510,7 +510,7 @@ namespace AssMngSys
             this.toolStripButtonSave});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(903, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(824, 25);
             this.toolStrip1.TabIndex = 28;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -570,7 +570,7 @@ namespace AssMngSys
             // textBoxPid
             // 
             this.textBoxPid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxPid.Location = new System.Drawing.Point(254, 549);
+            this.textBoxPid.Location = new System.Drawing.Point(184, 511);
             this.textBoxPid.Name = "textBoxPid";
             this.textBoxPid.Size = new System.Drawing.Size(116, 21);
             this.textBoxPid.TabIndex = 29;
@@ -581,7 +581,7 @@ namespace AssMngSys
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(903, 572);
+            this.ClientSize = new System.Drawing.Size(824, 540);
             this.Controls.Add(this.textBoxPid);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.label8);

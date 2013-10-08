@@ -6,7 +6,6 @@ namespace AssMngSysCe
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        private System.Windows.Forms.MainMenu mainMenu1;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -29,7 +28,6 @@ namespace AssMngSysCe
         /// </summary>
         private void InitializeComponent()
         {
-            this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.buttonOK = new System.Windows.Forms.Button();
             this.checkBoxNotWrite = new System.Windows.Forms.CheckBox();
             this.dataGrid1 = new System.Windows.Forms.DataGrid();
@@ -39,9 +37,9 @@ namespace AssMngSysCe
             // buttonOK
             // 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(75, 229);
+            this.buttonOK.Location = new System.Drawing.Point(75, 237);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(77, 36);
+            this.buttonOK.Size = new System.Drawing.Size(77, 29);
             this.buttonOK.TabIndex = 2;
             this.buttonOK.Text = "确认(Ent)";
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -52,7 +50,7 @@ namespace AssMngSysCe
             this.checkBoxNotWrite.Name = "checkBoxNotWrite";
             this.checkBoxNotWrite.Size = new System.Drawing.Size(165, 27);
             this.checkBoxNotWrite.TabIndex = 3;
-            this.checkBoxNotWrite.Text = "只显示未发卡标签";
+            this.checkBoxNotWrite.Text = "只显示未发卡清单";
             this.checkBoxNotWrite.CheckStateChanged += new System.EventHandler(this.checkBoxNotWrite_CheckStateChanged);
             // 
             // dataGrid1
@@ -60,7 +58,7 @@ namespace AssMngSysCe
             this.dataGrid1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.dataGrid1.Location = new System.Drawing.Point(3, 26);
             this.dataGrid1.Name = "dataGrid1";
-            this.dataGrid1.Size = new System.Drawing.Size(232, 199);
+            this.dataGrid1.Size = new System.Drawing.Size(232, 206);
             this.dataGrid1.TabIndex = 4;
             this.dataGrid1.DoubleClick += new System.EventHandler(this.dataGrid1_DoubleClick);
             this.dataGrid1.CurrentCellChanged += new System.EventHandler(this.dataGrid1_CurrentCellChanged);
@@ -69,9 +67,9 @@ namespace AssMngSysCe
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonCancel.Location = new System.Drawing.Point(156, 229);
+            this.buttonCancel.Location = new System.Drawing.Point(156, 237);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(77, 36);
+            this.buttonCancel.Size = new System.Drawing.Size(77, 29);
             this.buttonCancel.TabIndex = 2;
             this.buttonCancel.Text = "取消(F3)";
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);

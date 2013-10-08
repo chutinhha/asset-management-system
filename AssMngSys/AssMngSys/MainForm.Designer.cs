@@ -275,8 +275,6 @@
             this.imageList1.Images.SetKeyName(1, "note pad.ico");
             this.imageList1.Images.SetKeyName(2, "folder.ico");
             this.imageList1.Images.SetKeyName(3, "file open.ico");
-            this.imageList1.Images.SetKeyName(4, "add.ico");
-            this.imageList1.Images.SetKeyName(5, "ok.ico");
             // 
             // statusStrip1
             // 

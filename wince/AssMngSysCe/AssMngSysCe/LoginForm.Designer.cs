@@ -52,6 +52,7 @@
             this.buttonLogin = new System.Windows.Forms.Button();
             this.checkBoxStorePass = new System.Windows.Forms.CheckBox();
             this.buttonStart = new System.Windows.Forms.Button();
+            this.labelHit = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -116,6 +117,7 @@
             // 
             // menuItem2
             // 
+            this.menuItem2.Enabled = false;
             this.menuItem2.MenuItems.Add(this.menuItemRead);
             this.menuItem2.MenuItems.Add(this.menuItemInv);
             this.menuItem2.MenuItems.Add(this.menuItemLockTag);
@@ -203,12 +205,21 @@
             this.buttonStart.Visible = false;
             this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
             // 
+            // labelHit
+            // 
+            this.labelHit.Location = new System.Drawing.Point(44, 181);
+            this.labelHit.Name = "labelHit";
+            this.labelHit.Size = new System.Drawing.Size(159, 20);
+            this.labelHit.Text = "正在加载，请稍后 ...";
+            this.labelHit.Visible = false;
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(238, 268);
+            this.Controls.Add(this.labelHit);
             this.Controls.Add(this.checkBoxStorePass);
             this.Controls.Add(this.textBoxPass);
             this.Controls.Add(this.textBoxUser);
@@ -252,6 +263,7 @@
         private System.Windows.Forms.MenuItem menuItem3;
         private System.Windows.Forms.MenuItem menuItem4;
         private System.Windows.Forms.Button buttonStart;
+        private System.Windows.Forms.Label labelHit;
     }
 }
 

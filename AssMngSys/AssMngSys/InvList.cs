@@ -47,12 +47,13 @@ namespace AssMngSys
                 string sAssId = dataGridView1.Rows[i].Cells["资产编码"].Value.ToString();
                 string sId = toolStripTextBoxInvId.Text.Replace("#", "") + i.ToString();
                 sSql = string.Format
-                    (@"insert into inv_list(id,pid,ass_id,ass_nam,stat,stat_sub,duty_man,vender,ass_desc,addr,dept,inv_no,cre_man,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}')",
+                    (@"insert into inv_list(id,pid,ass_id,ass_nam,stat,use_man,stat_sub,duty_man,vender,ass_desc,addr,dept,inv_no,cre_man,cre_tm)values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}')",
                     sId,
                     dataGridView1.Rows[i].Cells["标签喷码"].Value.ToString(),
                     dataGridView1.Rows[i].Cells["资产编码"].Value.ToString(),
                     dataGridView1.Rows[i].Cells["资产名称"].Value.ToString(),
                     dataGridView1.Rows[i].Cells["库存状态"].Value.ToString(),
+                    dataGridView1.Rows[i].Cells["领用人员"].Value.ToString(),
                     dataGridView1.Rows[i].Cells["使用状态"].Value.ToString(),
                     dataGridView1.Rows[i].Cells["保管人员"].Value.ToString(),
                     dataGridView1.Rows[i].Cells["品牌"].Value.ToString(),
@@ -90,7 +91,7 @@ namespace AssMngSys
             //QryAssDlg qryassdlg = new QryAssDlg(mf);
             if (qryassdlg.ShowDialog() == DialogResult.OK)
             {
-                string sSql = "select pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 库存状态, stat_sub 使用状态,duty_man 保管人员,vender 品牌, ass_desc 资产描述,addr 所在地点 ,dept 部门 from ass_list where ynenable = 'Y' and stat in('库存','领用') ";
+                string sSql = "select pid 标签喷码,ass_id 资产编码,ass_nam 资产名称,stat 库存状态,use_man 领用人员, stat_sub 使用状态,duty_man 保管人员,vender 品牌, ass_desc 资产描述,addr 所在地点 ,dept 部门 from ass_list where ynenable = 'Y' and stat in('库存','领用') ";
                 DataTable dt = MysqlHelper.ExecuteDataTable(sSql + qryassdlg.sSqlCondition);
                 bindingSource1.DataSource = dt;
                 bindingNavigator1.BindingSource = bindingSource1;

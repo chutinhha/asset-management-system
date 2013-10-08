@@ -74,6 +74,7 @@ namespace AssMngSysCe
             this.label10 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label1CheckHit = new System.Windows.Forms.Label();
             this.buttonHideCheck = new System.Windows.Forms.Button();
             this.listView2 = new System.Windows.Forms.ListView();
             this.label8 = new System.Windows.Forms.Label();
@@ -86,7 +87,7 @@ namespace AssMngSysCe
             this.label3 = new System.Windows.Forms.Label();
             this.timer2 = new System.Windows.Forms.Timer();
             this.service1 = new AssMngSysCe.AssWebSrv.Service();
-            this.label1CheckHit = new System.Windows.Forms.Label();
+            this.timer3 = new System.Windows.Forms.Timer();
             this.tabPage5.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -418,25 +419,25 @@ namespace AssMngSysCe
             // 
             // buttonSelectAss
             // 
-            this.buttonSelectAss.Location = new System.Drawing.Point(138, 17);
+            this.buttonSelectAss.Location = new System.Drawing.Point(119, 9);
             this.buttonSelectAss.Name = "buttonSelectAss";
-            this.buttonSelectAss.Size = new System.Drawing.Size(68, 33);
+            this.buttonSelectAss.Size = new System.Drawing.Size(79, 33);
             this.buttonSelectAss.TabIndex = 2;
-            this.buttonSelectAss.Text = "选择";
+            this.buttonSelectAss.Text = "选择(F4)";
             this.buttonSelectAss.Click += new System.EventHandler(this.buttonSelectAss_Click);
             // 
             // buttonReadBarcode
             // 
-            this.buttonReadBarcode.Location = new System.Drawing.Point(68, 17);
+            this.buttonReadBarcode.Location = new System.Drawing.Point(24, 9);
             this.buttonReadBarcode.Name = "buttonReadBarcode";
-            this.buttonReadBarcode.Size = new System.Drawing.Size(64, 33);
+            this.buttonReadBarcode.Size = new System.Drawing.Size(89, 33);
             this.buttonReadBarcode.TabIndex = 2;
-            this.buttonReadBarcode.Text = "读条码";
+            this.buttonReadBarcode.Text = "读条码(F2)";
             this.buttonReadBarcode.Click += new System.EventHandler(this.buttonReadBarcode_Click);
             // 
             // textBoxYnWrite
             // 
-            this.textBoxYnWrite.Location = new System.Drawing.Point(92, 120);
+            this.textBoxYnWrite.Location = new System.Drawing.Point(92, 114);
             this.textBoxYnWrite.Name = "textBoxYnWrite";
             this.textBoxYnWrite.ReadOnly = true;
             this.textBoxYnWrite.Size = new System.Drawing.Size(114, 23);
@@ -444,7 +445,7 @@ namespace AssMngSysCe
             // 
             // textBoxAssId
             // 
-            this.textBoxAssId.Location = new System.Drawing.Point(92, 89);
+            this.textBoxAssId.Location = new System.Drawing.Point(92, 83);
             this.textBoxAssId.Name = "textBoxAssId";
             this.textBoxAssId.ReadOnly = true;
             this.textBoxAssId.Size = new System.Drawing.Size(114, 23);
@@ -452,14 +453,14 @@ namespace AssMngSysCe
             // 
             // label11
             // 
-            this.label11.Location = new System.Drawing.Point(17, 122);
+            this.label11.Location = new System.Drawing.Point(17, 116);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(81, 20);
             this.label11.Text = "是否已发：";
             // 
             // textBoxPid
             // 
-            this.textBoxPid.Location = new System.Drawing.Point(92, 56);
+            this.textBoxPid.Location = new System.Drawing.Point(92, 50);
             this.textBoxPid.Name = "textBoxPid";
             this.textBoxPid.Size = new System.Drawing.Size(114, 23);
             this.textBoxPid.TabIndex = 1;
@@ -467,14 +468,14 @@ namespace AssMngSysCe
             // 
             // label10
             // 
-            this.label10.Location = new System.Drawing.Point(17, 91);
+            this.label10.Location = new System.Drawing.Point(17, 85);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(81, 20);
             this.label10.Text = "资产编码：";
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(17, 59);
+            this.label4.Location = new System.Drawing.Point(17, 53);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(81, 20);
             this.label4.Text = "标签喷码：";
@@ -496,6 +497,14 @@ namespace AssMngSysCe
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(230, 207);
             this.tabPage4.Text = "盘点";
+            // 
+            // label1CheckHit
+            // 
+            this.label1CheckHit.Location = new System.Drawing.Point(33, 50);
+            this.label1CheckHit.Name = "label1CheckHit";
+            this.label1CheckHit.Size = new System.Drawing.Size(152, 20);
+            this.label1CheckHit.Text = "正在加载，请稍后 ...";
+            this.label1CheckHit.Visible = false;
             // 
             // buttonHideCheck
             // 
@@ -581,7 +590,7 @@ namespace AssMngSysCe
             // 
             // timer2
             // 
-            this.timer2.Interval = 3000;
+            this.timer2.Interval = 1000;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // service1
@@ -598,13 +607,10 @@ namespace AssMngSysCe
             this.service1.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; MS Web Services Client Protocol 2.0.50727.3053" +
                 ")";
             // 
-            // label1CheckHit
+            // timer3
             // 
-            this.label1CheckHit.Location = new System.Drawing.Point(24, 59);
-            this.label1CheckHit.Name = "label1CheckHit";
-            this.label1CheckHit.Size = new System.Drawing.Size(152, 20);
-            this.label1CheckHit.Text = "正在加载，请稍后 ...";
-            this.label1CheckHit.Visible = false;
+            this.timer3.Interval = 1;
+            this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
             // 
             // MainForm
             // 
@@ -692,5 +698,6 @@ namespace AssMngSysCe
         private AssMngSysCe.AssWebSrv.Service service1;
         private System.Windows.Forms.Button buttonDetail;
         private System.Windows.Forms.Label label1CheckHit;
+        private System.Windows.Forms.Timer timer3;
     }
 }
